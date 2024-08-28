@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://media.baby7blog.com/FrsCM7eBM3iGEtMY-rgr4Hjwqumr">
 <meta property="article:published_time" content="2020-09-22T05:52:35.000Z">
-<meta property="article:modified_time" content="2024-08-28T08:25:20.166Z">
+<meta property="article:modified_time" content="2024-08-28T08:45:01.753Z">
 <meta property="article:author" content="七仔">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-28 16:25:20" itemprop="dateModified" datetime="2024-08-28T16:25:20+08:00">2024-08-28</time>
+                <time title="修改时间：2024-08-28 16:45:01" itemprop="dateModified" datetime="2024-08-28T16:45:01+08:00">2024-08-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -232,6 +232,7 @@
 <h1 id="Mybatis-plus子查询的一个思路"><a href="#Mybatis-plus子查询的一个思路" class="headerlink" title="Mybatis-plus子查询的一个思路"></a>Mybatis-plus子查询的一个思路</h1></blockquote>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>思路就是QueryWrapper中的getCustomSqlSegment()这个函数，其实在Mybatis的xml文件中${ew.customSqlSegment}的customSqlSegment也是用的这个函数，使用这个函数可以做一个小的QueryWrapper然后getCustomSqlSegment()转为字符串，最后替换其中的#{}（忘了是什么了，后面补上），然后在大的QueryWrapper里用inSql函数添加这个转换后的字符串</p>
 <h2 id="伪代码（后面补上完整的）"><a href="#伪代码（后面补上完整的）" class="headerlink" title="伪代码（后面补上完整的）"></a>伪代码（后面补上完整的）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QueryWrapper&lt;Test&gt; queryWrapper = <span class="keyword">new</span> <span class="title class_">QueryWrapper</span>&lt;&gt;();</span><br><span class="line">QueryWrapper&lt;Test&gt; childQueryWrapper = <span class="keyword">new</span> <span class="title class_">QueryWrapper</span>&lt;&gt;();</span><br><span class="line">childQueryWrapper.eq(<span class="string">&quot;CESHI&quot;</span>, value);</span><br><span class="line"><span class="type">String</span> <span class="variable">childString</span> <span class="operator">=</span> childQueryWrapper.getCustomSqlSegment();</span><br><span class="line">childString = childString.replace(<span class="string">&quot;#&#123;&#125;&quot;</span>, value);</span><br><span class="line">queryWrapper.inSql(<span class="string">&quot;NEW&quot;</span>, childString);</span><br></pre></td></tr></table></figure>
+<p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/85.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/85.html</a></p>
     </div>
 
     

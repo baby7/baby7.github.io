@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://media.baby7blog.com/Fm5zywKHBGmtRuQZAg8N0PohDYpG">
 <meta property="article:published_time" content="2020-06-18T12:38:03.000Z">
-<meta property="article:modified_time" content="2024-08-28T08:25:19.823Z">
+<meta property="article:modified_time" content="2024-08-28T08:45:01.395Z">
 <meta property="article:author" content="七仔">
 <meta property="article:tag" content="插件">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-28 16:25:19" itemprop="dateModified" datetime="2024-08-28T16:25:19+08:00">2024-08-28</time>
+                <time title="修改时间：2024-08-28 16:45:01" itemprop="dateModified" datetime="2024-08-28T16:45:01+08:00">2024-08-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -235,7 +235,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div id=&quot;weather-view-he&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    export default &#123;</span><br><span class="line">        name: &quot;Weather&quot;,</span><br><span class="line">        created() &#123;</span><br><span class="line">            const WIDGET = document.createElement(&#x27;script&#x27;);</span><br><span class="line">            WIDGET.text = &quot;WIDGET = &#123;ID: &#x27;RejMJQqNQR&#x27;&#125;&quot;;</span><br><span class="line">            document.body.appendChild(WIDGET);</span><br><span class="line">            const s = document.createElement(&#x27;script&#x27;);</span><br><span class="line">            s.type = &#x27;text/javascript&#x27;;</span><br><span class="line">            s.src = &#x27;https://apip.weatherdt.com/view/static/js/r.js?v=1111&#x27;;</span><br><span class="line">            document.body.appendChild(s);</span><br><span class="line">        &#125;,</span><br><span class="line">        mounted() &#123;</span><br><span class="line">            var id = setInterval(() =&gt; &#123;</span><br><span class="line">                if(document.getElementById(&quot;weather-view-he&quot;).style.cssText</span><br><span class="line">                    === &quot;background-color:#000;width:500px;height:250px;font-size: 16px;&quot;)&#123;</span><br><span class="line">                    clearInterval(id)</span><br><span class="line">                &#125;</span><br><span class="line">                document.getElementById(&quot;weather-view-he&quot;).style.cssText</span><br><span class="line">                    = &quot;background-color:#000;width:500px;height:250px;font-size: 16px;&quot;</span><br><span class="line">            &#125;,500)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <p>这里多了mounted()函数，因为生成的插件虽然有深色版，但是黑的不够彻底，需要做一下样式调整，其中还包括大小和字体<br>可以看到是用了计时器进行样式调整，因为需要给原来的插件调整的时间，确定调整成功后会关闭计时器</p>
-
+<p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/74.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/74.html</a></p>
     </div>
 
     
