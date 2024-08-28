@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="前端在对接过程中发现token失效后返回直接返回500，而不是返回200然后在返回体中设置自定义返回码，需要后端调整为返回200ok，请求体中的code为自定义的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对Jeecg-Boot中Token失效返回格式的调整">
+<meta property="og:url" content="https://baby7.github.io/myBlog/68.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="前端在对接过程中发现token失效后返回直接返回500，而不是返回200然后在返回体中设置自定义返回码，需要后端调整为返回200ok，请求体中的code为自定义的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/FqOPohNT3eVm82WKXEea7Zgwpw6E">
+<meta property="article:published_time" content="2020-04-28T11:03:20.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:19.608Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/FqOPohNT3eVm82WKXEea7Zgwpw6E">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/68.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>对Jeecg-Boot中Token失效返回格式的调整 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/68.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          对Jeecg-Boot中Token失效返回格式的调整
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-28 19:03:20" itemprop="dateCreated datePublished" datetime="2020-04-28T19:03:20+08:00">2020-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:19" itemprop="dateModified" datetime="2024-08-28T16:25:19+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">后端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/FqOPohNT3eVm82WKXEea7Zgwpw6E" width=200 /> </div>
+
+<p>前端在对接过程中发现token失效后返回直接返回500，而不是返回200然后在返回体中设置自定义返回码，需要后端调整为返回200ok，请求体中的code为自定义的。</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="对Jeecg-Boot中Token失效返回格式的调整"><a href="#对Jeecg-Boot中Token失效返回格式的调整" class="headerlink" title="对Jeecg-Boot中Token失效返回格式的调整"></a>对Jeecg-Boot中Token失效返回格式的调整</h1></blockquote>
+<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>使用 Jeecg-Boot 的Spring Boot后端模块开发，前端未使用Jeecg-Boot的配套前端。</p>
+<h3 id="二、问题"><a href="#二、问题" class="headerlink" title="二、问题"></a>二、问题</h3><p>前端在对接过程中发现token失效后返回直接返回500，而不是返回200然后在返回体中设置自定义返回码，需要后端调整为返回200ok，请求体中的code为自定义的。</p>
+<h3 id="三、过程"><a href="#三、过程" class="headerlink" title="三、过程"></a>三、过程</h3><p>发现请求中带失效token后端会报错</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">org.apache.shiro.authc.AuthenticationException: Token失效，请重新登录!</span><br><span class="line">	at org.jeecg.modules.shiro.authc.ShiroRealm.checkUserTokenIsEffect(ShiroRealm.java:<span class="number">129</span>)</span><br><span class="line">	at org.jeecg.modules.shiro.authc.ShiroRealm.doGetAuthenticationInfo(ShiroRealm.java:<span class="number">101</span>)</span><br><span class="line">	at org.apache.shiro.realm.AuthenticatingRealm.getAuthenticationInfo(AuthenticatingRealm.java:<span class="number">571</span>)</span><br><span class="line">	at org.apache.shiro.authc.pam.ModularRealmAuthenticator.doSingleRealmAuthentication(ModularRealmAuthenticator.java:<span class="number">180</span>)</span><br><span class="line">	at org.apache.shiro.authc.pam.ModularRealmAuthenticator.doAuthenticate(ModularRealmAuthenticator.java:<span class="number">267</span>)</span><br><span class="line">	at org.apache.shiro.authc.AbstractAuthenticator.authenticate(AbstractAuthenticator.java:<span class="number">198</span>)</span><br><span class="line">	at org.apache.shiro.mgt.AuthenticatingSecurityManager.authenticate(AuthenticatingSecurityManager.java:<span class="number">106</span>)</span><br><span class="line">	at org.apache.shiro.mgt.DefaultSecurityManager.login(DefaultSecurityManager.java:<span class="number">274</span>)</span><br><span class="line">	at org.apache.shiro.subject.support.DelegatingSubject.login(DelegatingSubject.java:<span class="number">260</span>)</span><br><span class="line">	at org.jeecg.modules.shiro.authc.aop.JwtFilter.executeLogin(JwtFilter.java:<span class="number">57</span>)</span><br><span class="line">	at org.jeecg.modules.shiro.authc.aop.JwtFilter.isAccessAllowed(JwtFilter.java:<span class="number">40</span>)</span><br><span class="line">	at org.apache.shiro.web.filter.AccessControlFilter.onPreHandle(AccessControlFilter.java:<span class="number">162</span>)</span><br><span class="line">	at org.apache.shiro.web.filter.PathMatchingFilter.isFilterChainContinued(PathMatchingFilter.java:<span class="number">203</span>)</span><br><span class="line">	at org.apache.shiro.web.filter.PathMatchingFilter.preHandle(PathMatchingFilter.java:<span class="number">178</span>)</span><br><span class="line">	at org.jeecg.modules.shiro.authc.aop.JwtFilter.preHandle(JwtFilter.java:<span class="number">78</span>)</span><br></pre></td></tr></table></figure>
+
+<p>其中ShiroRealm和JwtFilter为jeecg-boot框架源码，其余为引用包代码，可以看到框架在ShiroRealm中抛出了AuthenticationException异常，之后一层层接收异常直到JwtFilter类的isAccessAllowed函数中处理异常，但是JwtFilter对异常的处理是再次抛出AuthenticationException，黑人问号.jpg</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 执行登录认证</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> mappedValue</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">isAccessAllowed</span><span class="params">(ServletRequest request, ServletResponse response, Object mappedValue)</span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        executeLogin(request, response);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">AuthenticationException</span>(<span class="string">&quot;Token失效，请重新登录&quot;</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是我们可以发现同样在JwtFilter类中有一个preHandle函数，我们可以在preHandle函数中对</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="built_in">super</span>.preHandle(request, response);</span><br></pre></td></tr></table></figure>
+
+<p>进行异常处理，修改为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">super</span>.preHandle(request, response);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span> (AuthenticationException e)&#123;</span><br><span class="line">    httpServletResponse.setStatus(HttpStatus.OK.value());</span><br><span class="line">    <span class="type">JSONObject</span> <span class="variable">data</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JSONObject</span>();</span><br><span class="line">    data.put(<span class="string">&quot;code&quot;</span>, <span class="number">2333</span>);</span><br><span class="line">    data.put(<span class="string">&quot;message&quot;</span>, <span class="string">&quot;Token失效，请重新登录&quot;</span>);</span><br><span class="line">    data.put(<span class="string">&quot;success&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">    data.put(<span class="string">&quot;timestamp&quot;</span>, <span class="keyword">new</span> <span class="title class_">Date</span>().getTime());</span><br><span class="line">    <span class="comment">/**获取OutputStream输出流*/</span></span><br><span class="line">    <span class="type">OutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> response.getOutputStream();</span><br><span class="line">    <span class="comment">/**设置json返回格式*/</span></span><br><span class="line">    ((HttpServletResponse) response).setHeader(<span class="string">&quot;content-type&quot;</span>, <span class="string">&quot;application/json&quot;</span>);</span><br><span class="line">    <span class="comment">/**将字符转换成字节数组，指定以UTF-8编码进行转换*/</span></span><br><span class="line">    <span class="type">byte</span>[] dataByteArr = data.toJSONString().getBytes(StandardCharsets.UTF_8);</span><br><span class="line">    <span class="comment">/**使用OutputStream流向客户端输出字节数组*/</span></span><br><span class="line">    outputStream.write(dataByteArr);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过postman测试为返回200ok，状态码2333</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/67.html" rel="prev" title="针对微信获取小程序码scene参数的数据压缩算法">
+      <i class="fa fa-chevron-left"></i> 针对微信获取小程序码scene参数的数据压缩算法
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/69.html" rel="next" title="vue看板娘插件-雷姆">
+      vue看板娘插件-雷姆 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9Jeecg-Boot%E4%B8%ADToken%E5%A4%B1%E6%95%88%E8%BF%94%E5%9B%9E%E6%A0%BC%E5%BC%8F%E7%9A%84%E8%B0%83%E6%95%B4"><span class="nav-number">1.</span> <span class="nav-text">对Jeecg-Boot中Token失效返回格式的调整</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%BF%87%E7%A8%8B"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、过程</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

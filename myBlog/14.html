@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="这款播放器界面简洁优雅，功能强大，直接调用QQ音乐歌曲或歌单ID自动加载歌曲列表">
+<meta property="og:type" content="article">
+<meta property="og:title" content="音乐播放器插件">
+<meta property="og:url" content="https://baby7.github.io/myBlog/14.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="这款播放器界面简洁优雅，功能强大，直接调用QQ音乐歌曲或歌单ID自动加载歌曲列表">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557755571328051252.jpg">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190512/1557669625683028526.png">
+<meta property="og:image" content="http://img.baidu.com/hi/jx2/j_0003.gif">
+<meta property="article:published_time" content="2019-04-13T09:29:55.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:18.518Z">
+<meta property="article:author" content="七仔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557755571328051252.jpg">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/14.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>音乐播放器插件 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/14.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          音乐播放器插件
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-13 17:29:55" itemprop="dateCreated datePublished" datetime="2019-04-13T17:29:55+08:00">2019-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:18" itemprop="dateModified" datetime="2024-08-28T16:25:18+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">前端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557755571328051252.jpg" width=200 /> </div>
+
+<p>这款播放器界面简洁优雅，功能强大，直接调用QQ音乐歌曲或歌单ID自动加载歌曲列表</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="音乐播放器插件"><a href="#音乐播放器插件" class="headerlink" title="音乐播放器插件"></a>音乐播放器插件</h1></blockquote>
+<h2 id="一代版本："><a href="#一代版本：" class="headerlink" title="一代版本："></a>一代版本：</h2><p>来自小伟博客：<a target="_blank" rel="noopener" href="http://www.mlwei.com/1440.html">http://www.mlwei.com/1440.html</a></p>
+<p>歌单来源：QQ音乐</p>
+<p>歌单歌手：J·Fla</p>
+<p>PS：但是似乎并不稳定，设置了不自动播放有时候进去还是自动播放。</p>
+<h2 id="二代版本："><a href="#二代版本：" class="headerlink" title="二代版本："></a>二代版本：</h2><p>使用APlayer作为博客的音乐播放器插件（APlayer GitHub地址：<a target="_blank" rel="noopener" href="https://github.com/MoePlayer/APlayer">https://github.com/MoePlayer/APlayer</a>）</p>
+<p>但是需要自己写音乐的标题、作者、播放地址、封面和歌词。我使用了python3爬取的网易云的歌单信息，但是音乐地址隔一段时间会过期，所以我写了个定时爬取歌单信息保存到.json中，博客打开时会获取这个json文件以取得歌单信息。</p>
+<p>CloudMusicList.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> random, math</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> html</span><br><span class="line"></span><br><span class="line">etree = html.etree</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Spider</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>.headers = &#123;</span><br><span class="line">                 <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0&#x27;</span>,</span><br><span class="line">                 <span class="string">&#x27;Cookie&#x27;</span>:<span class="string">&#x27;_iuqxldmzr_=32; _ntes_nnid=8d4ef0883a3bcc9d3a2889b0bf36766a,1533782432391;&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;ntes_nuid=8d4ef0883a3bcc9d3a2889b0bf36766a;&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;utmc=94650624; WM_TID=GzmBlbRkRGQXeQiYuDVCfoEatU6VSsKC; playerid=19729878;&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;utma=94650624.1180067615.1533782433.1533816989.1533822858.9;&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;utmz=94650624.1533822858.9.7.utmcsr=cn.bing.com|utmccn=(referral)|utmcmd=referral|utmcct=/;&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;WM_NI=S5gViyNVs14K%2BZoVerGK69gLlmtnH5NqzyHcCUY%2BiWm2ZaHATeI1gfsEnK%2BQ1jyP%2FROzbzDV0AyJ&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;HR4YQfBetXSRipyrYCFn%2BNdA%2FA8Mv80riS3cuMVJi%2BAFgCpXTiHBNHE%3D; WM_NIKE=9ca17ae2e6ffcda1&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;70e2e6ee84b674afedfbd3cd7d98b8e1d0f554f888a4abc76990b184badc4f89e7af8ece2af0fea7c3b92a91eb&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;a9b7ec738e8abdd2b741e986a1b7e87a8595fadae648b0b3bc8fcb3f8eafb69acb69818b97ccec5dafee9682cb&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;4b98bb87d2e66eb19ba2acaa5bf3b6b7b1ae5a8da6ae9bc75ef49fb7abcb5af8879f87c16fb8889db3ec7cbbae&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;97a4c566e992aca2ae4bfc93bad9b37aab8dfd84f8479696a7ccc44ea59dc0b9d7638c9e82a9c837e2a3; JSES&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;SIONID-WYYY=sHwCKYJYxz6ODfURChA471BMF%5CSVf3%5CTc8Qcy9h9Whj6CfMxw4YWTMV7CIx5g6rqW8OBv04YGH&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;wwq%2B%5CD1N61qknTP%2Fym%2BHJZ1ylSH1EabbQASc9ywIT8YvOr%2FpMgvmm1cbr2%2Bd6ssMYXuTlpOIrKqp%5&#x27;</span></span><br><span class="line">                          <span class="string">&#x27;C%2FM611EhmfAfU47%5CSQWAs%2BYzgY%3A1533828139236&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__get_mp3</span>(<span class="params">self, <span class="built_in">id</span></span>):</span><br><span class="line">        d = <span class="string">&#x27;&#123;&quot;ids&quot;:&quot;[%s]&quot;,&quot;br&quot;:320000,&quot;csrf_token&quot;:&quot;&quot;&#125;&#x27;</span> % <span class="built_in">id</span></span><br><span class="line">        wyy = WangYiYun(d)</span><br><span class="line">        data = wyy.get_data()</span><br><span class="line">        url = <span class="string">&#x27;https://music.163.com/weapi/song/enhance/player/url?csrf_token=&#x27;</span></span><br><span class="line">        response = requests.post(url, data=data, headers=<span class="variable language_">self</span>.headers).json()</span><br><span class="line">        <span class="keyword">return</span> response[<span class="string">&#x27;data&#x27;</span>][<span class="number">0</span>][<span class="string">&#x27;url&#x27;</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">download_a_music</span>(<span class="params">self, <span class="built_in">id</span></span>):</span><br><span class="line">        <span class="comment">#这里的url是真实的歌词页面</span></span><br><span class="line">        url = <span class="string">&quot;http://music.163.com/api/song/lyric?&quot;</span>+<span class="string">&quot;id=&quot;</span>+<span class="built_in">str</span>(<span class="built_in">id</span>)+<span class="string">&quot;&amp;lv=1&amp;kv=1&amp;tv=-1&quot;</span></span><br><span class="line">        html = requests.post(url)</span><br><span class="line">        json_obj = html.text</span><br><span class="line">        <span class="comment">#歌词是一个json对象 解析它</span></span><br><span class="line">        j = json.loads(json_obj)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            lyric = j[<span class="string">&#x27;lrc&#x27;</span>][<span class="string">&#x27;lyric&#x27;</span>]</span><br><span class="line">        <span class="keyword">except</span> KeyError:</span><br><span class="line">            lyric = <span class="string">&quot;无歌词&quot;</span></span><br><span class="line">        url = <span class="variable language_">self</span>.__get_mp3(<span class="built_in">id</span>)</span><br><span class="line">        <span class="keyword">return</span> url, lyric</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">WangYiYun</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, d</span>):</span><br><span class="line">        <span class="variable language_">self</span>.d = d</span><br><span class="line">        <span class="variable language_">self</span>.e = <span class="string">&#x27;010001&#x27;</span></span><br><span class="line">        <span class="variable language_">self</span>.f = <span class="string">&quot;00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5a&quot;</span> \</span><br><span class="line">                 <span class="string">&quot;a76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46be&quot;</span> \</span><br><span class="line">                 <span class="string">&quot;e255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.g = <span class="string">&quot;0CoJUm6Qyw8W8jud&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.random_text = <span class="variable language_">self</span>.get_random_str()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># js中的a函数</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_random_str</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">str</span> = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&#x27;</span></span><br><span class="line">        res = <span class="string">&#x27;&#x27;</span></span><br><span class="line">        <span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">            index = math.floor(random.random() * <span class="built_in">len</span>(<span class="built_in">str</span>))</span><br><span class="line">            res += <span class="built_in">str</span>[index]</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">aes_encrypt</span>(<span class="params">self, text, key</span>):</span><br><span class="line">        iv = <span class="string">&#x27;0102030405060708&#x27;</span>  <span class="comment"># 偏移量</span></span><br><span class="line">        pad = <span class="number">16</span> - <span class="built_in">len</span>(text.encode()) % <span class="number">16</span>  <span class="comment"># 使加密信息的长度为16的倍数，要不会报下面的错</span></span><br><span class="line">        <span class="comment"># 长度是16的倍数还会报错，不能包含中文，要对他进行unicode编码</span></span><br><span class="line">        text = text + pad * <span class="built_in">chr</span>(pad)  <span class="comment"># Input strings must be a multiple of 16 in length</span></span><br><span class="line">        encryptor = AES.new(key, AES.MODE_CBC, iv)</span><br><span class="line">        msg = base64.b64encode(encryptor.encrypt(text))  <span class="comment"># 最后还需要使用base64进行加密</span></span><br><span class="line">        <span class="keyword">return</span> msg</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ras加密</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">rsa_encrypt</span>(<span class="params">self, value, text, modulus</span>):</span><br><span class="line">        text = text[::-<span class="number">1</span>]</span><br><span class="line">        rs = <span class="built_in">int</span>(codecs.encode(text.encode(<span class="string">&#x27;utf-8&#x27;</span>), <span class="string">&#x27;hex_codec&#x27;</span>), <span class="number">16</span>) ** <span class="built_in">int</span>(value, <span class="number">16</span>) % <span class="built_in">int</span>(modulus, <span class="number">16</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">format</span>(rs, <span class="string">&#x27;x&#x27;</span>).zfill(<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_data</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 这个参数加密两次</span></span><br><span class="line">        params = <span class="variable language_">self</span>.aes_encrypt(<span class="variable language_">self</span>.d, <span class="variable language_">self</span>.g)</span><br><span class="line">        params = <span class="variable language_">self</span>.aes_encrypt(params.decode(<span class="string">&#x27;utf-8&#x27;</span>), <span class="variable language_">self</span>.random_text)</span><br><span class="line">        enc_sec_key = <span class="variable language_">self</span>.rsa_encrypt(<span class="variable language_">self</span>.e, <span class="variable language_">self</span>.random_text, <span class="variable language_">self</span>.f)</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="string">&#x27;params&#x27;</span>: params,</span><br><span class="line">            <span class="string">&#x27;encSecKey&#x27;</span>: enc_sec_key</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">music_msg</span>(<span class="params">song_id, name, artist, cover</span>):</span><br><span class="line">    spider = Spider()</span><br><span class="line">    url, lyric = spider.download_a_music(song_id)</span><br><span class="line">    lyric = lyric.replace(<span class="string">&#x27;&quot;&#x27;</span>, <span class="string">&quot;“&quot;</span>)</span><br><span class="line">    <span class="comment"># 带歌词的歌单信息</span></span><br><span class="line">    music_one_json = <span class="string">&#x27;&#123;&quot;name&quot;:&quot;&#x27;</span> + name + <span class="string">&#x27;&quot;,&quot;artist&quot;:&quot;&#x27;</span> + artist + <span class="string">&#x27;&quot;,&quot;url&quot;:&quot;&#x27;</span> + url + <span class="string">&#x27;&quot;,&quot;cover&quot;:&quot;&#x27;</span> + cover + <span class="string">&#x27;&quot;,&quot;lrc&quot;:&quot;&#x27;</span> + lyric + <span class="string">&#x27;&quot;&#125;,&#x27;</span></span><br><span class="line">    <span class="comment"># 不带歌词的</span></span><br><span class="line">    <span class="comment"># music_one_json = &#x27;&#123;&quot;name&quot;:&quot;&#x27; + name + &#x27;&quot;,&quot;artist&quot;:&quot;&#x27; + artist + &#x27;&quot;,&quot;url&quot;:&quot;&#x27; + url + &#x27;&quot;,&quot;cover&quot;:&quot;&#x27; + cover + &#x27;&quot;&#125;,&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> music_one_json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_music_json</span>():</span><br><span class="line">    url = <span class="string">&#x27;https://music.163.com/#/playlist?id=2487763362&#x27;</span></span><br><span class="line">    new_url = url.replace(<span class="string">&#x27;/#&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">    header = &#123;</span><br><span class="line">        <span class="string">&#x27;Host&#x27;</span>: <span class="string">&#x27;music.163.com&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;Referer&#x27;</span>: <span class="string">&#x27;https://music.163.com/&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) &#x27;</span></span><br><span class="line">                      <span class="string">&#x27;Chrome/49.0.2623.221 Safari/537.36 SE 2.X MetaSr 1.0&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">    res = requests.get(new_url, headers=header).text</span><br><span class="line">    r = BeautifulSoup(res, <span class="string">&quot;html.parser&quot;</span>)</span><br><span class="line">    music_dict = &#123;&#125;</span><br><span class="line">    result = r.find(<span class="string">&#x27;ul&#x27;</span>, &#123;<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;f-hide&#x27;</span>&#125;).find_all(<span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">    <span class="keyword">for</span> music <span class="keyword">in</span> result:</span><br><span class="line">        music_id = music.get(<span class="string">&#x27;href&#x27;</span>).strip(<span class="string">&#x27;/song?id=&#x27;</span>)</span><br><span class="line">        music_name = music.text</span><br><span class="line">        music_dict[music_id] = music_name</span><br><span class="line">    music_json = <span class="string">&quot;[&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">for</span> song_id <span class="keyword">in</span> music_dict:</span><br><span class="line">            music_json += music_msg(song_id, music_dict[song_id], <span class="string">&quot;J·Fla&quot;</span>, <span class="string">&quot;http://p4.music.126.net/79vdQ-WExvH5f_h3GvXcXQ==/109951163694979815.jpg?param=200y200&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">       <span class="built_in">print</span>(e)</span><br><span class="line">    <span class="keyword">return</span> music_json[:-<span class="number">1</span>] + <span class="string">&quot;]&quot;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        music_json = get_music_json().replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;\\n&quot;</span>)</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;music.json&#x27;</span>, <span class="string">&#x27;w&#x27;</span>,encoding=<span class="string">&#x27;utf8&#x27;</span>) <span class="keyword">as</span> fw:</span><br><span class="line">            fw.write(music_json)</span><br><span class="line">        <span class="built_in">print</span>(music_json)</span><br><span class="line">        music_json = <span class="string">&quot;&quot;</span></span><br><span class="line">        time.sleep(<span class="number">600</span>)  <span class="comment"># 十分钟更新一次</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>会发现我偷了个懒，歌曲的演唱者一直没变，实际上这整个歌单全都是J·Fla小姐姐一个人唱的</p>
+<p>后来我发现在服务器上爬虫挺占CPU的。。。毕竟服务器不怎么好，有时间得改一改</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190512/1557669625683028526.png" alt="CPU负载图"></p>
+<h2 id="现版本："><a href="#现版本：" class="headerlink" title="现版本："></a>现版本：</h2><p>由于上个版本非常占CPU，所以放弃，究其原因是为了防止过期所以定时爬取更新音乐播放链接，这个方法不可取，但是又不能在服务器上去播放音乐，毕竟服务器的带宽也不怎么宽裕。</p>
+<p>一个办法是将静态音乐文件放在七牛云存储上，七牛云的速度比我的服务器快多了，带宽也大。</p>
+<p>具体的操作是：</p>
+<blockquote>
+<p>1.修改上版本代码将音乐文件下载到本地</p>
+</blockquote>
+<blockquote>
+<p>2.将音乐上传到七牛云的对象空间</p>
+</blockquote>
+<blockquote>
+<p>3.修改上版本代码生成一个包含歌词等信息的JSON文件放在七牛云&#x2F;服务器，此处要注意将音乐播放地址改为七牛云的音乐外链</p>
+</blockquote>
+<p>结束，消除了定时爬取音乐链接的CPU消耗，也没有增加对服务器的带宽占用，满意<br><img src="http://img.baidu.com/hi/jx2/j_0003.gif" alt="满意"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/13.html" rel="prev" title="六种设计模式结合的Java绘图板">
+      <i class="fa fa-chevron-left"></i> 六种设计模式结合的Java绘图板
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/15.html" rel="next" title="在SSM中使用Redis实现高并发抢座">
+      在SSM中使用Redis实现高并发抢座 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8%E6%8F%92%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">音乐播放器插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BB%A3%E7%89%88%E6%9C%AC%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">一代版本：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E4%BB%A3%E7%89%88%E6%9C%AC%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">二代版本：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E7%89%88%E6%9C%AC%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">现版本：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Home Assistant(hass)是一个开源的基于Python的智能家居控制系统，可以连接很多品牌的智能家居并且控制，并且相对于那些品牌的智能家居有更多的自由和控制性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【“魔镜”系列】智能家居控制">
+<meta property="og:url" content="https://baby7.github.io/myBlog/77.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="Home Assistant(hass)是一个开源的基于Python的智能家居控制系统，可以连接很多品牌的智能家居并且控制，并且相对于那些品牌的智能家居有更多的自由和控制性。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/FoCGeeXhKnmWDLCUMO7s2H6QkUA5">
+<meta property="article:published_time" content="2020-06-29T06:27:41.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:19.923Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="树莓派">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/FoCGeeXhKnmWDLCUMO7s2H6QkUA5">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/77.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>【“魔镜”系列】智能家居控制 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/77.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【“魔镜”系列】智能家居控制
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-29 14:27:41" itemprop="dateCreated datePublished" datetime="2020-06-29T14:27:41+08:00">2020-06-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:19" itemprop="dateModified" datetime="2024-08-28T16:25:19+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%AD%94%E9%95%9C/" itemprop="url" rel="index"><span itemprop="name">魔镜</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/FoCGeeXhKnmWDLCUMO7s2H6QkUA5" width=200 /> </div>
+
+<p>Home Assistant(hass)是一个开源的基于Python的智能家居控制系统，可以连接很多品牌的智能家居并且控制，并且相对于那些品牌的智能家居有更多的自由和控制性。</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="【“魔镜”系列】智能家居控制"><a href="#【“魔镜”系列】智能家居控制" class="headerlink" title="【“魔镜”系列】智能家居控制"></a>【“魔镜”系列】智能家居控制</h1></blockquote>
+<h3 id="开源的Home-Assistant家居控制系统"><a href="#开源的Home-Assistant家居控制系统" class="headerlink" title="开源的Home Assistant家居控制系统"></a>开源的Home Assistant家居控制系统</h3><p>Home Assistant(hass)是一个开源的基于Python的智能家居控制系统，可以连接很多品牌的智能家居并且控制，并且相对于那些品牌的智能家居有更多的自由和控制性。</p>
+<h3 id="魔镜和Home-Assistant之间的通信"><a href="#魔镜和Home-Assistant之间的通信" class="headerlink" title="魔镜和Home Assistant之间的通信"></a>魔镜和Home Assistant之间的通信</h3><p>Home Assistant有完整的Rest API，<a target="_blank" rel="noopener" href="https://developers.home-assistant.io/docs/api/rest">点击这里进入</a>，魔镜系统通过Rest格式的http与hass进行通信<br>使用这些API需要有权限，就是header要带一个token，可以在你的hass中获取长期的token（长期访问令牌），该令牌有十年有效期，token格式见上述网址</p>
+<h3 id="我的智能场景（自动化）"><a href="#我的智能场景（自动化）" class="headerlink" title="我的智能场景（自动化）"></a>我的智能场景（自动化）</h3><blockquote>
+<h4 id="回家和离家"><a href="#回家和离家" class="headerlink" title="回家和离家"></a>回家和离家</h4><p>我的智能家居设备都会连接到路由器，手机也会连接到路由器，因为每次连接到路由器这些设备的的IP都不会改变，通过ping或者hass的nmap_tracker插件可以判断这些设备在不在线，因为我的手机常年保持WIFI开启状态，回家会自动连接，离家也会因为距离断开，可以通过这个判断我是否在家（5秒钟判断一次，20秒没连上就判断为离家状态）<br>如果回家：播放欢迎回家语音并且打开顶灯然后打开魔镜系统<br>如果离家：关闭所有设备且关闭魔镜系统<br>关于魔镜系统的打开关闭是因为开启状态会占用快一半的3b+的cpu，比较费电，并且打开屏幕也会费电</p>
+<h4 id="日出和日落"><a href="#日出和日落" class="headerlink" title="日出和日落"></a>日出和日落</h4><p>hass自带一个日出日落的状态，初始化时会判断你的位置，通过这个取得日出日落时间<br>日出：关闭顶灯<br>日落：开启顶灯，因为我住的地方比较阴，所以设置了偏移量提前日落四十分钟执行</p>
+<h4 id="睡觉动作"><a href="#睡觉动作" class="headerlink" title="睡觉动作"></a>睡觉动作</h4><p>我十二点准时睡觉，零点准时触发会关闭大灯且关闭魔镜系统</p>
+<h4 id="温湿度固定值提示"><a href="#温湿度固定值提示" class="headerlink" title="温湿度固定值提示"></a>温湿度固定值提示</h4><p>在温度为30和湿度90会提示“当前温湿度多少多少，求求你开开除湿机&#x2F;空调吧”<br>其实可以做到直接控制空调和除湿机，但是我不想太强制就只做了提示</p>
+</blockquote>
+<h3 id="我连接的设备"><a href="#我连接的设备" class="headerlink" title="我连接的设备"></a>我连接的设备</h3><blockquote>
+<h4 id="米家开关"><a href="#米家开关" class="headerlink" title="米家开关"></a>米家开关</h4><p>连接了两个，一个控制热水器，一个控制魔镜的屏幕开关<br>热水器：睡觉前把热水器的烧水按钮打开但是不打开米家开关，早上躺在床上说一句“魔镜魔镜，打开热水器”就可以在床上滩一会儿，然后起来后喝热水<br>屏幕开关：现在是控制树莓派的屏幕开关，我用剪刀测试发现通过短接两个点可以实现屏幕的开关，后续会研究研究可不可以用GPIO实现控制屏幕开关，然后把这个腾给台灯用</p>
+<h4 id="米家空调伴侣"><a href="#米家空调伴侣" class="headerlink" title="米家空调伴侣"></a>米家空调伴侣</h4><p>有个空调伴侣的插件：<a target="_blank" rel="noopener" href="https://github.com/syssi/xiaomi_airconditioningcompanion">源码地址</a>，但是不支持我这个版本，所以现在以开关形式控制空调</p>
+<h4 id="飞利浦智能灯泡"><a href="#飞利浦智能灯泡" class="headerlink" title="飞利浦智能灯泡"></a>飞利浦智能灯泡</h4><p>可以调节亮度和色温，我用hass调用后发现关灯状态下需要调用两次，开灯状态下调用一次API，然后范围是：亮度[1-100]，色温[175-333]</p>
+<h3 id="米家万能遥控器"><a href="#米家万能遥控器" class="headerlink" title="米家万能遥控器"></a>米家万能遥控器</h3><p>通过xiaomi_miio.remote_learn_command学习红外码，然后使用remote.send_command发送红外码，我可以通过hass控制电视、机顶盒、风扇这些，空调的红外码可以学习但是发射没反应不知道为什么，通过米家APP发射的可以使用</p>
+</blockquote>
+<h3 id="如何接入米家设备"><a href="#如何接入米家设备" class="headerlink" title="如何接入米家设备"></a>如何接入米家设备</h3><p>hass接入米家设备需要取得token，米家APP的5.4.54版本有个bug，会在日志文件中打印token等信息，在手机SmartHome&#x2F;logs&#x2F;Plug_Devicemanager&#x2F;日期&#x2F;路径中找到日志文件打开可以找到json格式的数据，其中包含token、host等信息</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag"># 树莓派</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/76.html" rel="prev" title="【“魔镜”系列】DHT11传感器温湿度的获取与显示">
+      <i class="fa fa-chevron-left"></i> 【“魔镜”系列】DHT11传感器温湿度的获取与显示
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/78.html" rel="next" title="【“魔镜”系列】节假日信息">
+      【“魔镜”系列】节假日信息 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E3%80%90%E2%80%9C%E9%AD%94%E9%95%9C%E2%80%9D%E7%B3%BB%E5%88%97%E3%80%91%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E6%8E%A7%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">【“魔镜”系列】智能家居控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%BA%90%E7%9A%84Home-Assistant%E5%AE%B6%E5%B1%85%E6%8E%A7%E5%88%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.0.1.</span> <span class="nav-text">开源的Home Assistant家居控制系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AD%94%E9%95%9C%E5%92%8CHome-Assistant%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E4%BF%A1"><span class="nav-number">1.0.2.</span> <span class="nav-text">魔镜和Home Assistant之间的通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E6%99%BA%E8%83%BD%E5%9C%BA%E6%99%AF%EF%BC%88%E8%87%AA%E5%8A%A8%E5%8C%96%EF%BC%89"><span class="nav-number">1.0.3.</span> <span class="nav-text">我的智能场景（自动化）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E5%AE%B6%E5%92%8C%E7%A6%BB%E5%AE%B6"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">回家和离家</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A5%E5%87%BA%E5%92%8C%E6%97%A5%E8%90%BD"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">日出和日落</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9D%A1%E8%A7%89%E5%8A%A8%E4%BD%9C"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">睡觉动作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%A9%E6%B9%BF%E5%BA%A6%E5%9B%BA%E5%AE%9A%E5%80%BC%E6%8F%90%E7%A4%BA"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">温湿度固定值提示</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%AE%BE%E5%A4%87"><span class="nav-number">1.0.4.</span> <span class="nav-text">我连接的设备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%B3%E5%AE%B6%E5%BC%80%E5%85%B3"><span class="nav-number">1.0.4.1.</span> <span class="nav-text">米家开关</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%B3%E5%AE%B6%E7%A9%BA%E8%B0%83%E4%BC%B4%E4%BE%A3"><span class="nav-number">1.0.4.2.</span> <span class="nav-text">米家空调伴侣</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A3%9E%E5%88%A9%E6%B5%A6%E6%99%BA%E8%83%BD%E7%81%AF%E6%B3%A1"><span class="nav-number">1.0.4.3.</span> <span class="nav-text">飞利浦智能灯泡</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%B3%E5%AE%B6%E4%B8%87%E8%83%BD%E9%81%A5%E6%8E%A7%E5%99%A8"><span class="nav-number">1.0.5.</span> <span class="nav-text">米家万能遥控器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%8E%A5%E5%85%A5%E7%B1%B3%E5%AE%B6%E8%AE%BE%E5%A4%87"><span class="nav-number">1.0.6.</span> <span class="nav-text">如何接入米家设备</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

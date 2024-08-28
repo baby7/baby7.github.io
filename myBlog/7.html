@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="自己整理的部署网站时的一些步骤，可能不太全，如果发现有错误或缺少步骤请与我练习，不要让别人被我带沟里。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署个人网站步骤">
+<meta property="og:url" content="https://baby7.github.io/myBlog/7.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="自己整理的部署网站时的一些步骤，可能不太全，如果发现有错误或缺少步骤请与我练习，不要让别人被我带沟里。。。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/Fgh-tWBmqrtB2BqO4J9nQzuk-rkH">
+<meta property="article:published_time" content="2019-04-12T08:36:32.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:18.252Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="建站">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/Fgh-tWBmqrtB2BqO4J9nQzuk-rkH">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/7.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>部署个人网站步骤 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          部署个人网站步骤
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-12 16:36:32" itemprop="dateCreated datePublished" datetime="2019-04-12T16:36:32+08:00">2019-04-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:18" itemprop="dateModified" datetime="2024-08-28T16:25:18+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">后端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/Fgh-tWBmqrtB2BqO4J9nQzuk-rkH" width=200 /> </div>
+
+<p>自己整理的部署网站时的一些步骤，可能不太全，如果发现有错误或缺少步骤请与我练习，不要让别人被我带沟里。。。</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="部署个人网站步骤"><a href="#部署个人网站步骤" class="headerlink" title="部署个人网站步骤"></a>部署个人网站步骤</h1></blockquote>
+<h2 id="一、-让别人可以访问到你的网站"><a href="#一、-让别人可以访问到你的网站" class="headerlink" title="一、 让别人可以访问到你的网站"></a>一、 让别人可以访问到你的网站</h2><h4 id="（一）、首先你得租个服务器"><a href="#（一）、首先你得租个服务器" class="headerlink" title="（一）、首先你得租个服务器"></a>（一）、首先你得租个服务器</h4><h4 id="（二）、购买域名的同时顺便可以买个解析，不贵"><a href="#（二）、购买域名的同时顺便可以买个解析，不贵" class="headerlink" title="（二）、购买域名的同时顺便可以买个解析，不贵"></a>（二）、购买域名的同时顺便可以买个解析，不贵</h4><h4 id="（三）、配置解析到你的ESC外网IP（在安全组打开80端口）"><a href="#（三）、配置解析到你的ESC外网IP（在安全组打开80端口）" class="headerlink" title="（三）、配置解析到你的ESC外网IP（在安全组打开80端口）"></a>（三）、配置解析到你的ESC外网IP（在安全组打开80端口）</h4><p><font color=red>【记录类型为A，主机记录填www，记录值填服务器外网IP，其余默认就行】</font></p>
+<h4 id="（四）、网站ICP备案，填写你的信息和网站信息"><a href="#（四）、网站ICP备案，填写你的信息和网站信息" class="headerlink" title="（四）、网站ICP备案，填写你的信息和网站信息"></a>（四）、网站ICP备案，填写你的信息和网站信息</h4><p><font color=red>【域名实名认证完成后，实名认证信息需要3-5个工作日入库（进入管局的数据库）。建议完成域名实名认证后，不要马上提交资料至管局审核，建议3-5个工作日后再提交订单。】</font></p>
+<p><font color=red>【个人网站命名要求：<a target="_blank" rel="noopener" href="https://help.aliyun.com/knowledge_detail/36957.html%E3%80%91">https://help.aliyun.com/knowledge_detail/36957.html】</a></font>（可能需要用到手机端的APP，拍照、证件照、从网站下载《个人网站备案承诺书》打印并填写信息拍照上传），大约一天内会有你购买域名的公司客服给你打电话，有错误就修改再次提交，没有错误人家就提交到所在地通信管理局，之后需要等挺久（二十天以内？），在这之前先把项目安装了。</p>
+<h4 id="（五）、版权问题，不要使用未授权的字体、图片、肖像等。【微软雅黑需要商业授权】http-fonts-safe-360-cn-可以查询字体版权（不太全）"><a href="#（五）、版权问题，不要使用未授权的字体、图片、肖像等。【微软雅黑需要商业授权】http-fonts-safe-360-cn-可以查询字体版权（不太全）" class="headerlink" title="（五）、版权问题，不要使用未授权的字体、图片、肖像等。【微软雅黑需要商业授权】http://fonts.safe.360.cn/可以查询字体版权（不太全）"></a>（五）、版权问题，不要使用未授权的字体、图片、肖像等。<font color=red>【微软雅黑需要商业授权】</font><a target="_blank" rel="noopener" href="http://fonts.safe.360.cn/">http://fonts.safe.360.cn/</a>可以查询字体版权（不太全）</h4><h4 id="（六）、在ICP备案完成后需要进行公安备案。"><a href="#（六）、在ICP备案完成后需要进行公安备案。" class="headerlink" title="（六）、在ICP备案完成后需要进行公安备案。"></a>（六）、在ICP备案完成后需要进行公安备案。</h4><h2 id="二、-安装项目"><a href="#二、-安装项目" class="headerlink" title="二、 安装项目"></a>二、 安装项目</h2><h4 id="（一）、安装持久化数据库（MySQL、Oracle等），缓存数据库（Redis等）【确认项目的数据库密码和新数据库密码是否一致】"><a href="#（一）、安装持久化数据库（MySQL、Oracle等），缓存数据库（Redis等）【确认项目的数据库密码和新数据库密码是否一致】" class="headerlink" title="（一）、安装持久化数据库（MySQL、Oracle等），缓存数据库（Redis等）【确认项目的数据库密码和新数据库密码是否一致】"></a>（一）、安装持久化数据库（MySQL、Oracle等），缓存数据库（Redis等）<font color=red>【确认项目的数据库密码和新数据库密码是否一致】</font></h4><h4 id="（二）、部署数据（例如运行SQL文件）"><a href="#（二）、部署数据（例如运行SQL文件）" class="headerlink" title="（二）、部署数据（例如运行SQL文件）"></a>（二）、部署数据（例如运行SQL文件）</h4><h4 id="（三）、安装JDK（确认版本，配置环境变量）"><a href="#（三）、安装JDK（确认版本，配置环境变量）" class="headerlink" title="（三）、安装JDK（确认版本，配置环境变量）"></a>（三）、安装JDK（确认版本，配置环境变量）</h4><h4 id="（四）、安装服务器（Tomcat、Nginx等）"><a href="#（四）、安装服务器（Tomcat、Nginx等）" class="headerlink" title="（四）、安装服务器（Tomcat、Nginx等）"></a>（四）、安装服务器（Tomcat、Nginx等）</h4><h4 id="（五）、将项目打成war包放在Tomcat的webapp文件夹下"><a href="#（五）、将项目打成war包放在Tomcat的webapp文件夹下" class="headerlink" title="（五）、将项目打成war包放在Tomcat的webapp文件夹下"></a>（五）、将项目打成war包放在Tomcat的webapp文件夹下</h4><h4 id="（六）、修改路径（Tomcat下conf文件夹的server-xml）【可以从访问时URL需要填写域名或IP-项目缩减到只用域名或IP】"><a href="#（六）、修改路径（Tomcat下conf文件夹的server-xml）【可以从访问时URL需要填写域名或IP-项目缩减到只用域名或IP】" class="headerlink" title="（六）、修改路径（Tomcat下conf文件夹的server.xml）【可以从访问时URL需要填写域名或IP&#x2F;项目缩减到只用域名或IP】"></a>（六）、修改路径（Tomcat下conf文件夹的server.xml）<font color=red>【可以从访问时URL需要填写域名或IP&#x2F;项目缩减到只用域名或IP】</font></h4><p>1、修改tomcat http端口为80（因为默认是80端口，访问时可以不写）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">&quot;80&quot;</span> <span class="attr">protocol</span>=<span class="string">&quot;HTTP/1.1&quot;</span> <span class="attr">connectionTimeout</span>=<span class="string">&quot;20000&quot;</span> <span class="attr">redirectPort</span>=<span class="string">&quot;8443&quot;</span>  <span class="attr">URIEncoding</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2、去除访问时的项目名</p>
+<p>在 <Host>  </Host>节点下增加一行</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">path</span>=<span class="string">&quot;&quot;</span> <span class="attr">docBase</span>=<span class="string">&quot;../webapps/**&quot;</span> <span class="attr">debug</span>=<span class="string">&quot;0&quot;</span> <span class="attr">reloadable</span>=<span class="string">&quot;true&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>docBase：代表项目的绝对路径。也可以使用相对路径，<font color=red>**处填你的项目名</font>。</p>
+<p>path：代表访问时的项目名称,path留空代表访问域名后面不需要带项目的名称</p>
+<p>debug是设定debug level, 0表示提供最少的信息，9表示提供最多的信息</p>
+<h4 id="（七）、双击Tomcat-bin文件夹下的startup-bat运行服务器"><a href="#（七）、双击Tomcat-bin文件夹下的startup-bat运行服务器" class="headerlink" title="（七）、双击Tomcat bin文件夹下的startup.bat运行服务器"></a>（七）、双击Tomcat bin文件夹下的startup.bat运行服务器</h4><h2 id="三、在备案未完成之前可以输入ESC服务器外网IP进行访问"><a href="#三、在备案未完成之前可以输入ESC服务器外网IP进行访问" class="headerlink" title="三、在备案未完成之前可以输入ESC服务器外网IP进行访问"></a>三、在备案未完成之前可以输入ESC服务器外网IP进行访问</h2><p>自己整理的部署网站时的一些步骤，可能不太全，如果发现有错误或缺少步骤请与我联系，不要让别人被我带沟里。。。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BB%BA%E7%AB%99/" rel="tag"># 建站</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/6.html" rel="prev" title="Python 网易云音乐 歌单及MV下载器">
+      <i class="fa fa-chevron-left"></i> Python 网易云音乐 歌单及MV下载器
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/8.html" rel="next" title="代码高亮插件：SyntaxHighlighter的简单使用">
+      代码高亮插件：SyntaxHighlighter的简单使用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99%E6%AD%A5%E9%AA%A4"><span class="nav-number">1.</span> <span class="nav-text">部署个人网站步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81-%E8%AE%A9%E5%88%AB%E4%BA%BA%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE%E5%88%B0%E4%BD%A0%E7%9A%84%E7%BD%91%E7%AB%99"><span class="nav-number">1.1.</span> <span class="nav-text">一、 让别人可以访问到你的网站</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E3%80%81%E9%A6%96%E5%85%88%E4%BD%A0%E5%BE%97%E7%A7%9F%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">（一）、首先你得租个服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E3%80%81%E8%B4%AD%E4%B9%B0%E5%9F%9F%E5%90%8D%E7%9A%84%E5%90%8C%E6%97%B6%E9%A1%BA%E4%BE%BF%E5%8F%AF%E4%BB%A5%E4%B9%B0%E4%B8%AA%E8%A7%A3%E6%9E%90%EF%BC%8C%E4%B8%8D%E8%B4%B5"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">（二）、购买域名的同时顺便可以买个解析，不贵</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%B8%89%EF%BC%89%E3%80%81%E9%85%8D%E7%BD%AE%E8%A7%A3%E6%9E%90%E5%88%B0%E4%BD%A0%E7%9A%84ESC%E5%A4%96%E7%BD%91IP%EF%BC%88%E5%9C%A8%E5%AE%89%E5%85%A8%E7%BB%84%E6%89%93%E5%BC%8080%E7%AB%AF%E5%8F%A3%EF%BC%89"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">（三）、配置解析到你的ESC外网IP（在安全组打开80端口）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%9B%9B%EF%BC%89%E3%80%81%E7%BD%91%E7%AB%99ICP%E5%A4%87%E6%A1%88%EF%BC%8C%E5%A1%AB%E5%86%99%E4%BD%A0%E7%9A%84%E4%BF%A1%E6%81%AF%E5%92%8C%E7%BD%91%E7%AB%99%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">（四）、网站ICP备案，填写你的信息和网站信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%BA%94%EF%BC%89%E3%80%81%E7%89%88%E6%9D%83%E9%97%AE%E9%A2%98%EF%BC%8C%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E6%9C%AA%E6%8E%88%E6%9D%83%E7%9A%84%E5%AD%97%E4%BD%93%E3%80%81%E5%9B%BE%E7%89%87%E3%80%81%E8%82%96%E5%83%8F%E7%AD%89%E3%80%82%E3%80%90%E5%BE%AE%E8%BD%AF%E9%9B%85%E9%BB%91%E9%9C%80%E8%A6%81%E5%95%86%E4%B8%9A%E6%8E%88%E6%9D%83%E3%80%91http-fonts-safe-360-cn-%E5%8F%AF%E4%BB%A5%E6%9F%A5%E8%AF%A2%E5%AD%97%E4%BD%93%E7%89%88%E6%9D%83%EF%BC%88%E4%B8%8D%E5%A4%AA%E5%85%A8%EF%BC%89"><span class="nav-number">1.1.0.5.</span> <span class="nav-text">（五）、版权问题，不要使用未授权的字体、图片、肖像等。【微软雅黑需要商业授权】http:&#x2F;&#x2F;fonts.safe.360.cn&#x2F;可以查询字体版权（不太全）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%85%AD%EF%BC%89%E3%80%81%E5%9C%A8ICP%E5%A4%87%E6%A1%88%E5%AE%8C%E6%88%90%E5%90%8E%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8C%E5%85%AC%E5%AE%89%E5%A4%87%E6%A1%88%E3%80%82"><span class="nav-number">1.1.0.6.</span> <span class="nav-text">（六）、在ICP备案完成后需要进行公安备案。</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81-%E5%AE%89%E8%A3%85%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.2.</span> <span class="nav-text">二、 安装项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E3%80%81%E5%AE%89%E8%A3%85%E6%8C%81%E4%B9%85%E5%8C%96%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88MySQL%E3%80%81Oracle%E7%AD%89%EF%BC%89%EF%BC%8C%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88Redis%E7%AD%89%EF%BC%89%E3%80%90%E7%A1%AE%E8%AE%A4%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%86%E7%A0%81%E5%92%8C%E6%96%B0%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%86%E7%A0%81%E6%98%AF%E5%90%A6%E4%B8%80%E8%87%B4%E3%80%91"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">（一）、安装持久化数据库（MySQL、Oracle等），缓存数据库（Redis等）【确认项目的数据库密码和新数据库密码是否一致】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E3%80%81%E9%83%A8%E7%BD%B2%E6%95%B0%E6%8D%AE%EF%BC%88%E4%BE%8B%E5%A6%82%E8%BF%90%E8%A1%8CSQL%E6%96%87%E4%BB%B6%EF%BC%89"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">（二）、部署数据（例如运行SQL文件）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%B8%89%EF%BC%89%E3%80%81%E5%AE%89%E8%A3%85JDK%EF%BC%88%E7%A1%AE%E8%AE%A4%E7%89%88%E6%9C%AC%EF%BC%8C%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%EF%BC%89"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">（三）、安装JDK（确认版本，配置环境变量）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%9B%9B%EF%BC%89%E3%80%81%E5%AE%89%E8%A3%85%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%88Tomcat%E3%80%81Nginx%E7%AD%89%EF%BC%89"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">（四）、安装服务器（Tomcat、Nginx等）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%BA%94%EF%BC%89%E3%80%81%E5%B0%86%E9%A1%B9%E7%9B%AE%E6%89%93%E6%88%90war%E5%8C%85%E6%94%BE%E5%9C%A8Tomcat%E7%9A%84webapp%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">（五）、将项目打成war包放在Tomcat的webapp文件夹下</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E5%85%AD%EF%BC%89%E3%80%81%E4%BF%AE%E6%94%B9%E8%B7%AF%E5%BE%84%EF%BC%88Tomcat%E4%B8%8Bconf%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84server-xml%EF%BC%89%E3%80%90%E5%8F%AF%E4%BB%A5%E4%BB%8E%E8%AE%BF%E9%97%AE%E6%97%B6URL%E9%9C%80%E8%A6%81%E5%A1%AB%E5%86%99%E5%9F%9F%E5%90%8D%E6%88%96IP-%E9%A1%B9%E7%9B%AE%E7%BC%A9%E5%87%8F%E5%88%B0%E5%8F%AA%E7%94%A8%E5%9F%9F%E5%90%8D%E6%88%96IP%E3%80%91"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">（六）、修改路径（Tomcat下conf文件夹的server.xml）【可以从访问时URL需要填写域名或IP&#x2F;项目缩减到只用域名或IP】</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%B8%83%EF%BC%89%E3%80%81%E5%8F%8C%E5%87%BBTomcat-bin%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84startup-bat%E8%BF%90%E8%A1%8C%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">（七）、双击Tomcat bin文件夹下的startup.bat运行服务器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%9C%A8%E5%A4%87%E6%A1%88%E6%9C%AA%E5%AE%8C%E6%88%90%E4%B9%8B%E5%89%8D%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5ESC%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%A4%96%E7%BD%91IP%E8%BF%9B%E8%A1%8C%E8%AE%BF%E9%97%AE"><span class="nav-number">1.3.</span> <span class="nav-text">三、在备案未完成之前可以输入ESC服务器外网IP进行访问</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

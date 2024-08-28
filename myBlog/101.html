@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="因为harmonyOS暂时没有发现现成的mqtt的js包，所以使用Java进行Mqtt消息的接收，使用JS去定时调用Java接收到消息并展示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HarmonyOS实现MQTT消息监听展示">
+<meta property="og:url" content="https://baby7.github.io/myBlog/101.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="因为harmonyOS暂时没有发现现成的mqtt的js包，所以使用Java进行Mqtt消息的接收，使用JS去定时调用Java接收到消息并展示">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/1624956831251988394">
+<meta property="article:published_time" content="2021-06-29T08:56:53.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:20.721Z">
+<meta property="article:author" content="七仔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/1624956831251988394">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/101.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HarmonyOS实现MQTT消息监听展示 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/101.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HarmonyOS实现MQTT消息监听展示
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-06-29 16:56:53" itemprop="dateCreated datePublished" datetime="2021-06-29T16:56:53+08:00">2021-06-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:20" itemprop="dateModified" datetime="2024-08-28T16:25:20+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">前端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/1624956831251988394" width=200 /> </div>
+
+<p>因为harmonyOS暂时没有发现现成的mqtt的js包，所以使用Java进行Mqtt消息的接收，使用JS去定时调用Java接收到消息并展示</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="HarmonyOS实现MQTT消息监听展示"><a href="#HarmonyOS实现MQTT消息监听展示" class="headerlink" title="HarmonyOS实现MQTT消息监听展示"></a>HarmonyOS实现MQTT消息监听展示</h1></blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>因为harmonyOS暂时没有发现现成的mqtt的js包，所以使用Java进行Mqtt消息的接收，使用JS去定时调用Java接收到消息并展示<br>首先是JS调用Java，JS FA(Feature Ability)调用Java PA(Particle Ability)有两种方式，Ability和Internal Ability，这里使用的是第一种Ability<br>然后是Java端的Mqtt消息接收，使用paho的第三方库进行消息接收，页面启动时JS端调用Java端实现Mqtt消息接收开始，使用异步挂起，接收消息并缓存，随后JS端每次调用Java端拿到的都是最新缓存的信息</p>
+<h2 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码"></a>具体代码</h2><p>hml页面：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">            &#123;&#123; title &#125;&#125;</span><br><span class="line">        <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;mqttMessage&quot;</span>&gt;</span></span><br><span class="line">            开始mqtt</span><br><span class="line">        <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span> <span class="attr">onclick</span>=<span class="string">&quot;stopMqtt&quot;</span>&gt;</span></span><br><span class="line">            停止mqtt</span><br><span class="line">        <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>JS代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">ABILITY_TYPE_EXTERNAL</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ACTION_SYNC</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ACTION_MESSAGE_CODE_START_MQTT</span> = <span class="number">1001</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ACTION_MESSAGE_CODE_MQTT_MESSAGE</span> = <span class="number">1002</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">BUNDLE_NAME</span> = <span class="string">&#x27;com.example.mqttapplication&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ABILITY_NAME</span> = <span class="string">&#x27;com.example.mqttapplication.PlayAbility&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> playAbility = &#123;</span><br><span class="line">    <span class="attr">startMqtt</span>: <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title class_">FeatureAbility</span>.<span class="title function_">callAbility</span>(&#123;</span><br><span class="line">            <span class="attr">messageCode</span>: <span class="variable constant_">ACTION_MESSAGE_CODE_START_MQTT</span>,</span><br><span class="line">            <span class="attr">abilityType</span>: <span class="variable constant_">ABILITY_TYPE_EXTERNAL</span>,</span><br><span class="line">            <span class="attr">syncOption</span>: <span class="variable constant_">ACTION_SYNC</span>,</span><br><span class="line">            <span class="attr">bundleName</span>: <span class="variable constant_">BUNDLE_NAME</span>,</span><br><span class="line">            <span class="attr">abilityName</span>: <span class="variable constant_">ABILITY_NAME</span></span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">mqttMessage</span>: <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params">that</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="keyword">await</span> <span class="title class_">FeatureAbility</span>.<span class="title function_">callAbility</span>(&#123;</span><br><span class="line">            <span class="attr">messageCode</span>: <span class="variable constant_">ACTION_MESSAGE_CODE_MQTT_MESSAGE</span>,</span><br><span class="line">            <span class="attr">abilityType</span>: <span class="variable constant_">ABILITY_TYPE_EXTERNAL</span>,</span><br><span class="line">            <span class="attr">syncOption</span>: <span class="variable constant_">ACTION_SYNC</span>,</span><br><span class="line">            <span class="attr">bundleName</span>: <span class="variable constant_">BUNDLE_NAME</span>,</span><br><span class="line">            <span class="attr">abilityName</span>: <span class="variable constant_">ABILITY_NAME</span></span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">var</span> ret = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(result);</span><br><span class="line">        <span class="keyword">if</span> (ret.<span class="property">code</span> == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&#x27;mqtt is:&#x27;</span> + <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(ret.<span class="property">abilityResult</span>));</span><br><span class="line">            that.<span class="property">title</span> = <span class="string">&#x27;mqtt is:&#x27;</span> + <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(ret.<span class="property">abilityResult</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;mqtt error code:&#x27;</span> + <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(ret.<span class="property">code</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">timer</span>: <span class="literal">null</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">task</span>(<span class="params"></span>) &#123;</span><br><span class="line">        playAbility.<span class="title function_">mqttMessage</span>(<span class="variable language_">this</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">mqttMessage</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">title</span> = <span class="string">&quot;开始获取MQTT消息&quot;</span>;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">task</span>()</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">timer</span>=<span class="built_in">setInterval</span>(<span class="variable language_">this</span>.<span class="property">task</span>,<span class="number">200</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">stopMqtt</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="built_in">clearInterval</span>(<span class="variable language_">this</span>.<span class="property">timer</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//初始化Java端Mqtt消息接收</span></span><br><span class="line">playAbility.<span class="title function_">startMqtt</span>()</span><br></pre></td></tr></table></figure>
+
+<p>Java端代码(接收Mqtt消息，异步)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.eclipse.paho.client.mqttv3.*;</span><br><span class="line"><span class="keyword">import</span> org.eclipse.paho.client.mqttv3.MqttMessage;</span><br><span class="line"><span class="keyword">import</span> org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MqttThread</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**地址*/</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">MQTT_BROKER_HOST</span> <span class="operator">=</span> <span class="string">&quot;tcp://xxx.xxx.xxx.xxx:1883&quot;</span>;</span><br><span class="line">    <span class="comment">/**客户端唯一标识*/</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">MQTT_CLIENT_ID</span> <span class="operator">=</span> <span class="string">&quot;client&quot;</span>;</span><br><span class="line">    <span class="comment">/**订阅标识*/</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">MQTT_TOPIC</span> <span class="operator">=</span> <span class="string">&quot;HarmonyTest&quot;</span>;</span><br><span class="line">    <span class="comment">/**客户端*/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">static</span> MqttClient mqttClient;</span><br><span class="line">    <span class="comment">/**连接选项*/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> MqttConnectOptions options;</span><br><span class="line">    <span class="comment">/**消息*/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;String&gt; message;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MqttThread</span><span class="params">(List&lt;String&gt; message)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            mqttClient = <span class="keyword">new</span> <span class="title class_">MqttClient</span>(MQTT_BROKER_HOST, MQTT_CLIENT_ID, <span class="keyword">new</span> <span class="title class_">MemoryPersistence</span>());</span><br><span class="line">            options = <span class="keyword">new</span> <span class="title class_">MqttConnectOptions</span>();</span><br><span class="line">            options.setCleanSession(<span class="literal">true</span>);</span><br><span class="line">            options.setConnectionTimeout(<span class="number">20</span>);</span><br><span class="line">            options.setKeepAliveInterval(<span class="number">20</span>);</span><br><span class="line">            mqttClient.connect(options);</span><br><span class="line">            mqttClient.subscribe(MQTT_TOPIC);</span><br><span class="line">            mqttClient.setCallback(<span class="keyword">new</span> <span class="title class_">MqttCallback</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">connectionLost</span><span class="params">(Throwable throwable)</span> &#123; &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">messageArrived</span><span class="params">(String s, MqttMessage mqttMessage)</span> &#123;</span><br><span class="line">                    message.clear();</span><br><span class="line">                    message.add(mqttMessage.toString());</span><br><span class="line">                    System.out.println(<span class="string">&quot;接收到mqtt消息：&quot;</span> + mqttMessage.toString());</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">deliveryComplete</span><span class="params">(IMqttDeliveryToken iMqttDeliveryToken)</span> &#123; &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Java端代码(Particle Ability)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.example.mqttapplication.mqtt.MqttThread;</span><br><span class="line"><span class="keyword">import</span> ohos.aafwk.ability.Ability;</span><br><span class="line"><span class="keyword">import</span> ohos.aafwk.content.Intent;</span><br><span class="line"><span class="keyword">import</span> ohos.hiviewdfx.HiLog;</span><br><span class="line"><span class="keyword">import</span> ohos.hiviewdfx.HiLogLabel;</span><br><span class="line"><span class="keyword">import</span> ohos.rpc.*;</span><br><span class="line"><span class="keyword">import</span> ohos.utils.zson.ZSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PlayAbility</span> <span class="keyword">extends</span> <span class="title class_">Ability</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">HiLogLabel</span> <span class="variable">label</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HiLogLabel</span>(HiLog.LOG_APP, <span class="number">1</span>, <span class="string">&quot;MY_TAG&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ERROR</span> <span class="operator">=</span> -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">SUCCESS</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">START_MQTT</span> <span class="operator">=</span> <span class="number">1001</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MQTT_MESSAGE</span> <span class="operator">=</span> <span class="number">1002</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onStart</span><span class="params">(Intent intent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onStart(intent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> IRemoteObject <span class="title function_">onConnect</span><span class="params">(Intent intent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onConnect(intent);</span><br><span class="line">        <span class="type">PlayRemote</span> <span class="variable">remote</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PlayRemote</span>();</span><br><span class="line">        <span class="keyword">return</span> remote.asObject();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">PlayRemote</span> <span class="keyword">extends</span> <span class="title class_">RemoteObject</span> <span class="keyword">implements</span> <span class="title class_">IRemoteBroker</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> List&lt;String&gt; message;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Thread thread;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">PlayRemote</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="built_in">super</span>(<span class="string">&quot;PlayRemote&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">onRemoteRequest</span><span class="params">(<span class="type">int</span> code, MessageParcel data, MessageParcel reply, MessageOption option)</span> &#123;</span><br><span class="line">            <span class="comment">// 开始mqtt</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (code == START_MQTT) &#123;</span><br><span class="line">                Map&lt;String, Object&gt; result = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">                result.put(<span class="string">&quot;code&quot;</span>, SUCCESS);</span><br><span class="line">                result.put(<span class="string">&quot;abilityResult&quot;</span>, <span class="string">&quot;成功开始mqtt&quot;</span>);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    message = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">                    <span class="type">MqttThread</span> <span class="variable">mqttThread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MqttThread</span>(message);</span><br><span class="line">                    thread = <span class="keyword">new</span> <span class="title class_">Thread</span>(mqttThread);</span><br><span class="line">                    thread.start();</span><br><span class="line">                    System.out.println(<span class="string">&quot;mqtt启动成功&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                    result.put(<span class="string">&quot;code&quot;</span>, ERROR);</span><br><span class="line">                    result.put(<span class="string">&quot;abilityResult&quot;</span>, <span class="string">&quot;启动失败&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                reply.writeString(ZSONObject.toZSONString(result));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 获取mqtt消息</span></span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (code == MQTT_MESSAGE) &#123;</span><br><span class="line">                Map&lt;String, Object&gt; result = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">                result.put(<span class="string">&quot;code&quot;</span>, SUCCESS);</span><br><span class="line">                <span class="keyword">if</span> (message.isEmpty()) &#123;</span><br><span class="line">                    result.put(<span class="string">&quot;abilityResult&quot;</span>, <span class="string">&quot;未接收到MQTT消息&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="type">ZSONObject</span> <span class="variable">zsonObject</span> <span class="operator">=</span> ZSONObject.stringToZSON(message.get(<span class="number">0</span>));</span><br><span class="line">                    result.put(<span class="string">&quot;abilityResult&quot;</span>, zsonObject.getString(<span class="string">&quot;message&quot;</span>));</span><br><span class="line">                &#125;</span><br><span class="line">                reply.writeString(ZSONObject.toZSONString(result));</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                Map&lt;String, Object&gt; result = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">                result.put(<span class="string">&quot;abilityError&quot;</span>, ERROR);</span><br><span class="line">                reply.writeString(ZSONObject.toZSONString(result));</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> IRemoteObject <span class="title function_">asObject</span><span class="params">()</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另外启动网络连接还需要往config.json里加点东西获取权限</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="attr">&quot;module&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="attr">&quot;reqPermissions&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ohos.permission.GET_NETWORK_INFO&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ohos.permission.INTERNET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ohos.permission.SET_NETWORK_INFO&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ohos.permission.MANAGE_WIFI_CONNECTION&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ohos.permission.SET_WIFI_INFO&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ohos.permission.GET_WIFI_INFO&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后写了个python的脚本用来发送mqtt消息，很简单就一行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> paho.mqtt.publish <span class="keyword">as</span> publish</span><br><span class="line">publish.single(<span class="string">&#x27;HarmonyTest&#x27;</span>, <span class="string">&#x27;&#123;&quot;message&quot;:&quot;BongShakalaka&quot;&#125;&#x27;</span>, hostname=<span class="string">&#x27;xxx.xxx.xxx.xxx&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>附：mqtt消息是要有mqtt服务器的，这个就自己搭或者买吧</p>
+<p>应鸿蒙开发者论坛读者要求，这里贴上源码地址</p>
+<p>github: <a target="_blank" rel="noopener" href="https://github.com/baby7/MqttApplication">https://github.com/baby7/MqttApplication</a></p>
+<p>gitee(码云): <a target="_blank" rel="noopener" href="https://gitee.com/baby7/MqttApplication">https://gitee.com/baby7/MqttApplication</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/100.html" rel="prev" title="使用ELK容器对Nginx做热力图分析">
+      <i class="fa fa-chevron-left"></i> 使用ELK容器对Nginx做热力图分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/102.html" rel="next" title="使用MircoPython在ESP32的OLED屏幕上显示个小电视">
+      使用MircoPython在ESP32的OLED屏幕上显示个小电视 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HarmonyOS%E5%AE%9E%E7%8E%B0MQTT%E6%B6%88%E6%81%AF%E7%9B%91%E5%90%AC%E5%B1%95%E7%A4%BA"><span class="nav-number">1.</span> <span class="nav-text">HarmonyOS实现MQTT消息监听展示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">具体代码</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

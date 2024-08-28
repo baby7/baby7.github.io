@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="记录下博客从SSM-&gt;微服务-&gt;单体的架构调整还有未来的设想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的博客架构改变历程">
+<meta property="og:url" content="https://baby7.github.io/myBlog/127.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="记录下博客从SSM-&gt;微服务-&gt;单体的架构调整还有未来的设想">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/1699932721880682100">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190503/1556857224358060666.png">
+<meta property="article:published_time" content="2023-11-14T03:32:03.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:21.536Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="建站">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/1699932721880682100">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/127.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>我的博客架构改变历程 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/127.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          我的博客架构改变历程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-11-14 11:32:03" itemprop="dateCreated datePublished" datetime="2023-11-14T11:32:03+08:00">2023-11-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:21" itemprop="dateModified" datetime="2024-08-28T16:25:21+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">后端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/1699932721880682100" width=200 /> </div>
+
+<p>记录下博客从SSM-&gt;微服务-&gt;单体的架构调整还有未来的设想</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="我的博客架构改变历程"><a href="#我的博客架构改变历程" class="headerlink" title="我的博客架构改变历程"></a>我的博客架构改变历程</h1></blockquote>
+<blockquote>
+<h3 id="SSM后端"><a href="#SSM后端" class="headerlink" title="SSM后端"></a>SSM后端</h3></blockquote>
+<p>代码已遗失，我记得前端为JSP，再往前的版本就找不到了</p>
+<p>那时候还用了百度UEditor做富文本编辑，这玩意是真难使。。当时好像已经停止维护了，还得改源码</p>
+<p>用了七牛云做CDN，当时只用来存js或者css的，这个真不错，现在还在用，空间大，CDN费用还低</p>
+<p>用了三个服务器，一个做网关，附带文件服务器，nginx做负载均衡，另外两个服务器部署了两个SSM</p>
+<p>还做了mysql主主备份，就是两个mysql互为主从备份</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190503/1556857224358060666.png" alt="七仔的博客SSM架构"></p>
+<blockquote>
+<h3 id="SpringCloud微服务后端-Vue博客前端-Vue管理前端"><a href="#SpringCloud微服务后端-Vue博客前端-Vue管理前端" class="headerlink" title="SpringCloud微服务后端 + Vue博客前端 + Vue管理前端"></a>SpringCloud微服务后端 + Vue博客前端 + Vue管理前端</h3></blockquote>
+<p>基于PigX个人版，未开源</p>
+<p>后端以SpringCloud为基础，集合了Nacos + Gateway + Auth + Admin + 博客服务 + xxl-job 一共七个服务</p>
+<p>博客前端以Vue为基础，进行各个页面的开发，模块化的开发还是挺方便的</p>
+<p>博客管理端直接以PigX附带的Avue为框架开发，更简单</p>
+<p>UEditor的博客继续留着，后面写的都是Markdown格式的了，前端通过判断来进行渲染</p>
+<p>开始意识到SEO问题，通过Nginx进行header判断，发送到nodejs，nodejs调用python，python调用火狐进行渲染</p>
+<blockquote>
+<h3 id="SpringBoot后端-Vue博客前端-Vue管理前端"><a href="#SpringBoot后端-Vue博客前端-Vue管理前端" class="headerlink" title="SpringBoot后端 + Vue博客前端 + Vue管理前端"></a>SpringBoot后端 + Vue博客前端 + Vue管理前端</h3></blockquote>
+<p>上面的结构再加上mysql和redis什么的需要将近4G的服务器才能起得来，并且因为PigX的协议不能开源，所以就想自己搞一个</p>
+<p>从SpringBoot直接单体开发，比微服务占用内存少了太多</p>
+<p>Vue管理前端以Element-UI重写，去掉了Avue的框架</p>
+<p>使用marked做编辑器（忘了是这版还是上版，待验证）</p>
+<p>Vue博客前端没什么大变化，不过重写了之前UEditor格式的博客改都为了Markdown</p>
+<p>全部改为Docker形式部署，mysql，redis，后端，博客前端，管理前端，puppeteer-renderer，通过docker-compose管理</p>
+<p>puppeteer-renderer替换了上个版本的nodejs+python+浏览器，不过本质还是通过浏览器进行渲染再返回，速度还是慢了</p>
+<blockquote>
+<h3 id="SpringBoot后端-Thymeleaf博客前端-Vue管理前端-（开发中）"><a href="#SpringBoot后端-Thymeleaf博客前端-Vue管理前端-（开发中）" class="headerlink" title="SpringBoot后端 + Thymeleaf博客前端 + Vue管理前端 （开发中）"></a>SpringBoot后端 + Thymeleaf博客前端 + Vue管理前端 （开发中）</h3></blockquote>
+<p>由于上个架构的占用还是挺大，而且SEO还是麻烦，所以有个这个版本</p>
+<p>由于管理前端没必要做SEO，所有还是使用Vue为框架</p>
+<p>博客前端使用Thymeleaf重写，通过服务端渲染，这样就可以去掉puppeteer-renderer</p>
+<p>从mysql换为sqlite，一个是博客没必要这么庞大的数据库，二是省了部署的步骤，三是省内存</p>
+<p>redis同理，没必要做加速（待验证）</p>
+<p>将编辑器从marked换成了editor.md</p>
+<p>争取做到一个容器或者一个jar包就能跑起来</p>
+<p>增加MetaWeblog的支持</p>
+<p>增加RSS订阅的支持</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BB%BA%E7%AB%99/" rel="tag"># 建站</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/126.html" rel="prev" title="排查线上java程序cpu占用过高">
+      <i class="fa fa-chevron-left"></i> 排查线上java程序cpu占用过高
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/128.html" rel="next" title="奇奇怪怪的防烧屏算法">
+      奇奇怪怪的防烧屏算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%9E%B6%E6%9E%84%E6%94%B9%E5%8F%98%E5%8E%86%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">我的博客架构改变历程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSM%E5%90%8E%E7%AB%AF"><span class="nav-number">1.0.1.</span> <span class="nav-text">SSM后端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringCloud%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%90%8E%E7%AB%AF-Vue%E5%8D%9A%E5%AE%A2%E5%89%8D%E7%AB%AF-Vue%E7%AE%A1%E7%90%86%E5%89%8D%E7%AB%AF"><span class="nav-number">1.0.2.</span> <span class="nav-text">SpringCloud微服务后端 + Vue博客前端 + Vue管理前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringBoot%E5%90%8E%E7%AB%AF-Vue%E5%8D%9A%E5%AE%A2%E5%89%8D%E7%AB%AF-Vue%E7%AE%A1%E7%90%86%E5%89%8D%E7%AB%AF"><span class="nav-number">1.0.3.</span> <span class="nav-text">SpringBoot后端 + Vue博客前端 + Vue管理前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SpringBoot%E5%90%8E%E7%AB%AF-Thymeleaf%E5%8D%9A%E5%AE%A2%E5%89%8D%E7%AB%AF-Vue%E7%AE%A1%E7%90%86%E5%89%8D%E7%AB%AF-%EF%BC%88%E5%BC%80%E5%8F%91%E4%B8%AD%EF%BC%89"><span class="nav-number">1.0.4.</span> <span class="nav-text">SpringBoot后端 + Thymeleaf博客前端 + Vue管理前端 （开发中）</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

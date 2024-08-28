@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Spring MVC实现微信小程序登录流程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC实现微信小程序登录流程">
+<meta property="og:url" content="https://baby7.github.io/myBlog/25.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="Spring MVC实现微信小程序登录流程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://p.qpic.cn/pic_wework/3685288192/9f993793ca07f7b6a9f4359d7ba58998ced701fabcda2bdf/0">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190605/1559733008279096724.png">
+<meta property="article:published_time" content="2019-06-02T22:31:21.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:18.862Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="微信小程序">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://p.qpic.cn/pic_wework/3685288192/9f993793ca07f7b6a9f4359d7ba58998ced701fabcda2bdf/0">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/25.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Spring MVC实现微信小程序登录流程 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/25.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring MVC实现微信小程序登录流程
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-03 06:31:21" itemprop="dateCreated datePublished" datetime="2019-06-03T06:31:21+08:00">2019-06-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:18" itemprop="dateModified" datetime="2024-08-28T16:25:18+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">后端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://p.qpic.cn/pic_wework/3685288192/9f993793ca07f7b6a9f4359d7ba58998ced701fabcda2bdf/0" width=200 /> </div>
+
+<p>Spring MVC实现微信小程序登录流程</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="Spring-MVC实现微信小程序登录流程"><a href="#Spring-MVC实现微信小程序登录流程" class="headerlink" title="Spring MVC实现微信小程序登录流程"></a>Spring MVC实现微信小程序登录流程</h1></blockquote>
+<h2 id="流程说明："><a href="#流程说明：" class="headerlink" title="流程说明："></a>流程说明：</h2><p>1.小程序调用 wx.qy.login() 获取 临时登录凭证code ，并回传到服务商服务器。</p>
+<p>2.服务商服务器以code换取 用户唯一标识 userid 、用户所在企业corpid 和 会话密钥 session_key。</p>
+<p>此步骤以后服务商后台可以根据用户标识来生成自定义登录态，用于后续业务逻辑中前后端交互时识别用户身份。</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190605/1559733008279096724.png" alt="流程"></p>
+<p>Spring MVC实现登录流程：</p>
+<p>微信小程序的首页需要实现该流程</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> that = <span class="variable language_">this</span>;</span><br><span class="line"><span class="comment">// 登录</span></span><br><span class="line">wx.<span class="title function_">login</span>(&#123;</span><br><span class="line">    <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (res.<span class="property">code</span>) &#123;</span><br><span class="line">        wx.<span class="title function_">request</span>(&#123;</span><br><span class="line">            <span class="attr">url</span>: app.<span class="property">globalData</span>.<span class="property">path</span> + <span class="string">&quot;ConferenceNotes/login&quot;</span>,</span><br><span class="line">            <span class="attr">data</span>: &#123;</span><br><span class="line">            <span class="attr">code</span>: res.<span class="property">code</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">method</span>: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">            <span class="attr">header</span>: &#123;</span><br><span class="line">            <span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span>,</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> token = res.<span class="property">data</span>;</span><br><span class="line">            wx.<span class="title function_">getUserInfo</span>(&#123;</span><br><span class="line">                <span class="attr">success</span>: <span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="comment">// 保存用户信息到服务端</span></span><br><span class="line">                wx.<span class="title function_">request</span>(&#123;</span><br><span class="line">                    <span class="attr">url</span>: app.<span class="property">globalData</span>.<span class="property">path</span> + <span class="string">&quot;ConferenceNotes/getUserInfo?new_key=&quot;</span> + token + <span class="string">&quot;&amp;email=&quot;</span> + that.<span class="property">data</span>.<span class="property">email</span>,</span><br><span class="line">                    <span class="attr">data</span>: res,</span><br><span class="line">                    <span class="attr">method</span>: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">                    <span class="attr">header</span>: &#123;</span><br><span class="line">                    <span class="string">&#x27;Authorization&#x27;</span>: <span class="string">&#x27;Bearer &#x27;</span> + token,</span><br><span class="line">                    <span class="string">&#x27;content-type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span>,</span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">success</span>: <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">                        <span class="comment">//res.data应该有你返回的服务器对用户唯一标识（不是openID）</span></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="attr">fail</span>: <span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;error:&quot;</span> + error);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line"></span><br><span class="line">                <span class="comment">// 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回</span></span><br><span class="line">                <span class="comment">// 所以此处加入 callback 以防止这种情况</span></span><br><span class="line">                <span class="keyword">if</span> (app.<span class="property">userInfoReadyCallback</span>) &#123;</span><br><span class="line">                    app.<span class="title function_">userInfoReadyCallback</span>(res)</span><br><span class="line">                &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line"></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">fail</span>: <span class="keyword">function</span> (<span class="params">error</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;error code &quot;</span> + res.<span class="property">errMsg</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>Spring MVC响应login请求：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 登录</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/login&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">login</span><span class="params">(HttpServletResponse response,<span class="meta">@RequestBody</span> Code codeObject)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    response.setHeader(<span class="string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="string">&quot;*&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">code</span> <span class="operator">=</span> codeObject.getCode();</span><br><span class="line">    <span class="type">String</span> <span class="variable">new_key</span> <span class="operator">=</span> <span class="built_in">this</span>.userService.getNewKey(code);</span><br><span class="line">    response.getWriter().write(new_key);</span><br><span class="line">    response.getWriter().close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用Service层的函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取新的key，此key保存5分钟</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">getNewKey</span><span class="params">(String code)</span>&#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;https://api.weixin.qq.com/sns/jscode2session?appid=wx0805ed56c68e316b&amp;secret=&quot;</span></span><br><span class="line">            + <span class="string">&quot;41f765c3adc892684c5a7ccb378e6c3a&amp;js_code=&quot;</span> + code + <span class="string">&quot;&amp;grant_type=authorization_code&quot;</span>;</span><br><span class="line">    <span class="type">JSONObject</span> <span class="variable">jsonObject</span> <span class="operator">=</span> JSON.parseObject( UrlUtil.sendPost( url,<span class="string">&quot;&quot;</span> ));</span><br><span class="line">    <span class="type">String</span> <span class="variable">openid</span> <span class="operator">=</span> (String) jsonObject.get(<span class="string">&quot;openid&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">session_key</span> <span class="operator">=</span> (String) jsonObject.get(<span class="string">&quot;session_key&quot;</span>);</span><br><span class="line">    <span class="comment">//根据openid和session_key计算出来个值保存到reids并设置5分钟的过期时间</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">new_key</span> <span class="operator">=</span> DigestUtils.md5DigestAsHex((openid + session_key).getBytes());</span><br><span class="line">    <span class="built_in">this</span>.jedis.hset(new_key, <span class="string">&quot;NEW&quot;</span>, session_key);</span><br><span class="line">    <span class="built_in">this</span>.jedis.expire(new_key, <span class="number">300</span>);<span class="comment">//5分钟过期</span></span><br><span class="line">    <span class="keyword">return</span> new_key;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里我使用Redis进行保存，并设置5分钟的过期时间</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取用户信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/getUserInfo&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">(HttpServletRequest request, HttpServletResponse response,<span class="meta">@RequestBody</span> UserData userData)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    request.setCharacterEncoding(<span class="string">&quot;UTF-8&quot;</span>);</span><br><span class="line">    response.setHeader(<span class="string">&quot;Access-Control-Allow-Origin&quot;</span>, <span class="string">&quot;*&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">new_key</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;new_key&quot;</span>);</span><br><span class="line">    <span class="type">String</span> <span class="variable">email</span> <span class="operator">=</span> request.getParameter(<span class="string">&quot;email&quot;</span>);</span><br><span class="line">    <span class="type">Message</span> <span class="variable">message</span> <span class="operator">=</span> <span class="built_in">this</span>.userService.getUserInfo(new_key, email, userData);</span><br><span class="line">    <span class="type">ObjectMapper</span> <span class="variable">mapper</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ObjectMapper</span>();</span><br><span class="line">    response.getWriter().write(mapper.writeValueAsString(message));</span><br><span class="line">    response.getWriter().close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续响应getUserInfo请求</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> Message <span class="title function_">getUserInfo</span><span class="params">(String new_key, String email, UserData userData)</span> &#123;</span><br><span class="line">    <span class="type">Message</span> <span class="variable">message</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Message</span>();</span><br><span class="line">    <span class="keyword">if</span>(new_key != <span class="literal">null</span> &amp;&amp; !new_key.equals(<span class="string">&quot;&quot;</span>))&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">session_key</span> <span class="operator">=</span> <span class="built_in">this</span>.jedis.hget(new_key, <span class="string">&quot;NEW&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span>(session_key != <span class="literal">null</span> &amp;&amp; !session_key.equals(<span class="string">&quot;&quot;</span>))&#123;</span><br><span class="line">            <span class="built_in">this</span>.jedis.hdel(new_key, <span class="string">&quot;NEW&quot;</span>);</span><br><span class="line">            <span class="type">String</span> <span class="variable">iv</span> <span class="operator">=</span> userData.getIv();</span><br><span class="line">            <span class="type">String</span> <span class="variable">encryptedData</span> <span class="operator">=</span> userData.getEncryptedData();</span><br><span class="line">            <span class="type">JSONObject</span> <span class="variable">userInfoJSON</span> <span class="operator">=</span> getUserInfoJSON(encryptedData, session_key, iv);</span><br><span class="line">            <span class="keyword">if</span>(userInfoJSON != <span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="type">UserInfo</span> <span class="variable">userInfo</span> <span class="operator">=</span> JSON.parseObject(userInfoJSON.toJSONString(),UserInfo.class);</span><br><span class="line">                userInfo.setAvatarUrl(userInfoJSON.getString(<span class="string">&quot;avatarUrl&quot;</span>));</span><br><span class="line">                userInfo.setEmail(<span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span>(email == <span class="literal">null</span> || email.equals(<span class="string">&quot;&quot;</span>))&#123;</span><br><span class="line">                    <span class="type">UserInfo</span> <span class="variable">userInfo1</span> <span class="operator">=</span> <span class="built_in">this</span>.userDao.selectUser(userInfo.getOpenId());</span><br><span class="line">                    <span class="keyword">if</span>(userInfo1 == <span class="literal">null</span>)&#123;</span><br><span class="line">                        message.setMessage(<span class="string">&quot;no email&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span>&#123;</span><br><span class="line">                        userInfo = userInfo1;</span><br><span class="line">                        message.setMessage(userInfo1.getEmail());</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    userInfo.setEmail(email);</span><br><span class="line">                    message.setMessage(email);</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;before:&quot;</span> + userInfo.toString());</span><br><span class="line">                userInfo = login(userInfo);</span><br><span class="line">                System.out.println(<span class="string">&quot;next:&quot;</span> + userInfo.toString());</span><br><span class="line">                message.setState(<span class="string">&quot;success&quot;</span>);</span><br><span class="line">                message.setCode(userInfo.getId().toString());</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                message.setMessage(<span class="string">&quot;getUserInfo Algorithm error&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            message.setMessage(<span class="string">&quot;no session_key&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        message.setMessage(<span class="string">&quot;no new_key&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> message;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>实际上我这个写的很不好，后面会再修改</p>
+<p>调用了三个函数</p>
+<p>login：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> UserInfo <span class="title function_">login</span><span class="params">(UserInfo userInfo)</span>&#123;</span><br><span class="line">    <span class="type">UserInfo</span> <span class="variable">userInfo_r</span> <span class="operator">=</span> <span class="built_in">this</span>.userDao.selectUser(userInfo.getOpenId());</span><br><span class="line">    <span class="keyword">if</span>(userInfo_r == <span class="literal">null</span>)</span><br><span class="line">        <span class="built_in">this</span>.userDao.insertUser(userInfo);</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.userDao.updateUser(userInfo);</span><br><span class="line">        userInfo.setId(userInfo_r.getId());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> userInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>getUserInfoJson：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取UserInfo信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> JSONObject <span class="title function_">getUserInfoJSON</span><span class="params">(String encryptedData, String sessionkey, String iv)</span>&#123;</span><br><span class="line">    <span class="type">byte</span>[] dataByte = Base64.decode(encryptedData);     <span class="comment">//被加密的数据</span></span><br><span class="line">    <span class="type">byte</span>[] keyByte = Base64.decode(sessionkey);         <span class="comment">//加密秘钥</span></span><br><span class="line">    <span class="type">byte</span>[] ivByte = Base64.decode(iv);                  <span class="comment">//偏移量</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 如果密钥不足16位，那么就补足.  这个if 中的内容很重要</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">base</span> <span class="operator">=</span> <span class="number">16</span>;</span><br><span class="line">        <span class="keyword">if</span> (keyByte.length % base != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">groups</span> <span class="operator">=</span> keyByte.length / base + <span class="number">1</span>;</span><br><span class="line">            <span class="type">byte</span>[] temp = <span class="keyword">new</span> <span class="title class_">byte</span>[groups * base];</span><br><span class="line">            Arrays.fill(temp, (<span class="type">byte</span>) <span class="number">0</span>);</span><br><span class="line">            System.arraycopy(keyByte, <span class="number">0</span>, temp, <span class="number">0</span>, keyByte.length);</span><br><span class="line">            keyByte = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 初始化</span></span><br><span class="line">        Security.addProvider(<span class="keyword">new</span> <span class="title class_">BouncyCastleProvider</span>());</span><br><span class="line">        <span class="type">Cipher</span> <span class="variable">cipher</span> <span class="operator">=</span> Cipher.getInstance(<span class="string">&quot;AES/CBC/PKCS7Padding&quot;</span>,<span class="string">&quot;BC&quot;</span>);</span><br><span class="line">        <span class="type">SecretKeySpec</span> <span class="variable">spec</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SecretKeySpec</span>(keyByte, <span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        <span class="type">AlgorithmParameters</span> <span class="variable">parameters</span> <span class="operator">=</span> AlgorithmParameters.getInstance(<span class="string">&quot;AES&quot;</span>);</span><br><span class="line">        parameters.init(<span class="keyword">new</span> <span class="title class_">IvParameterSpec</span>(ivByte));</span><br><span class="line">        cipher.init(Cipher.DECRYPT_MODE, spec, parameters);<span class="comment">// 初始化</span></span><br><span class="line">        <span class="type">byte</span>[] resultByte = cipher.doFinal(dataByte);</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != resultByte &amp;&amp; resultByte.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(resultByte, StandardCharsets.UTF_8);</span><br><span class="line">            <span class="keyword">return</span> JSONObject.parseObject(result);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException | InvalidParameterSpecException | NoSuchPaddingException | IllegalBlockSizeException | BadPaddingException | InvalidKeyException | InvalidAlgorithmParameterException | NoSuchProviderException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>还有一个是从数据库调数据的，这里就不展示了</p>
+<p>我写这篇文章主要是给你们一个大概的流程和思路，里面的有些通用函数可以拿去用，但是最好不要照搬我的所有代码，因为时间紧，所以代码质量不怎么地，后面会继续修改更新博客的。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># 微信小程序</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/24.html" rel="prev" title="炫酷的博客背景">
+      <i class="fa fa-chevron-left"></i> 炫酷的博客背景
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/26.html" rel="next" title="Scrapy豆瓣整站爬虫">
+      Scrapy豆瓣整站爬虫 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-MVC%E5%AE%9E%E7%8E%B0%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">Spring MVC实现微信小程序登录流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B%E8%AF%B4%E6%98%8E%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">流程说明：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

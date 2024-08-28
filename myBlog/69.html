@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="博客一直没有个看板娘，内容又比较生硬，所以想加个看板娘在角落。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue看板娘插件-雷姆">
+<meta property="og:url" content="https://baby7.github.io/myBlog/69.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="博客一直没有个看板娘，内容又比较生硬，所以想加个看板娘在角落。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/Fp6sRBrDbemUzTkI5w70xNHLhhgM">
+<meta property="article:published_time" content="2020-04-28T12:01:53.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:19.655Z">
+<meta property="article:author" content="七仔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/Fp6sRBrDbemUzTkI5w70xNHLhhgM">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/69.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>vue看板娘插件-雷姆 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/69.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue看板娘插件-雷姆
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-28 20:01:53" itemprop="dateCreated datePublished" datetime="2020-04-28T20:01:53+08:00">2020-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:19" itemprop="dateModified" datetime="2024-08-28T16:25:19+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">前端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/Fp6sRBrDbemUzTkI5w70xNHLhhgM" width=200 /> </div>
+
+<p>博客一直没有个看板娘，内容又比较生硬，所以想加个看板娘在角落。</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="vue看板娘插件-雷姆"><a href="#vue看板娘插件-雷姆" class="headerlink" title="vue看板娘插件-雷姆"></a>vue看板娘插件-雷姆</h1></blockquote>
+<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>博客一直没有个看板娘，内容又比较生硬，所以想加个看板娘在角落。</p>
+<h3 id="二、挑选"><a href="#二、挑选" class="headerlink" title="二、挑选"></a>二、挑选</h3><p>vue看板娘插件中有个比较著名的<a target="_blank" rel="noopener" href="https://huaji8.top/post/live2d-plugin-2.0/">live2d</a>，里面有很多动漫人物，甚至还有一黑一白两只猫，但是看来看去没有我中意的看板娘。<br>然后又去搜，找见一个博文<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35351118">给自己的博客加上看板娘——Live2d蕾姆 | 雷姆</a>，但是是个html版的雷姆看板娘，这就面临一个问题：移植到vue中，虽然直接可以放到index.html中，但终归不是正常路子，还是移植吧，好在以前移植过挺多html插件的。</p>
+<h3 id="三、移植"><a href="#三、移植" class="headerlink" title="三、移植"></a>三、移植</h3><p>先放个移植后的vue吧，后面慢慢更：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;div&gt;欢迎来到七仔的博客&lt;/div&gt;</span><br><span class="line">            &lt;canvas id=&quot;live2d&quot; width=&quot;500&quot; height=&quot;560&quot; class=&quot;live2d&quot;&gt;&lt;/canvas&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;div&gt;</span><br><span class="line">                    &lt;input name=&quot;name&quot; type=&quot;text&quot; class=&quot;live_talk_name white_input&quot; id=&quot;AIuserName&quot; autocomplete=&quot;off&quot; placeholder=&quot;你的名字&quot; /&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">                &lt;div&gt;</span><br><span class="line">                    &lt;input name=&quot;talk&quot; type=&quot;text&quot; class=&quot;live_talk_talk white_input&quot; id=&quot;AIuserText&quot; autocomplete=&quot;off&quot; placeholder=&quot;要和我聊什么呀？&quot;/&gt;</span><br><span class="line">                    &lt;button type=&quot;button&quot; class=&quot;live_talk_send_btn&quot; id=&quot;talk_send&quot;&gt;发送&lt;/button&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;input name=&quot;live_talk&quot; id=&quot;live_talk&quot; value=&quot;1&quot; type=&quot;hidden&quot; /&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;div&gt;&lt;/div&gt;</span><br><span class="line">                &lt;div&gt;&lt;/div&gt;</span><br><span class="line">                &lt;div&gt;&lt;/div&gt;</span><br><span class="line">                &lt;div&gt;&lt;/div&gt;</span><br><span class="line">                &lt;div&gt;&lt;/div&gt;</span><br><span class="line">                &lt;input name=&quot;live_statu_val&quot; id=&quot;live_statu_val&quot; value=&quot;0&quot; type=&quot;hidden&quot; /&gt;</span><br><span class="line">                &lt;audio src preload=&quot;none&quot;&gt;&lt;/audio&gt;</span><br><span class="line">                &lt;input name=&quot;live2dBGM&quot; value=&quot;https://media.baby7blog.com/music/jfla/ShapeOfYou.mp3&quot; type=&quot;hidden&quot;&gt;</span><br><span class="line">                &lt;input id=&quot;duType&quot; value=&quot;douqilai,l2d_caihong&quot; type=&quot;hidden&quot;&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;div&gt;召唤蕾姆&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    import &quot;@/components/briannaKnickerbocker/live2d/js/live2d&quot;</span><br><span class="line"></span><br><span class="line">    export default &#123;</span><br><span class="line">        name: &quot;briannaKnickerbocker&quot;,</span><br><span class="line">        created() &#123;</span><br><span class="line">            var message_Path = &#x27;/live2d/&#x27;;//资源目录，如果目录不对请更改</span><br><span class="line">            var talkAPI = &quot;&quot;;//如果有类似图灵机器人的聊天接口请填写接口路径</span><br><span class="line">            // var home_Path = document.location.protocol +&#x27;//&#x27; + window.document.location.hostname +&#x27;/&#x27;;</span><br><span class="line">            var home_Path = &#x27;https://www.baby7blog.com/&#x27;;</span><br><span class="line"></span><br><span class="line">            var userAgent = window.navigator.userAgent.toLowerCase();</span><br><span class="line">            console.log(userAgent);</span><br><span class="line">            var norunAI = [ &quot;android&quot;, &quot;iphone&quot;, &quot;ipod&quot;, &quot;ipad&quot;, &quot;windows phone&quot;, &quot;mqqbrowser&quot; ,&quot;msie&quot;,&quot;trident/7.0&quot;];</span><br><span class="line">            var norunFlag = false;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            for(var i=0;i&lt;norunAI.length;i++)&#123;</span><br><span class="line">                if(userAgent.indexOf(norunAI[i]) &gt; -1)&#123;</span><br><span class="line">                    norunFlag = true;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(!window.WebGLRenderingContext)&#123;</span><br><span class="line">                norunFlag = true;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if(!norunFlag)&#123;</span><br><span class="line">                var hitFlag = false;</span><br><span class="line">                var AIFadeFlag = false;</span><br><span class="line">                var liveTlakTimer = null;</span><br><span class="line">                var sleepTimer_ = null;</span><br><span class="line">                var AITalkFlag = false;</span><br><span class="line">                var talkNum = 0;</span><br><span class="line">                (function ()&#123;</span><br><span class="line">                    function renderTip(template, context) &#123;</span><br><span class="line">                        var tokenReg = /(\\)?\&#123;([^\&#123;\&#125;\\]+)(\\)?\&#125;/g;</span><br><span class="line">                        return template.replace(tokenReg, function (word, slash1, token, slash2) &#123;</span><br><span class="line">                            if (slash1 || slash2) &#123;</span><br><span class="line">                                return word.replace(&#x27;\\&#x27;, &#x27;&#x27;);</span><br><span class="line">                            &#125;</span><br><span class="line">                            var variables = token.replace(/\s/g, &#x27;&#x27;).split(&#x27;.&#x27;);</span><br><span class="line">                            var currentObject = context;</span><br><span class="line">                            var i, length, variable;</span><br><span class="line">                            for (i = 0, length = variables.length; i &lt; length; ++i) &#123;</span><br><span class="line">                                variable = variables[i];</span><br><span class="line">                                currentObject = currentObject[variable];</span><br><span class="line">                                if (currentObject === undefined || currentObject === null) return &#x27;&#x27;;</span><br><span class="line">                            &#125;</span><br><span class="line">                            return currentObject;</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    String.prototype.renderTip = function (context) &#123;</span><br><span class="line">                        return renderTip(this, context);</span><br><span class="line">                    &#125;;</span><br><span class="line"></span><br><span class="line">                    var re = /x/;</span><br><span class="line">                    re.toString = function() &#123;</span><br><span class="line">                        showMessage(&#x27;哈哈，你打开了控制台，是想要看看我的秘密吗？&#x27;, 5000);</span><br><span class="line">                        return &#x27;&#x27;;</span><br><span class="line">                    &#125;;</span><br><span class="line"></span><br><span class="line">                    $(document).on(&#x27;copy&#x27;, function ()&#123;</span><br><span class="line">                        showMessage(&#x27;你都复制了些什么呀，转载要记得加上出处哦~~&#x27;, 5000);</span><br><span class="line">                    &#125;);</span><br><span class="line"></span><br><span class="line">                    function initTips()&#123;</span><br><span class="line">                        $.ajax(&#123;</span><br><span class="line">                            cache: true,</span><br><span class="line">                            url: message_Path+&#x27;message.json&#x27;,</span><br><span class="line">                            dataType: &quot;json&quot;,</span><br><span class="line">                            success: function (result)&#123;</span><br><span class="line">                                $.each(result.mouseover, function (index, tips)&#123;</span><br><span class="line">                                    $(tips.selector).mouseover(function ()&#123;</span><br><span class="line">                                        var text = tips.text;</span><br><span class="line">                                        if(Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1)-1];</span><br><span class="line">                                        text = text.renderTip(&#123;text: $(this).text()&#125;);</span><br><span class="line">                                        showMessage(text, 3000);</span><br><span class="line">                                        talkValTimer();</span><br><span class="line">                                        clearInterval(liveTlakTimer);</span><br><span class="line">                                        liveTlakTimer = null;</span><br><span class="line">                                    &#125;);</span><br><span class="line">                                    $(tips.selector).mouseout(function ()&#123;</span><br><span class="line">                                        showHitokoto();</span><br><span class="line">                                        if(liveTlakTimer == null)&#123;</span><br><span class="line">                                            liveTlakTimer = window.setInterval(function()&#123;</span><br><span class="line">                                                showHitokoto();</span><br><span class="line">                                            &#125;,15000);</span><br><span class="line">                                        &#125;;</span><br><span class="line">                                    &#125;);</span><br><span class="line">                                &#125;);</span><br><span class="line">                                $.each(result.click, function (index, tips)&#123;</span><br><span class="line">                                    $(tips.selector).click(function ()&#123;</span><br><span class="line">                                        if(hitFlag)&#123;</span><br><span class="line">                                            return false</span><br><span class="line">                                        &#125;</span><br><span class="line">                                        hitFlag = true;</span><br><span class="line">                                        setTimeout(function()&#123;</span><br><span class="line">                                            hitFlag = false;</span><br><span class="line">                                        &#125;,8000);</span><br><span class="line">                                        var text = tips.text;</span><br><span class="line">                                        if(Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1)-1];</span><br><span class="line">                                        text = text.renderTip(&#123;text: $(this).text()&#125;);</span><br><span class="line">                                        showMessage(text, 3000);</span><br><span class="line">                                    &#125;);</span><br><span class="line">                                    clearInterval(liveTlakTimer);</span><br><span class="line">                                    liveTlakTimer = null;</span><br><span class="line">                                    if(liveTlakTimer == null)&#123;</span><br><span class="line">                                        liveTlakTimer = window.setInterval(function()&#123;</span><br><span class="line">                                            showHitokoto();</span><br><span class="line">                                        &#125;,15000);</span><br><span class="line">                                    &#125;;</span><br><span class="line">                                &#125;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                    initTips();</span><br><span class="line"></span><br><span class="line">                    var text;</span><br><span class="line">                    if(document.referrer !== &#x27;&#x27;)&#123;</span><br><span class="line">                        var referrer = document.createElement(&#x27;a&#x27;);</span><br><span class="line">                        referrer.href = document.referrer;</span><br><span class="line">                        text = &#x27;嗨！来自 &lt;span&gt;&#x27; + referrer.hostname + &#x27;&lt;/span&gt; 的朋友！&#x27;;</span><br><span class="line">                        var domain = referrer.hostname.split(&#x27;.&#x27;)[1];</span><br><span class="line">                        if (domain == &#x27;baidu&#x27;) &#123;</span><br><span class="line">                            text = &#x27;嗨！ 来自 百度搜索 的朋友！&lt;br&gt;欢迎访问&lt;span&gt;「 &#x27; + document.title.split(&#x27; - &#x27;)[0] + &#x27; 」&lt;/span&gt;&#x27;;</span><br><span class="line">                        &#125;else if (domain == &#x27;so&#x27;) &#123;</span><br><span class="line">                            text = &#x27;嗨！ 来自 360搜索 的朋友！&lt;br&gt;欢迎访问&lt;span&gt;「 &#x27; + document.title.split(&#x27; - &#x27;)[0] + &#x27; 」&lt;/span&gt;&#x27;;</span><br><span class="line">                        &#125;else if (domain == &#x27;google&#x27;) &#123;</span><br><span class="line">                            text = &#x27;嗨！ 来自 谷歌搜索 的朋友！&lt;br&gt;欢迎访问&lt;span&gt;「 &#x27; + document.title.split(&#x27; - &#x27;)[0] + &#x27; 」&lt;/span&gt;&#x27;;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;else &#123;</span><br><span class="line">                        if (window.location.href == home_Path) &#123; //主页URL判断，需要斜杠结尾</span><br><span class="line">                            var now = (new Date()).getHours();</span><br><span class="line">                            if (now &gt; 23 || now &lt;= 5) &#123;</span><br><span class="line">                                text = &#x27;你是夜猫子呀？这么晚还不睡觉，明天起的来嘛？&#x27;;</span><br><span class="line">                            &#125; else if (now &gt; 5 &amp;&amp; now &lt;= 7) &#123;</span><br><span class="line">                                text = &#x27;早上好！一日之计在于晨，美好的一天就要开始了！&#x27;;</span><br><span class="line">                            &#125; else if (now &gt; 7 &amp;&amp; now &lt;= 11) &#123;</span><br><span class="line">                                text = &#x27;上午好！工作顺利嘛，不要久坐，多起来走动走动哦！&#x27;;</span><br><span class="line">                            &#125; else if (now &gt; 11 &amp;&amp; now &lt;= 14) &#123;</span><br><span class="line">                                text = &#x27;中午了，工作了一个上午，现在是午餐时间！&#x27;;</span><br><span class="line">                            &#125; else if (now &gt; 14 &amp;&amp; now &lt;= 17) &#123;</span><br><span class="line">                                text = &#x27;午后很容易犯困呢，今天的运动目标完成了吗？&#x27;;</span><br><span class="line">                            &#125; else if (now &gt; 17 &amp;&amp; now &lt;= 19) &#123;</span><br><span class="line">                                text = &#x27;傍晚了！窗外夕阳的景色很美丽呢，最美不过夕阳红~~&#x27;;</span><br><span class="line">                            &#125; else if (now &gt; 19 &amp;&amp; now &lt;= 21) &#123;</span><br><span class="line">                                text = &#x27;晚上好，今天过得怎么样？&#x27;;</span><br><span class="line">                            &#125; else if (now &gt; 21 &amp;&amp; now &lt;= 23) &#123;</span><br><span class="line">                                text = &#x27;已经这么晚了呀，早点休息吧，晚安~~&#x27;;</span><br><span class="line">                            &#125; else &#123;</span><br><span class="line">                                text = &#x27;嗨~ 快来逗我玩吧！&#x27;;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;else &#123;</span><br><span class="line">                            text = &#x27;欢迎阅读&lt;span&gt;「 &#x27; + document.title.split(&#x27; - &#x27;)[0] + &#x27; 」&lt;/span&gt;&#x27;;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    showMessage(text, 12000);</span><br><span class="line">                &#125;)();</span><br><span class="line"></span><br><span class="line">                liveTlakTimer = setInterval(function()&#123;</span><br><span class="line">                    showHitokoto();</span><br><span class="line">                &#125;,15000);</span><br><span class="line"></span><br><span class="line">                function showHitokoto()&#123;</span><br><span class="line">                    if(sessionStorage.getItem(&quot;Sleepy&quot;)!==&quot;1&quot;)&#123;</span><br><span class="line">                        if(!AITalkFlag)&#123;</span><br><span class="line">                            $.getJSON(&#x27;https://v1.hitokoto.cn/&#x27;,function(result)&#123;</span><br><span class="line">                                talkValTimer();</span><br><span class="line">                                showMessage(result.hitokoto, 0);</span><br><span class="line">                            &#125;);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                        hideMessage(0);</span><br><span class="line">                        if(sleepTimer_==null)&#123;</span><br><span class="line">                            sleepTimer_ = setInterval(function()&#123;</span><br><span class="line">                                checkSleep();</span><br><span class="line">                            &#125;,200);</span><br><span class="line">                        &#125;</span><br><span class="line">                        console.log(sleepTimer_);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                function checkSleep()&#123;</span><br><span class="line">                    var sleepStatu = sessionStorage.getItem(&quot;Sleepy&quot;);</span><br><span class="line">                    if(sleepStatu!==&#x27;1&#x27;)&#123;</span><br><span class="line">                        talkValTimer();</span><br><span class="line">                        showMessage(&#x27;你回来啦~&#x27;, 0);</span><br><span class="line">                        clearInterval(sleepTimer_);</span><br><span class="line">                        sleepTimer_= null;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                function showMessage(text, timeout)&#123;</span><br><span class="line">                    if(Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1)-1];</span><br><span class="line">                    //console.log(&#x27;showMessage&#x27;, text);</span><br><span class="line">                    $(&#x27;.message&#x27;).stop();</span><br><span class="line">                    $(&#x27;.message&#x27;).html(text);</span><br><span class="line">                    $(&#x27;.message&#x27;).fadeTo(200, 1);</span><br><span class="line">                    //if (timeout === null) timeout = 5000;</span><br><span class="line">                    //hideMessage(timeout);</span><br><span class="line">                &#125;</span><br><span class="line">                function talkValTimer()&#123;</span><br><span class="line">                    $(&#x27;#live_talk&#x27;).val(&#x27;1&#x27;);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                function hideMessage(timeout)&#123;</span><br><span class="line">                    //$(&#x27;.message&#x27;).stop().css(&#x27;opacity&#x27;,1);</span><br><span class="line">                    if (timeout === null) timeout = 5000;</span><br><span class="line">                    $(&#x27;.message&#x27;).delay(timeout).fadeTo(200, 0);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                function initLive2d ()&#123;</span><br><span class="line">                    $(&#x27;#hideButton&#x27;).on(&#x27;click&#x27;, function()&#123;</span><br><span class="line">                        if(AIFadeFlag)&#123;</span><br><span class="line">                            return false;</span><br><span class="line">                        &#125;else&#123;</span><br><span class="line">                            AIFadeFlag = true;</span><br><span class="line">                            localStorage.setItem(&quot;live2dhidden&quot;, &quot;0&quot;);</span><br><span class="line">                            $(&#x27;#landlord&#x27;).fadeOut(200);</span><br><span class="line">                            $(&#x27;#open_live2d&#x27;).delay(200).fadeIn(200);</span><br><span class="line">                            setTimeout(function()&#123;</span><br><span class="line">                                AIFadeFlag = false;</span><br><span class="line">                            &#125;,300);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                    $(&#x27;#open_live2d&#x27;).on(&#x27;click&#x27;, function()&#123;</span><br><span class="line">                        if(AIFadeFlag)&#123;</span><br><span class="line">                            return false;</span><br><span class="line">                        &#125;else&#123;</span><br><span class="line">                            AIFadeFlag = true;</span><br><span class="line">                            localStorage.setItem(&quot;live2dhidden&quot;, &quot;1&quot;);</span><br><span class="line">                            $(&#x27;#open_live2d&#x27;).fadeOut(200);</span><br><span class="line">                            $(&#x27;#landlord&#x27;).delay(200).fadeIn(200);</span><br><span class="line">                            setTimeout(function()&#123;</span><br><span class="line">                                AIFadeFlag = false;</span><br><span class="line">                            &#125;,300);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                    $(&#x27;#youduButton&#x27;).on(&#x27;click&#x27;,function()&#123;</span><br><span class="line">                        if($(&#x27;#youduButton&#x27;).hasClass(&#x27;doudong&#x27;))&#123;</span><br><span class="line">                            var typeIs = $(&#x27;#youduButton&#x27;).attr(&#x27;data-type&#x27;);</span><br><span class="line">                            $(&#x27;#youduButton&#x27;).removeClass(&#x27;doudong&#x27;);</span><br><span class="line">                            $(&#x27;body&#x27;).removeClass(typeIs);</span><br><span class="line">                            $(&#x27;#youduButton&#x27;).attr(&#x27;data-type&#x27;,&#x27;&#x27;);</span><br><span class="line">                        &#125;else&#123;</span><br><span class="line">                            var duType = $(&#x27;#duType&#x27;).val();</span><br><span class="line">                            var duArr = duType.split(&quot;,&quot;);</span><br><span class="line">                            var dataType = duArr[Math.floor(Math.random() * duArr.length)];</span><br><span class="line"></span><br><span class="line">                            $(&#x27;#youduButton&#x27;).addClass(&#x27;doudong&#x27;);</span><br><span class="line">                            $(&#x27;#youduButton&#x27;).attr(&#x27;data-type&#x27;,dataType);</span><br><span class="line">                            $(&#x27;body&#x27;).addClass(dataType);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;);</span><br><span class="line">                    if(talkAPI!==&quot;&quot;)&#123;</span><br><span class="line">                        $(&#x27;#showInfoBtn&#x27;).on(&#x27;click&#x27;,function()&#123;</span><br><span class="line">                            var live_statu = $(&#x27;#live_statu_val&#x27;).val();</span><br><span class="line">                            if(live_statu==&quot;0&quot;)&#123;</span><br><span class="line">                                return</span><br><span class="line">                            &#125;else&#123;</span><br><span class="line">                                $(&#x27;#live_statu_val&#x27;).val(&quot;0&quot;);</span><br><span class="line">                                $(&#x27;.live_talk_input_body&#x27;).fadeOut(500);</span><br><span class="line">                                AITalkFlag = false;</span><br><span class="line">                                showHitokoto();</span><br><span class="line">                                $(&#x27;#showTalkBtn&#x27;).show();</span><br><span class="line">                                $(&#x27;#showInfoBtn&#x27;).hide();</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                        $(&#x27;#showTalkBtn&#x27;).on(&#x27;click&#x27;,function()&#123;</span><br><span class="line">                            var live_statu = $(&#x27;#live_statu_val&#x27;).val();</span><br><span class="line">                            if(live_statu==&quot;1&quot;)&#123;</span><br><span class="line">                                return</span><br><span class="line">                            &#125;else&#123;</span><br><span class="line">                                $(&#x27;#live_statu_val&#x27;).val(&quot;1&quot;);</span><br><span class="line">                                $(&#x27;.live_talk_input_body&#x27;).fadeIn(500);</span><br><span class="line">                                AITalkFlag = true;</span><br><span class="line">                                $(&#x27;#showTalkBtn&#x27;).hide();</span><br><span class="line">                                $(&#x27;#showInfoBtn&#x27;).show();</span><br><span class="line"></span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                        $(&#x27;#talk_send&#x27;).on(&#x27;click&#x27;,function()&#123;</span><br><span class="line">                            var info_ = $(&#x27;#AIuserText&#x27;).val();</span><br><span class="line">                            var userid_ = $(&#x27;#AIuserName&#x27;).val();</span><br><span class="line">                            if(info_ == &quot;&quot; )&#123;</span><br><span class="line">                                showMessage(&#x27;写点什么吧！&#x27;,0);</span><br><span class="line">                                return;</span><br><span class="line">                            &#125;</span><br><span class="line">                            if(userid_ == &quot;&quot;)&#123;</span><br><span class="line">                                showMessage(&#x27;聊之前请告诉我你的名字吧！&#x27;,0);</span><br><span class="line">                                return;</span><br><span class="line">                            &#125;</span><br><span class="line">                            showMessage(&#x27;思考中~&#x27;, 0);</span><br><span class="line">                            $.ajax(&#123;</span><br><span class="line">                                type: &#x27;POST&#x27;,</span><br><span class="line">                                url: talkAPI,</span><br><span class="line">                                data: &#123;</span><br><span class="line">                                    &quot;info&quot;:info_,</span><br><span class="line">                                    &quot;userid&quot;:userid_</span><br><span class="line">                                &#125;,</span><br><span class="line">                                success: function(res) &#123;</span><br><span class="line">                                    if(res.code !== 100000)&#123;</span><br><span class="line">                                        talkValTimer();</span><br><span class="line">                                        showMessage(&#x27;似乎有什么错误，请和站长联系！&#x27;,0);</span><br><span class="line">                                    &#125;else&#123;</span><br><span class="line">                                        talkValTimer();</span><br><span class="line">                                        showMessage(res.text,0);</span><br><span class="line">                                    &#125;</span><br><span class="line">                                    console.log(res);</span><br><span class="line">                                    $(&#x27;#AIuserText&#x27;).val(&quot;&quot;);</span><br><span class="line">                                    sessionStorage.setItem(&quot;live2duser&quot;, userid_);</span><br><span class="line">                                &#125;</span><br><span class="line">                            &#125;);</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                        $(&#x27;#showInfoBtn&#x27;).hide();</span><br><span class="line">                        $(&#x27;#showTalkBtn&#x27;).hide();</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                    //获取音乐信息初始化</span><br><span class="line">                    var bgmListInfo = $(&#x27;input[name=live2dBGM]&#x27;);</span><br><span class="line">                    if(bgmListInfo.length == 0)&#123;</span><br><span class="line">                        $(&#x27;#musicButton&#x27;).hide();</span><br><span class="line">                    &#125;else&#123;</span><br><span class="line">                        var bgmPlayNow = parseInt($(&#x27;#live2d_bgm&#x27;).attr(&#x27;data-bgm&#x27;));</span><br><span class="line">                        var bgmPlayTime = 0;</span><br><span class="line">                        var live2dBGM_Num = sessionStorage.getItem(&quot;live2dBGM_Num&quot;);</span><br><span class="line">                        var live2dBGM_PlayTime = sessionStorage.getItem(&quot;live2dBGM_PlayTime&quot;);</span><br><span class="line">                        if(live2dBGM_Num)&#123;</span><br><span class="line">                            if(live2dBGM_Num&lt;=$(&#x27;input[name=live2dBGM]&#x27;).length-1)&#123;</span><br><span class="line">                                bgmPlayNow = parseInt(live2dBGM_Num);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        if(live2dBGM_PlayTime)&#123;</span><br><span class="line">                            bgmPlayTime = parseInt(live2dBGM_PlayTime);</span><br><span class="line">                        &#125;</span><br><span class="line">                        var live2dBGMSrc = bgmListInfo.eq(bgmPlayNow).val();</span><br><span class="line">                        $(&#x27;#live2d_bgm&#x27;).attr(&#x27;data-bgm&#x27;,bgmPlayNow);</span><br><span class="line">                        $(&#x27;#live2d_bgm&#x27;).attr(&#x27;src&#x27;,live2dBGMSrc);</span><br><span class="line">                        $(&#x27;#live2d_bgm&#x27;)[0].currentTime = bgmPlayTime;</span><br><span class="line">                        $(&#x27;#live2d_bgm&#x27;)[0].volume = 0.5;</span><br><span class="line">                        var live2dBGM_IsPlay = sessionStorage.getItem(&quot;live2dBGM_IsPlay&quot;);</span><br><span class="line">                        var live2dBGM_WindowClose = sessionStorage.getItem(&quot;live2dBGM_WindowClose&quot;);</span><br><span class="line">                        if(live2dBGM_IsPlay == &#x27;0&#x27; &amp;&amp; live2dBGM_WindowClose == &#x27;0&#x27;)&#123;</span><br><span class="line">                            $(&#x27;#live2d_bgm&#x27;)[0].play();</span><br><span class="line">                            $(&#x27;#musicButton&#x27;).addClass(&#x27;play&#x27;);</span><br><span class="line">                        &#125;</span><br><span class="line">                        sessionStorage.setItem(&quot;live2dBGM_WindowClose&quot; , &#x27;1&#x27;);</span><br><span class="line">                        $(&#x27;#musicButton&#x27;).on(&#x27;click&#x27;,function()&#123;</span><br><span class="line">                            if($(&#x27;#musicButton&#x27;).hasClass(&#x27;play&#x27;))&#123;</span><br><span class="line">                                $(&#x27;#live2d_bgm&#x27;)[0].pause();</span><br><span class="line">                                $(&#x27;#musicButton&#x27;).removeClass(&#x27;play&#x27;);</span><br><span class="line">                                sessionStorage.setItem(&quot;live2dBGM_IsPlay&quot;,&#x27;1&#x27;);</span><br><span class="line">                            &#125;else&#123;</span><br><span class="line">                                $(&#x27;#live2d_bgm&#x27;)[0].play();</span><br><span class="line">                                $(&#x27;#musicButton&#x27;).addClass(&#x27;play&#x27;);</span><br><span class="line">                                sessionStorage.setItem(&quot;live2dBGM_IsPlay&quot;,&#x27;0&#x27;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;);</span><br><span class="line">                        window.onbeforeunload = function()&#123;</span><br><span class="line">                            sessionStorage.setItem(&quot;live2dBGM_WindowClose&quot; , &#x27;0&#x27;);</span><br><span class="line">                            if($(&#x27;#musicButton&#x27;).hasClass(&#x27;play&#x27;))&#123;</span><br><span class="line">                                sessionStorage.setItem(&quot;live2dBGM_IsPlay&quot;,&#x27;0&#x27;);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        document.getElementById(&#x27;live2d_bgm&#x27;).addEventListener(&quot;timeupdate&quot;, function()&#123;</span><br><span class="line">                            var live2dBgmPlayTimeNow = document.getElementById(&#x27;live2d_bgm&#x27;).currentTime;</span><br><span class="line">                            sessionStorage.setItem(&quot;live2dBGM_PlayTime&quot; , live2dBgmPlayTimeNow );</span><br><span class="line">                        &#125;);</span><br><span class="line">                        document.getElementById(&#x27;live2d_bgm&#x27;).addEventListener(&quot;ended&quot;, function()&#123;</span><br><span class="line">                            var listNow = parseInt($(&#x27;#live2d_bgm&#x27;).attr(&#x27;data-bgm&#x27;));</span><br><span class="line">                            listNow ++ ;</span><br><span class="line">                            if(listNow &gt; $(&#x27;input[name=live2dBGM]&#x27;).length-1)&#123;</span><br><span class="line">                                listNow = 0;</span><br><span class="line">                            &#125;</span><br><span class="line">                            var listNewSrc = $(&#x27;input[name=live2dBGM]&#x27;).eq(listNow).val();</span><br><span class="line">                            sessionStorage.setItem(&quot;live2dBGM_Num&quot;,listNow);</span><br><span class="line">                            $(&#x27;#live2d_bgm&#x27;).attr(&#x27;src&#x27;,listNewSrc);</span><br><span class="line">                            $(&#x27;#live2d_bgm&#x27;)[0].play();</span><br><span class="line">                            $(&#x27;#live2d_bgm&#x27;).attr(&#x27;data-bgm&#x27;,listNow);</span><br><span class="line">                        &#125;);</span><br><span class="line">                        document.getElementById(&#x27;live2d_bgm&#x27;).addEventListener(&quot;error&quot;, function()&#123;</span><br><span class="line">                            $(&#x27;#live2d_bgm&#x27;)[0].pause();</span><br><span class="line">                            $(&#x27;#musicButton&#x27;).removeClass(&#x27;play&#x27;);</span><br><span class="line">                            showMessage(&#x27;音乐似乎加载不出来了呢！&#x27;,0);</span><br><span class="line">                        &#125;);</span><br><span class="line">                    &#125;</span><br><span class="line">                    //获取用户名</span><br><span class="line">                    var live2dUser = sessionStorage.getItem(&quot;live2duser&quot;);</span><br><span class="line">                    if(live2dUser !== null)&#123;</span><br><span class="line">                        $(&#x27;#AIuserName&#x27;).val(live2dUser);</span><br><span class="line">                    &#125;</span><br><span class="line">                    //获取位置</span><br><span class="line">                    var landL = sessionStorage.getItem(&quot;historywidth&quot;);</span><br><span class="line">                    var landB = sessionStorage.getItem(&quot;historyheight&quot;);</span><br><span class="line">                    if(landL == null || landB ==null)&#123;</span><br><span class="line">                        landL = &#x27;5px&#x27;</span><br><span class="line">                        landB = &#x27;0px&#x27;</span><br><span class="line">                    &#125;</span><br><span class="line">                    $(&#x27;#landlord&#x27;).css(&#x27;left&#x27;,landL+&#x27;px&#x27;);</span><br><span class="line">                    $(&#x27;#landlord&#x27;).css(&#x27;bottom&#x27;,landB + &#x27;px&#x27;);</span><br><span class="line">                    //移动</span><br><span class="line">                    function getEvent() &#123;</span><br><span class="line">                        return window.event || arguments.callee.caller.arguments[0];</span><br><span class="line">                    &#125;</span><br><span class="line">                    var smcc = document.getElementById(&quot;landlord&quot;);</span><br><span class="line">                    var moveX = 0;</span><br><span class="line">                    var moveY = 0;</span><br><span class="line">                    var moveBottom = 0;</span><br><span class="line">                    var moveLeft = 0;</span><br><span class="line">                    var moveable = false;</span><br><span class="line">                    var docMouseMoveEvent = document.onmousemove;</span><br><span class="line">                    var docMouseUpEvent = document.onmouseup;</span><br><span class="line">                    smcc.onmousedown = function()&#123;</span><br><span class="line">                        var ent = getEvent();</span><br><span class="line">                        moveable = true;</span><br><span class="line">                        moveX = ent.clientX;</span><br><span class="line">                        moveY = ent.clientY;</span><br><span class="line">                        var obj = smcc;</span><br><span class="line">                        moveBottom = parseInt(obj.style.bottom);</span><br><span class="line">                        moveLeft = parseInt(obj.style.left);</span><br><span class="line">                        if(isFirefox=navigator.userAgent.indexOf(&quot;Firefox&quot;)&gt;0)&#123;</span><br><span class="line">                            window.getSelection().removeAllRanges();</span><br><span class="line">                        &#125;</span><br><span class="line">                        document.onmousemove = function()&#123;</span><br><span class="line">                            if(moveable)&#123;</span><br><span class="line">                                var ent = getEvent();</span><br><span class="line">                                var x = moveLeft + ent.clientX - moveX;</span><br><span class="line">                                var y = moveBottom +  (moveY - ent.clientY);</span><br><span class="line">                                obj.style.left = x + &quot;px&quot;;</span><br><span class="line">                                obj.style.bottom = y + &quot;px&quot;;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;;</span><br><span class="line">                        document.onmouseup = function()&#123;</span><br><span class="line">                            if(moveable)&#123;</span><br><span class="line">                                var historywidth = obj.style.left;</span><br><span class="line">                                var historyheight = obj.style.bottom;</span><br><span class="line">                                historywidth = historywidth.replace(&#x27;px&#x27;, &#x27;&#x27;);</span><br><span class="line">                                historyheight = historyheight.replace(&#x27;px&#x27;, &#x27;&#x27;);</span><br><span class="line">                                sessionStorage.setItem(&quot;historywidth&quot;, historywidth);</span><br><span class="line">                                sessionStorage.setItem(&quot;historyheight&quot;, historyheight);</span><br><span class="line">                                document.onmousemove = docMouseMoveEvent;</span><br><span class="line">                                document.onmouseup = docMouseUpEvent;</span><br><span class="line">                                moveable = false;</span><br><span class="line">                                moveX = 0;</span><br><span class="line">                                moveY = 0;</span><br><span class="line">                                moveBottom = 0;</span><br><span class="line">                                moveLeft = 0;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;;</span><br><span class="line">                    &#125;;</span><br><span class="line">                &#125;</span><br><span class="line">                $(document).ready(function() &#123;</span><br><span class="line">                    var AIimgSrc = [</span><br><span class="line">                        &quot;https://media.baby7blog.com/live2d/texture_00.png&quot;</span><br><span class="line">                    ]</span><br><span class="line">                    var images = [];</span><br><span class="line">                    var imgLength = AIimgSrc.length;</span><br><span class="line">                    var loadingNum = 0;</span><br><span class="line">                    for(var i=0;i&lt;imgLength;i++)&#123;</span><br><span class="line">                        images[i] = new Image();</span><br><span class="line">                        images[i].src = AIimgSrc[i];</span><br><span class="line">                        images[i].onload = function()&#123;</span><br><span class="line">                            loadingNum++;</span><br><span class="line">                            if(loadingNum===imgLength)&#123;</span><br><span class="line">                                var live2dhidden = localStorage.getItem(&quot;live2dhidden&quot;);</span><br><span class="line">                                if(live2dhidden===&quot;0&quot;)&#123;</span><br><span class="line">                                    setTimeout(function()&#123;</span><br><span class="line">                                        $(&#x27;#open_live2d&#x27;).fadeIn(200);</span><br><span class="line">                                    &#125;,1300);</span><br><span class="line">                                &#125;else&#123;</span><br><span class="line">                                    setTimeout(function()&#123;</span><br><span class="line">                                        $(&#x27;#landlord&#x27;).fadeIn(200);</span><br><span class="line">                                    &#125;,1300);</span><br><span class="line">                                &#125;</span><br><span class="line">                                setTimeout(function()&#123;</span><br><span class="line">                                    loadlive2d(&quot;live2d&quot;, message_Path+&quot;model/rem/rem.json&quot;);</span><br><span class="line">                                &#125;,1000);</span><br><span class="line">                                initLive2d ();</span><br><span class="line">                                images = null;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/68.html" rel="prev" title="对Jeecg-Boot中Token失效返回格式的调整">
+      <i class="fa fa-chevron-left"></i> 对Jeecg-Boot中Token失效返回格式的调整
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/70.html" rel="next" title="“魔镜”智能家居系统（我的毕设）">
+      “魔镜”智能家居系统（我的毕设） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue%E7%9C%8B%E6%9D%BF%E5%A8%98%E6%8F%92%E4%BB%B6-%E9%9B%B7%E5%A7%86"><span class="nav-number">1.</span> <span class="nav-text">vue看板娘插件-雷姆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%8C%91%E9%80%89"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、挑选</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E7%A7%BB%E6%A4%8D"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、移植</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

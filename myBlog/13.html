@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Java绘图板使用的设计模式有：工厂模式、备忘录模式、单例模式、模板模式、迭代器模式、状态模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="六种设计模式结合的Java绘图板">
+<meta property="og:url" content="https://baby7.github.io/myBlog/13.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="Java绘图板使用的设计模式有：工厂模式、备忘录模式、单例模式、模板模式、迭代器模式、状态模式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750008778.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750008778.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750053601.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750054405.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953015153.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953083480.jpeg">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953051283.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953081955.jpeg">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953099714.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953081248.jpeg">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953047242.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781027714.jpeg">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781012256.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781001571.jpeg">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781081726.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781055047.png">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781001502.png">
+<meta property="og:image" content="https://media.baby7blog.com/MyBlog/ueditor/jsp/upload/image/20190413/1555146484360011012.png">
+<meta property="og:image" content="https://media.baby7blog.com/MyBlog/ueditor/jsp/upload/image/20190413/1555146488313013513.png">
+<meta property="article:published_time" content="2019-04-13T09:10:20.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:18.474Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750008778.png">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/13.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>六种设计模式结合的Java绘图板 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/13.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          六种设计模式结合的Java绘图板
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-04-13 17:10:20" itemprop="dateCreated datePublished" datetime="2019-04-13T17:10:20+08:00">2019-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:18" itemprop="dateModified" datetime="2024-08-28T16:25:18+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">桌面技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750008778.png" width=200 /> </div>
+
+<p>Java绘图板使用的设计模式有：工厂模式、备忘录模式、单例模式、模板模式、迭代器模式、状态模式</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="六种设计模式结合的Java绘图板"><a href="#六种设计模式结合的Java绘图板" class="headerlink" title="六种设计模式结合的Java绘图板"></a>六种设计模式结合的Java绘图板</h1></blockquote>
+<h2 id="部分截图："><a href="#部分截图：" class="headerlink" title="部分截图："></a>部分截图：</h2><p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750008778.png" alt="主界面"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750053601.png" alt="保存文件"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750054405.png" alt="编辑颜色"></p>
+<h2 id="功能实现：（截图在功能区）"><a href="#功能实现：（截图在功能区）" class="headerlink" title="功能实现：（截图在功能区）"></a>功能实现：（截图在功能区）</h2><ol>
+<li><p>用户可以选择颜色、线型，或图形，绘制图形</p>
+</li>
+<li><p>也可以擦除所绘制的图形。</p>
+</li>
+<li><p>还可以输入文本信息等</p>
+</li>
+<li><p>用户绘制好的图形可以保存到文件，也可以读取文件中的图形 显示在界面上</p>
+</li>
+<li><p>提供撤销和重做功能</p>
+</li>
+</ol>
+<h3 id="1-应用场景："><a href="#1-应用场景：" class="headerlink" title="1. 应用场景："></a>1. 应用场景：</h3><p>绘图板实现铅笔、画刷、取色器、喷枪、橡皮、直线、多边形、矩形、椭圆、圆角矩形、打字的功能，实现了颜色选择，实现了撤销和重做，实现了图片保存、读取等功能。</p>
+<h3 id="2-设计模式："><a href="#2-设计模式：" class="headerlink" title="2. 设计模式："></a>2. 设计模式：</h3><p>工厂模式、备忘录模式、单例模式、模板模式、迭代器模式、状态模式。</p>
+<ol>
+<li><p>工厂模式：实现工具栏的各个工具。</p>
+</li>
+<li><p>备忘录模式：实现撤销和重做。</p>
+</li>
+<li><p>单例模式：确保只有一个备忘录的状态列表。</p>
+</li>
+<li><p>模板模式：创建颜色选择面板和工具栏面板。</p>
+</li>
+<li><p>迭代器模式：简化文件过滤器。</p>
+</li>
+<li><p>状态模式：实现菜单栏的撤销和重做的是否禁用。</p>
+</li>
+</ol>
+<h3 id="3-实现代码："><a href="#3-实现代码：" class="headerlink" title="3. 实现代码："></a>3. 实现代码：</h3><p>代码由java语言实现。</p>
+<h2 id="一、需求分析"><a href="#一、需求分析" class="headerlink" title="一、需求分析"></a>一、需求分析</h2><p>&ensp;&ensp;&ensp;&ensp;工厂模式是一种创建型设计模式，采用工厂模式通过面向对象的手法，将所要创建的具体对象的创建工作延迟到了子类，从而提供了一种扩展的策略，较好的解决了这种紧耦合的关系。通过定义十一个具体工具的类来实现工具栏的各个功能。备忘录模式就是在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样可以在以后将对象恢复到原先保存的状态。该模式主要实现撤销和重做。单例模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。单例模式主要解决保证历史纪录的唯一性，节省内存。定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。此模式主要解决创建面板代码的复用问题。迭代器设计模式提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的表示。该模式用来简化文件过滤器。对象的行为依赖于它的状态（属性），并且可以根据它的状态改变而改变它的相关行为。该模式用来实现控制菜单栏的撤销重做的是否禁用。</p>
+<h2 id="二、设计模式类图"><a href="#二、设计模式类图" class="headerlink" title="二、设计模式类图"></a>二、设计模式类图</h2><p>根据需求分析，绘图板可以采用了六种设计模式，分别是工厂模式、备忘录模式、单例模式、模板模式、迭代器模式和状态模式。</p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953015153.png" alt="类图"></p>
+<h3 id="（1）-工厂模式"><a href="#（1）-工厂模式" class="headerlink" title="（1） 工厂模式"></a>（1） 工厂模式</h3><p>工厂模式是一种创建型设计模式，采用工厂模式通过面向对象的手法，将所要创建的具体对象的创建工作延迟到了子类，从而提供了一种扩展的策略，较好的解决了这种紧耦合的关系。通过定义十一个具体工具的类来实现工具栏的各个功能。模式类图如图2-1：</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953083480.jpeg" alt="工厂模式"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953051283.png" alt="工厂模式具体"></p>
+<p>图2-1 工厂模式类图</p>
+<h3 id="（2）备忘录模式"><a href="#（2）备忘录模式" class="headerlink" title="（2）备忘录模式"></a>（2）备忘录模式</h3><p>所谓备忘录模式就是在不破坏封装的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态，这样可以在以后将对象恢复到原先保存的状态。该模式主要实现撤销和重做。模式类图如图2-2：</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953081955.jpeg" alt="备忘录模式"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953099714.png" alt="备忘录具体"></p>
+<p>图2-2（b）备忘录模式类图</p>
+<h3 id="（3）-单例模式"><a href="#（3）-单例模式" class="headerlink" title="（3） 单例模式"></a>（3） 单例模式</h3><p>单例模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建。这个类提供了一种访问其唯一的对象的方式，可以直接访问，不需要实例化该类的对象。单例模式主要解决保证历史纪录的唯一性，节省内存。模式类图如图2-3：</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953081248.jpeg" alt="单例模式"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146367953047242.png" alt="单例模式具体"></p>
+<p>图2-3 单例模式类图</p>
+<h3 id="（4）模板模式"><a href="#（4）模板模式" class="headerlink" title="（4）模板模式"></a>（4）模板模式</h3><p>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。此模式主要解决创建面板代码的复用问题。模式类图如图2-4：</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781027714.jpeg" alt="模板模式"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781012256.png" alt="模板模式具体"></p>
+<p>图2-4（a） 模板模式类图</p>
+<h3 id="（5）迭代器模式"><a href="#（5）迭代器模式" class="headerlink" title="（5）迭代器模式"></a>（5）迭代器模式</h3><p>迭代器设计模式提供一种方法顺序访问一个聚合对象中的各个元素，而又不暴露其内部的表示。该模式用来简化文件过滤器。模式类图如图2-5。</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781001571.jpeg" alt="迭代器模式"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781081726.png" alt="迭代器模式具体"></p>
+<p>图2-5迭代器模式类图</p>
+<h3 id="（6）状态模式"><a href="#（6）状态模式" class="headerlink" title="（6）状态模式"></a>（6）状态模式</h3><p>对象的行为依赖于它的状态（属性），并且可以根据它的状态改变而改变它的相关行为。该模式用来实现控制菜单栏的撤销重做的是否禁用。模式类图如图2-6。</p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781055047.png" alt="状态模式"></p>
+<p><img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146373781001502.png" alt="状态模式具体"></p>
+<p>图2-6状态模式类图</p>
+<h2 id="三、代码应用"><a href="#三、代码应用" class="headerlink" title="三、代码应用"></a>三、代码应用</h2><p><img src="https://media.baby7blog.com/MyBlog/ueditor/jsp/upload/image/20190413/1555146484360011012.png" alt="代码列表1"></p>
+<p><img src="https://media.baby7blog.com/MyBlog/ueditor/jsp/upload/image/20190413/1555146488313013513.png" alt="代码列表2"></p>
+<h3 id="1-工厂模式"><a href="#1-工厂模式" class="headerlink" title="1. 工厂模式"></a>1. 工厂模式</h3><p>Tool抽象一个工具类，ToolFactory类来实例一个生产工具的工厂。工厂模式主要包含： PencilTool类、BrushTool类、EraserTool类、LineTool类、RectTool类、PolygonTool类、RoundTool类、RoundRectTool类、AtomizerTool类、ColorPickedTool类、TextTool类用来实现各种工具。</p>
+<h3 id="2-备忘录模式"><a href="#2-备忘录模式" class="headerlink" title="2. 备忘录模式"></a>2. 备忘录模式</h3><p>备忘录模式使用三个类 Memento、Originator 和 CareTaker。Memento 包含了要被恢复的对象的状态。Originator 创建并在 Memento 对象中存储状态。Caretaker 对象负责从 Memento 中恢复对象的状态。最终实现撤销和重做。</p>
+<h3 id="3-单例模式"><a href="#3-单例模式" class="headerlink" title="3. 单例模式"></a>3. 单例模式</h3><p>CareTaker类实现了单例模式，其内部维护了一个图片列表，为了节省内存资源，使用了单例模式。</p>
+<h3 id="4-模板模式"><a href="#4-模板模式" class="headerlink" title="4. 模板模式"></a>4. 模板模式</h3><p>创建一个定义操作的 MyPanel抽象类，其中，模板方法设置为 final，这样它就不会被重写。ColorPanel和 ToolPanel是扩展了 MyPanel的实体类，它们重写了抽象类的方法。实现创建颜色选择面板和工具栏面板。</p>
+<h3 id="5-迭代器模式"><a href="#5-迭代器模式" class="headerlink" title="5. 迭代器模式"></a>5. 迭代器模式</h3><p>迭代器模式主要包含;迭代器角色(Iterator)，定义遍历元素所需要的方法。具体迭代器角色(ConcreteIterator)，实现迭代器接口中定义的方法，完成集合的迭代;容器角色(List)，定义集合可以进行的操作;具体容器角色(ConcreteAggregate)，就是抽象容器的具体实现类。用来简化文件过滤。</p>
+<h3 id="6-状态模式"><a href="#6-状态模式" class="headerlink" title="6. 状态模式"></a>6. 状态模式</h3><p>状态模式主要包含：State类(状态接口),Context类(具体环境),StartState类,MiddleState类,EndState类。用来实现菜单栏的撤销和重做的是否禁用。</p>
+<p>源码请移步CSDN下载：</p>
+<p><a target="_blank" rel="noopener" href="https://download.csdn.net/download/weixin_35706300/11099426">https://download.csdn.net/download/weixin_35706300&#x2F;11099426</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/12.html" rel="prev" title="UEditor的使用及Word的导入">
+      <i class="fa fa-chevron-left"></i> UEditor的使用及Word的导入
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/14.html" rel="next" title="音乐播放器插件">
+      音乐播放器插件 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%BB%93%E5%90%88%E7%9A%84Java%E7%BB%98%E5%9B%BE%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">六种设计模式结合的Java绘图板</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E6%88%AA%E5%9B%BE%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">部分截图：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0%EF%BC%9A%EF%BC%88%E6%88%AA%E5%9B%BE%E5%9C%A8%E5%8A%9F%E8%83%BD%E5%8C%BA%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">功能实现：（截图在功能区）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 应用场景：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%9A"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 设计模式：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 实现代码：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">一、需求分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E7%B1%BB%E5%9B%BE"><span class="nav-number">1.4.</span> <span class="nav-text">二、设计模式类图</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9B%BE"><span class="nav-number">1.4.1.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%881%EF%BC%89-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">（1） 工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%882%EF%BC%89%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.3.</span> <span class="nav-text">（2）备忘录模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%883%EF%BC%89-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.4.</span> <span class="nav-text">（3） 单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%884%EF%BC%89%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.5.</span> <span class="nav-text">（4）模板模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%885%EF%BC%89%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.6.</span> <span class="nav-text">（5）迭代器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%EF%BC%886%EF%BC%89%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.4.7.</span> <span class="nav-text">（6）状态模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%BB%A3%E7%A0%81%E5%BA%94%E7%94%A8"><span class="nav-number">1.5.</span> <span class="nav-text">三、代码应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. 工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 备忘录模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.3.</span> <span class="nav-text">3. 单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%A8%A1%E6%9D%BF%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.4.</span> <span class="nav-text">4. 模板模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.5.</span> <span class="nav-text">5. 迭代器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.5.6.</span> <span class="nav-text">6. 状态模式</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

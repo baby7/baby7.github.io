@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="平常在微博也就看看热搜，别的都用不到，搞了个这个服务卡片，自己用着舒服（手动狗头）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HarmonyOS - 开发一个微博热搜服务卡片">
+<meta property="og:url" content="https://baby7.github.io/myBlog/106.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="平常在微博也就看看热搜，别的都用不到，搞了个这个服务卡片，自己用着舒服（手动狗头）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/1628133158383963786">
+<meta property="og:image" content="https://harmonyos.oss-cn-beijing.aliyuncs.com/images/202108/413b492284255a3aac52049e5658f780fb1234.gif?x-oss-process=image/resize,w_374,h_757">
+<meta property="article:published_time" content="2021-08-05T03:12:40.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:20.903Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="插件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/1628133158383963786">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/106.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HarmonyOS - 开发一个微博热搜服务卡片 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/106.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HarmonyOS - 开发一个微博热搜服务卡片
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-08-05 11:12:40" itemprop="dateCreated datePublished" datetime="2021-08-05T11:12:40+08:00">2021-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:20" itemprop="dateModified" datetime="2024-08-28T16:25:20+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">前端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/1628133158383963786" width=200 /> </div>
+
+<p>平常在微博也就看看热搜，别的都用不到，搞了个这个服务卡片，自己用着舒服（手动狗头）</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="HarmonyOS-开发一个微博热搜服务卡片"><a href="#HarmonyOS-开发一个微博热搜服务卡片" class="headerlink" title="HarmonyOS - 开发一个微博热搜服务卡片"></a>HarmonyOS - 开发一个微博热搜服务卡片</h1></blockquote>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://harmonyos.oss-cn-beijing.aliyuncs.com/images/202108/413b492284255a3aac52049e5658f780fb1234.gif?x-oss-process=image/resize,w_374,h_757" alt="鸿蒙微博热搜服务卡片"></p>
+<h2 id="关键原理"><a href="#关键原理" class="headerlink" title="关键原理"></a>关键原理</h2><ul>
+<li><p>使用JS的服务卡片，相对于Java的服务卡片，JS的服务卡片的支持更加齐全，效果更佳</p>
+</li>
+<li><p>使用了JS的UI中的List组件显示微博的热搜列表，每个子项包括序号、标题、热度和类型</p>
+</li>
+<li><p>通过在Ability的onCreateForm(Intent intent)函数中进行热搜的数据分析返回</p>
+</li>
+<li><p>使用Java的Jsoup包进行网页的html数据获取，再使用其分析出微博的热搜信息</p>
+</li>
+</ul>
+<h2 id="服务卡片的页面和样式"><a href="#服务卡片的页面和样式" class="headerlink" title="服务卡片的页面和样式"></a>服务卡片的页面和样式</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">list</span> <span class="attr">class</span>=<span class="string">&quot;list&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 表头 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">list-item</span> <span class="attr">class</span>=<span class="string">&quot;list-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;div&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;item_number&quot;</span> <span class="attr">style</span>=<span class="string">&quot;color: #999;&quot;</span> &gt;</span>序号<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;item_title&quot;</span> <span class="attr">style</span>=<span class="string">&quot;color: #999;&quot;</span>&gt;</span>关键词<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">list-item</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 主要内容 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">list-item</span> <span class="attr">for</span>=<span class="string">&quot;&#123;&#123;cards&#125;&#125;&quot;</span> <span class="attr">class</span>=<span class="string">&quot;list-item&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;div&quot;</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 序号 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;item_number&quot;</span>&gt;</span>&#123;&#123; $item.number &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 标题 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;item_title&quot;</span>&gt;</span>&#123;&#123; $item.title &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 热度 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;item_count&quot;</span>&gt;</span>&#123;&#123; $item.count &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 类型(新/热/商) --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">text</span> <span class="attr">class</span>=<span class="string">&quot;item_type&quot;</span> <span class="attr">style</span>=<span class="string">&quot;background-color: &#123;&#123;$item.color&#125;&#125;;&quot;</span> &gt;</span>&#123;&#123; $item.type &#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">list-item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">list</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后是样式文件</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*列表样式*/</span></span><br><span class="line"><span class="selector-class">.list</span>&#123;</span><br><span class="line">    <span class="attribute">align-items</span>:center; <span class="comment">/*居中对齐*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*列表中每个元素的样式*/</span></span><br><span class="line"><span class="selector-class">.list-item</span>&#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span>; <span class="comment">/*圆角*/</span></span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f2f2f2</span>; <span class="comment">/*背景颜色*/</span></span><br><span class="line">    <span class="attribute">margin-bottom</span>: <span class="number">3px</span>; <span class="comment">/*向下间隔*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*元素中内容的样式*/</span></span><br><span class="line"><span class="selector-class">.div</span>&#123;</span><br><span class="line">    <span class="attribute">margin</span>:<span class="number">6px</span>; <span class="comment">/*四周边距*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*元素-序号的样式*/</span></span><br><span class="line"><span class="selector-class">.item_number</span> &#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#f26d5f</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">30px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: left; <span class="comment">/*左对齐*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*元素-标题的样式*/</span></span><br><span class="line"><span class="selector-class">.item_title</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#0078b6</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">220px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*元素-热度的样式*/</span></span><br><span class="line"><span class="selector-class">.item_count</span>&#123;</span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: right; <span class="comment">/*右对齐*/</span></span><br><span class="line">    <span class="attribute">width</span>: <span class="number">60px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#808080</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*元素-类型的样式*/</span></span><br><span class="line"><span class="selector-class">.item_type</span>&#123;</span><br><span class="line">    <span class="attribute">margin-left</span>: <span class="number">5px</span>; <span class="comment">/*向左间隔*/</span></span><br><span class="line">    <span class="attribute">font-size</span>: <span class="number">12px</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: right;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">15px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#fff</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">2px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>接着是js文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">cards</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">&quot;number&quot;</span>: <span class="number">1</span>,                        <span class="comment">//序号</span></span><br><span class="line">                <span class="string">&quot;title&quot;</span>: <span class="string">&quot;义乌1秒发6只冠军同款 &quot;</span>,     <span class="comment">//标题</span></span><br><span class="line">                <span class="string">&quot;count&quot;</span>: <span class="number">4591790</span>,                   <span class="comment">//热度</span></span><br><span class="line">                <span class="string">&quot;type&quot;</span>: <span class="string">&quot;新&quot;</span>,                       <span class="comment">//类型(新/热/商)</span></span><br><span class="line">                <span class="string">&quot;color&quot;</span>: <span class="string">&quot;#f2f2f2&quot;</span>                  <span class="comment">//类型的颜色</span></span><br><span class="line">            &#125;</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Java端进行网页请求和分析出微博热搜信息"><a href="#Java端进行网页请求和分析出微博热搜信息" class="headerlink" title="Java端进行网页请求和分析出微博热搜信息"></a>Java端进行网页请求和分析出微博热搜信息</h2><p>首先需要引入一个包Jsoup，含有网页请求和网页分析的工具</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">&#x27;org.jsoup:jsoup:1.12.1&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后写一个获取微博热搜的工具类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.jsoup.Jsoup;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.internal.StringUtil;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.nodes.Document;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.nodes.Element;</span><br><span class="line"><span class="keyword">import</span> org.jsoup.select.Elements;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 获取微博热搜信息工具</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">GetWeiboListUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 微博热搜地址</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">URL</span> <span class="operator">=</span> <span class="string">&quot;https://s.weibo.com/top/summary?cate=realtimehot&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> List&lt;Map&lt;String, String&gt;&gt; <span class="title function_">getWeiboList</span><span class="params">()</span> &#123;</span><br><span class="line">        List&lt;Map&lt;String, String&gt;&gt; weiboList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 使用Jsoup进行网页请求</span></span><br><span class="line">            <span class="type">Document</span> <span class="variable">document</span> <span class="operator">=</span> Jsoup.connect(URL).get();</span><br><span class="line">            <span class="comment">// 开始分析HTML</span></span><br><span class="line">            <span class="type">Element</span> <span class="variable">plTopRealTimeHot</span> <span class="operator">=</span> document.getElementById(<span class="string">&quot;pl_top_realtimehot&quot;</span>);</span><br><span class="line">            <span class="type">Elements</span> <span class="variable">tBody</span> <span class="operator">=</span> plTopRealTimeHot.children().get(<span class="number">0</span>).children().get(<span class="number">1</span>).children();</span><br><span class="line">            <span class="keyword">for</span> (Element element : tBody) &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">number</span> <span class="operator">=</span> element.children().get(<span class="number">0</span>).text();</span><br><span class="line">                <span class="keyword">if</span> (StringUtil.isBlank(number)) &#123;</span><br><span class="line">                    number = <span class="string">&quot;↑&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">String</span> <span class="variable">title</span> <span class="operator">=</span> element.children().get(<span class="number">1</span>).children().get(<span class="number">0</span>).text();</span><br><span class="line">                <span class="type">String</span> <span class="variable">count</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">                <span class="keyword">if</span> (element.children().get(<span class="number">1</span>).children().size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">                    count = element.children().get(<span class="number">1</span>).children().get(<span class="number">1</span>).text();</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">String</span> <span class="variable">type</span> <span class="operator">=</span> element.children().get(<span class="number">2</span>).text();</span><br><span class="line">                <span class="type">String</span> <span class="variable">color</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">                <span class="comment">// 根据类型打上颜色</span></span><br><span class="line">                <span class="keyword">if</span> (!StringUtil.isBlank(type)) &#123;</span><br><span class="line">                    <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">                        <span class="keyword">case</span> <span class="string">&quot;热&quot;</span>: color = <span class="string">&quot;#ff9406&quot;</span>;<span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> <span class="string">&quot;新&quot;</span>: color = <span class="string">&quot;#ff3852&quot;</span>;<span class="keyword">break</span>;</span><br><span class="line">                        <span class="keyword">case</span> <span class="string">&quot;商&quot;</span>: color = <span class="string">&quot;#00b7ee&quot;</span>;<span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                Map&lt;String, String&gt; weiboItem = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">                weiboItem.put(<span class="string">&quot;number&quot;</span>, number);</span><br><span class="line">                weiboItem.put(<span class="string">&quot;title&quot;</span>, title);</span><br><span class="line">                weiboItem.put(<span class="string">&quot;count&quot;</span>, count);</span><br><span class="line">                weiboItem.put(<span class="string">&quot;type&quot;</span>, type);</span><br><span class="line">                weiboItem.put(<span class="string">&quot;color&quot;</span>, color);</span><br><span class="line">                weiboList.add(weiboItem);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> weiboList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后是实现Ability的创建事件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> ***.GetWeiboListUtil;</span><br><span class="line"><span class="keyword">import</span> ohos.aafwk.ability.AbilitySlice;</span><br><span class="line"><span class="keyword">import</span> ohos.aafwk.ability.FormBindingData;</span><br><span class="line"><span class="keyword">import</span> ohos.aafwk.ability.ProviderFormInfo;</span><br><span class="line"><span class="keyword">import</span> ohos.ace.ability.AceAbility;</span><br><span class="line"><span class="keyword">import</span> ohos.aafwk.content.Intent;</span><br><span class="line"><span class="keyword">import</span> ohos.utils.zson.ZSONArray;</span><br><span class="line"><span class="keyword">import</span> ohos.utils.zson.ZSONObject;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainAbility</span> <span class="keyword">extends</span> <span class="title class_">AceAbility</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// UI侧列表名称</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">LIST_NAME</span> <span class="operator">=</span> <span class="string">&quot;cards&quot;</span>;</span><br><span class="line">    <span class="comment">// 卡片类型4*4</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DEFAULT_DIMENSION_4X4</span> <span class="operator">=</span> <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onStart</span><span class="params">(Intent intent)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onStart(intent);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onStop</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onStop();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> ProviderFormInfo <span class="title function_">onCreateForm</span><span class="params">(Intent intent)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">formName</span> <span class="operator">=</span> intent.getStringParam(AbilitySlice.PARAM_FORM_NAME_KEY);</span><br><span class="line">        <span class="type">int</span> <span class="variable">dimension</span> <span class="operator">=</span> intent.getIntParam(AbilitySlice.PARAM_FORM_DIMENSION_KEY, DEFAULT_DIMENSION_4X4);</span><br><span class="line">        <span class="keyword">if</span> (formName.equals(<span class="string">&quot;widget&quot;</span>) &amp;&amp; dimension == DEFAULT_DIMENSION_4X4) &#123;</span><br><span class="line">            <span class="type">ProviderFormInfo</span> <span class="variable">providerFormInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ProviderFormInfo</span>();</span><br><span class="line">            <span class="type">ZSONObject</span> <span class="variable">zsonObject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ZSONObject</span>();</span><br><span class="line">            List&lt;Object&gt; weiboList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;(GetWeiboListUtil.getWeiboList());</span><br><span class="line">            <span class="type">ZSONArray</span> <span class="variable">zsonArray</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ZSONArray</span>(weiboList);</span><br><span class="line">            zsonObject.put(LIST_NAME, zsonArray);</span><br><span class="line">            providerFormInfo.setJsBindingData(<span class="keyword">new</span> <span class="title class_">FormBindingData</span>(zsonObject));</span><br><span class="line">            <span class="keyword">return</span> providerFormInfo;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onUpdateForm</span><span class="params">(<span class="type">long</span> formId)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onUpdateForm(formId);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onDeleteForm</span><span class="params">(<span class="type">long</span> formId)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onDeleteForm(formId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8F%92%E4%BB%B6/" rel="tag"># 插件</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/105.html" rel="prev" title="Jenkins容器遭到挖矿程序入侵后的梳理和解决">
+      <i class="fa fa-chevron-left"></i> Jenkins容器遭到挖矿程序入侵后的梳理和解决
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/107.html" rel="next" title="关于为知笔记Docker容器的MySQL连接和备份">
+      关于为知笔记Docker容器的MySQL连接和备份 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HarmonyOS-%E5%BC%80%E5%8F%91%E4%B8%80%E4%B8%AA%E5%BE%AE%E5%8D%9A%E7%83%AD%E6%90%9C%E6%9C%8D%E5%8A%A1%E5%8D%A1%E7%89%87"><span class="nav-number">1.</span> <span class="nav-text">HarmonyOS - 开发一个微博热搜服务卡片</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text">效果图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">关键原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%8D%A1%E7%89%87%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%92%8C%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">服务卡片的页面和样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E7%AB%AF%E8%BF%9B%E8%A1%8C%E7%BD%91%E9%A1%B5%E8%AF%B7%E6%B1%82%E5%92%8C%E5%88%86%E6%9E%90%E5%87%BA%E5%BE%AE%E5%8D%9A%E7%83%AD%E6%90%9C%E4%BF%A1%E6%81%AF"><span class="nav-number">1.4.</span> <span class="nav-text">Java端进行网页请求和分析出微博热搜信息</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

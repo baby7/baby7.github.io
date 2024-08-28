@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="讲一讲我入手威联通TS-551都搞了些什么">
+<meta property="og:type" content="article">
+<meta property="og:title" content="我的NAS折腾之路（威联通TS-551，不定期更新）">
+<meta property="og:url" content="https://baby7.github.io/myBlog/108.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="讲一讲我入手威联通TS-551都搞了些什么">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/1639031304266936474">
+<meta property="og:image" content="https://media.baby7blog.com/1639031304266936474">
+<meta property="og:image" content="https://media.baby7blog.com/1639034089565575430">
+<meta property="og:image" content="https://media.baby7blog.com/1639032152752945052">
+<meta property="og:image" content="https://media.baby7blog.com/1639032083138760598">
+<meta property="og:image" content="https://media.baby7blog.com/1639032118257512506">
+<meta property="og:image" content="https://media.baby7blog.com/1642409080136538355">
+<meta property="article:published_time" content="2021-12-09T06:27:20.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:20.969Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="Nas">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/1639031304266936474">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/108.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>我的NAS折腾之路（威联通TS-551，不定期更新） | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/108.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          我的NAS折腾之路（威联通TS-551，不定期更新）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-12-09 14:27:20" itemprop="dateCreated datePublished" datetime="2021-12-09T14:27:20+08:00">2021-12-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:20" itemprop="dateModified" datetime="2024-08-28T16:25:20+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nas/" itemprop="url" rel="index"><span itemprop="name">Nas</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/1639031304266936474" width=200 /> </div>
+
+<p>讲一讲我入手威联通TS-551都搞了些什么</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="我的NAS折腾之路（不定期更新）"><a href="#我的NAS折腾之路（不定期更新）" class="headerlink" title="我的NAS折腾之路（不定期更新）"></a>我的NAS折腾之路（不定期更新）</h1></blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>入手了一个威联通TS-551的NAS，大概一千三入手</p>
+<p>两个2.5寸盘位，三个3.5寸盘位，可以组一个Raid1和一个Raid5</p>
+<p>暂时2.5寸盘位塞了一个三星的SSD，旧电脑拆下来的，用它做系统盘</p>
+<p>这样的话平常不存取3.5寸盘的数据的话就没有什么声音（3.5寸盘塞了个西数的红盘Plus，有炒豆子的声音）</p>
+<p>机器本身有一条宜鼎DDR3L 2G的内存条，买了个协德DDR3L 4G的，发现不兼容，即使单插协德的也不行，后面买了个宇瞻DDR3L 4G的，兼容了，花了一百四（忒贵了）<br><img src="https://media.baby7blog.com/1639031304266936474" alt="威联通TS-551"><br><br /></p>
+<h2 id="外网挂载NAS"><a href="#外网挂载NAS" class="headerlink" title="外网挂载NAS"></a>外网挂载NAS</h2><p>前提是你有公网ip或者做了内网穿透，这里只是说下挂载软件</p>
+<p>首先的话需要提前在NAS上开启WebDav或者FTP</p>
+<p>之前用的是RaiDrive，界面很好看，功能也很多，但是只有收费版才能去广告，普通版会有软件内的标题广告，还有右下角弹窗广告（这个弹窗广告火绒去不掉，说是功能性弹窗），这玩意还没有破解版就很难受</p>
+<p>后来搞到了破解版的NetDrive2，虽然界面没有上面那个好看，但也算简洁大方了，也支持WebDav和FTP等的挂载</p>
+<p>++如果需要这个软件破解版的话可以下方评论区留下邮箱和软件名称，我有时间就会发过去++</p>
+<p>放个图<br><img src="https://media.baby7blog.com/1639034089565575430" alt="d1e7a57f3a08458466f8889b8c1a3fb.png"><br><br /></p>
+<h2 id="Docker-玩法"><a href="#Docker-玩法" class="headerlink" title="Docker 玩法"></a>Docker 玩法</h2><h3 id="一、搭建一个私人签到系统"><a href="#一、搭建一个私人签到系统" class="headerlink" title="一、搭建一个私人签到系统"></a>一、搭建一个私人签到系统</h3><p>使用的镜像是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/r/a76yyyy/qiandao">a76yyyy&#x2F;qiandao</a></p>
+<p>这里我还搭建了一个<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/_/mysql">mysql:8.0.26</a>的容器，qiandao系统的数据源就直接放到这里了</p>
+<p>里面有很多公共的签到模板，直接使用就可以，也可以上传har格式的文件新建或编辑<br><img src="https://media.baby7blog.com/1639032152752945052" alt="image.png"><br><br /></p>
+<h3 id="二、搭建一个领取Epic每周免费游戏的容器"><a href="#二、搭建一个领取Epic每周免费游戏的容器" class="headerlink" title="二、搭建一个领取Epic每周免费游戏的容器"></a>二、搭建一个领取Epic每周免费游戏的容器</h3><p>使用的镜像是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/r/luminoleon/epicgames-claimer">luminoleon&#x2F;epicgames-claimer</a></p>
+<p>每天定时领取E宝的周限免游戏，爽歪歪<br><br /></p>
+<h3 id="三、搭建一个智能家居系统-HomeAssistant"><a href="#三、搭建一个智能家居系统-HomeAssistant" class="headerlink" title="三、搭建一个智能家居系统(HomeAssistant)"></a>三、搭建一个智能家居系统(HomeAssistant)</h3><p>使用的镜像是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/r/homeassistant/home-assistant">homeassistant&#x2F;home-assistant</a></p>
+<p>这是个开源的第三方智能家居系统，可以接入各种品牌的各种智能家居(只要支持)，可以离线运行，有各种各样的界面，这个系统的生态过于庞大，无法几句话讲清楚，有兴趣的话指路国内最大的HomeAssistant论坛：<a target="_blank" rel="noopener" href="https://bbs.hassbian.com/?fromuser=baby7blog">瀚思彼岸</a>，也可以看看我博客的其他文章，也有讲HomeAssistant的<br><img src="https://media.baby7blog.com/1639032083138760598" alt="54165ea517516a8d825776a88334eb8.png"><br><br /></p>
+<h3 id="四、搭建一个Minecraft服务器"><a href="#四、搭建一个Minecraft服务器" class="headerlink" title="四、搭建一个Minecraft服务器"></a>四、搭建一个Minecraft服务器</h3><p>放一下我的docker-compose配置吧，镜像可以看到我用的是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/r/itzg/minecraft-server">itzg&#x2F;minecraft-server:java16</a></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mc-world-servival:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">itzg/minecraft-server:java16</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">25565</span><span class="string">:25565</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/share/CACHEDEV1_DATA/docker/minecraft/mc-world-servival:/data</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">EULA=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TYPE=PAPER</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">VERSION=1.16.5</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">OPS=willminec</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ONLINE_MODE=FALSE</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">mc-world-servival</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">stdin_open:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+
+<p>我用的是PAPER类型的服务器，适合进行插件的添加，性能优化似乎也更好一下</p>
+<p>版本的话选的是1.16.5，相对来说比较新，插件也多一些<br><br /></p>
+<h3 id="五、搭建一个团队笔记服务"><a href="#五、搭建一个团队笔记服务" class="headerlink" title="五、搭建一个团队笔记服务"></a>五、搭建一个团队笔记服务</h3><p>使用的镜像是<a target="_blank" rel="noopener" href="https://registry.hub.docker.com/r/wiznote/wizserver">wiznote&#x2F;wizserver</a></p>
+<p>这是一个国内的公司做的，颜值做的不错，功能做的也挺全的，设备覆盖的也很全</p>
+<p>不过后来我还是换回了威联通的Notes，因为发现为知这个docker有一点费cpu，耗个百分之几的样子，我为了mc服务器的流畅就把它停了<br><img src="https://media.baby7blog.com/1639032118257512506" alt="image.png"></p>
+<h2 id="原生应用"><a href="#原生应用" class="headerlink" title="原生应用"></a>原生应用</h2><h3 id="一、安装Plex并在树莓派安装kodi的plex插件"><a href="#一、安装Plex并在树莓派安装kodi的plex插件" class="headerlink" title="一、安装Plex并在树莓派安装kodi的plex插件"></a>一、安装Plex并在树莓派安装kodi的plex插件</h3><h4 id="1-提前削刮和整理"><a href="#1-提前削刮和整理" class="headerlink" title="1.提前削刮和整理"></a>1.提前削刮和整理</h4><p>这里我建议提前使用TinyMediaManager这个软件进行削刮，削刮后使用该软件进行电影电视剧和文件夹的重命名和结构整理</p>
+<p>++如果需要这个软件破解版的话可以下方评论区留下邮箱和软件名称，我有时间就会发过去++</p>
+<h4 id="2-Plex服务的安装"><a href="#2-Plex服务的安装" class="headerlink" title="2.Plex服务的安装"></a>2.Plex服务的安装</h4><p>Plex服务直接在appcenter的娱乐板块直接安装就可以，安装后点击图标打开plex的web页面，在设置处添加资料库，然后等待自动削刮即可，但是可能某些电影或电视剧削刮失败，</p>
+<p><img src="https://media.baby7blog.com/1642409080136538355" alt="image.png"></p>
+<h4 id="3-Kodi的plex插件"><a href="#3-Kodi的plex插件" class="headerlink" title="3.Kodi的plex插件"></a>3.Kodi的plex插件</h4><p>直接在插件处搜索plex然后选中第一个直接安装即可，安装后点击进入，然后记住显示的字母，根据提示打开页面输入这串代码以激活</p>
+<h3 id="二、关于Plex的https"><a href="#二、关于Plex的https" class="headerlink" title="二、关于Plex的https"></a>二、关于Plex的https</h3><p>参考我的这篇博客：<a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog?id=113">https://www.baby7blog.com/myBlog?id=113</a></p>
+<h2 id="关于下载"><a href="#关于下载" class="headerlink" title="关于下载"></a>关于下载</h2><p>这块的东西很多人说过了，自带的、迅雷套件、玩物下载、还有qb和tr，我就不说了，这里讲一个针对单个百度网盘文件快速下载的</p>
+<h3 id="一、使用油猴插件和aria2下载百度网盘单个文件"><a href="#一、使用油猴插件和aria2下载百度网盘单个文件" class="headerlink" title="一、使用油猴插件和aria2下载百度网盘单个文件"></a>一、使用油猴插件和aria2下载百度网盘单个文件</h3><h4 id="1-在威联通的docker中安装aria2"><a href="#1-在威联通的docker中安装aria2" class="headerlink" title="1. 在威联通的docker中安装aria2"></a>1. 在威联通的docker中安装aria2</h4><p>这里可以参考：<a target="_blank" rel="noopener" href="https://post.smzdm.com/p/awx0w2qg/">https://post.smzdm.com/p/awx0w2qg/</a></p>
+<h4 id="2-需要浏览器安装油猴"><a href="#2-需要浏览器安装油猴" class="headerlink" title="2. 需要浏览器安装油猴"></a>2. 需要浏览器安装油猴</h4><p>地址：<a target="_blank" rel="noopener" href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN">https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd?hl=zh-CN</a></p>
+<h4 id="3-然后在油猴插件中安装对应的插件"><a href="#3-然后在油猴插件中安装对应的插件" class="headerlink" title="3. 然后在油猴插件中安装对应的插件"></a>3. 然后在油猴插件中安装对应的插件</h4><p>地址：<a target="_blank" rel="noopener" href="https://greasyfork.org/zh-CN/scripts/418182-%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%AE%80%E6%98%93%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B-%E7%9B%B4%E9%93%BE%E4%B8%8B%E8%BD%BD%E5%A4%8D%E6%B4%BB%E7%89%88">https://greasyfork.org/zh-CN/scripts/418182-%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E7%AE%80%E6%98%93%E4%B8%8B%E8%BD%BD%E5%8A%A9%E6%89%8B-%E7%9B%B4%E9%93%BE%E4%B8%8B%E8%BD%BD%E5%A4%8D%E6%B4%BB%E7%89%88</a></p>
+<h4 id="4-修改插件"><a href="#4-修改插件" class="headerlink" title="4. 修改插件"></a>4. 修改插件</h4><p>点击油猴图标然后点击管理面板，然后在列表中找到对应插件，点击右边的编辑，在用户域白名单中加入你的威联通域名或者ip</p>
+<h4 id="5-修改aria2下载设置"><a href="#5-修改aria2下载设置" class="headerlink" title="5. 修改aria2下载设置"></a>5. 修改aria2下载设置</h4><p>(1). 在百度网盘中选择一个文件再点击左上角简易下载助手，点击获取直链地址，点击下方配置aria2，左边地址修改域名为你自己的，例如我的是http:&#x2F;&#x2F;<em><strong>.</strong></em>.com:10086&#x2F;jsonrpc（不要直接复制），右边填写的是【打开自己的aria2-&gt;系统设置-&gt;ariaNg设置-&gt;RPC-&gt;AricRPC密钥（没有就自己设置一个）】</p>
+<p>(2). 复制插件下方【必须把IDM的UA改为】的右边，然后在自己的aria2-&gt;系统设置-&gt;Aria2设置-&gt;HTTP设置-&gt;自定义User Agent中粘贴进去</p>
+<h4 id="6-在插件中点击发送至Aria2即可"><a href="#6-在插件中点击发送至Aria2即可" class="headerlink" title="6. 在插件中点击发送至Aria2即可"></a>6. 在插件中点击发送至Aria2即可</h4>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Nas/" rel="tag"># Nas</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/107.html" rel="prev" title="关于为知笔记Docker容器的MySQL连接和备份">
+      <i class="fa fa-chevron-left"></i> 关于为知笔记Docker容器的MySQL连接和备份
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/109.html" rel="next" title="国家公祭日网站变色方法">
+      国家公祭日网站变色方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84NAS%E6%8A%98%E8%85%BE%E4%B9%8B%E8%B7%AF%EF%BC%88%E4%B8%8D%E5%AE%9A%E6%9C%9F%E6%9B%B4%E6%96%B0%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">我的NAS折腾之路（不定期更新）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%96%E7%BD%91%E6%8C%82%E8%BD%BDNAS"><span class="nav-number">1.2.</span> <span class="nav-text">外网挂载NAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E7%8E%A9%E6%B3%95"><span class="nav-number">1.3.</span> <span class="nav-text">Docker 玩法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%A7%81%E4%BA%BA%E7%AD%BE%E5%88%B0%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.3.1.</span> <span class="nav-text">一、搭建一个私人签到系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%A2%86%E5%8F%96Epic%E6%AF%8F%E5%91%A8%E5%85%8D%E8%B4%B9%E6%B8%B8%E6%88%8F%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="nav-number">1.3.2.</span> <span class="nav-text">二、搭建一个领取Epic每周免费游戏的容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85%E7%B3%BB%E7%BB%9F-HomeAssistant"><span class="nav-number">1.3.3.</span> <span class="nav-text">三、搭建一个智能家居系统(HomeAssistant)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAMinecraft%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">1.3.4.</span> <span class="nav-text">四、搭建一个Minecraft服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%9B%A2%E9%98%9F%E7%AC%94%E8%AE%B0%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.5.</span> <span class="nav-text">五、搭建一个团队笔记服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">原生应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%AE%89%E8%A3%85Plex%E5%B9%B6%E5%9C%A8%E6%A0%91%E8%8E%93%E6%B4%BE%E5%AE%89%E8%A3%85kodi%E7%9A%84plex%E6%8F%92%E4%BB%B6"><span class="nav-number">1.4.1.</span> <span class="nav-text">一、安装Plex并在树莓派安装kodi的plex插件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%8F%90%E5%89%8D%E5%89%8A%E5%88%AE%E5%92%8C%E6%95%B4%E7%90%86"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">1.提前削刮和整理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Plex%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">2.Plex服务的安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Kodi%E7%9A%84plex%E6%8F%92%E4%BB%B6"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.Kodi的plex插件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%85%B3%E4%BA%8EPlex%E7%9A%84https"><span class="nav-number">1.4.2.</span> <span class="nav-text">二、关于Plex的https</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.5.</span> <span class="nav-text">关于下载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BD%BF%E7%94%A8%E6%B2%B9%E7%8C%B4%E6%8F%92%E4%BB%B6%E5%92%8Caria2%E4%B8%8B%E8%BD%BD%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98%E5%8D%95%E4%B8%AA%E6%96%87%E4%BB%B6"><span class="nav-number">1.5.1.</span> <span class="nav-text">一、使用油猴插件和aria2下载百度网盘单个文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%9C%A8%E5%A8%81%E8%81%94%E9%80%9A%E7%9A%84docker%E4%B8%AD%E5%AE%89%E8%A3%85aria2"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">1. 在威联通的docker中安装aria2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E9%9C%80%E8%A6%81%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85%E6%B2%B9%E7%8C%B4"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">2. 需要浏览器安装油猴</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E7%84%B6%E5%90%8E%E5%9C%A8%E6%B2%B9%E7%8C%B4%E6%8F%92%E4%BB%B6%E4%B8%AD%E5%AE%89%E8%A3%85%E5%AF%B9%E5%BA%94%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">3. 然后在油猴插件中安装对应的插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E4%BF%AE%E6%94%B9%E6%8F%92%E4%BB%B6"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">4. 修改插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E4%BF%AE%E6%94%B9aria2%E4%B8%8B%E8%BD%BD%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">5. 修改aria2下载设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%9C%A8%E6%8F%92%E4%BB%B6%E4%B8%AD%E7%82%B9%E5%87%BB%E5%8F%91%E9%80%81%E8%87%B3Aria2%E5%8D%B3%E5%8F%AF"><span class="nav-number">1.5.1.6.</span> <span class="nav-text">6. 在插件中点击发送至Aria2即可</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

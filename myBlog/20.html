@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="爬取豆瓣电影排行的前250名，要爬取的信息有电影名,海报,评分,导演,编剧,主演,类型,片长,首次上映日期,简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scrapy实战：双向爬取（豆瓣电影Top250）">
+<meta property="og:url" content="https://baby7.github.io/myBlog/20.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="爬取豆瓣电影排行的前250名，要爬取的信息有电影名,海报,评分,导演,编剧,主演,类型,片长,首次上映日期,简介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557729875653001252.jpg">
+<meta property="og:image" content="http://media.baby7blog.com/ueditor/jsp/upload/image/20190510/1557448496900014751.png">
+<meta property="og:image" content="http://media.baby7blog.com/ueditor/jsp/upload/image/20190510/1557448533556001986.png">
+<meta property="og:image" content="http://media.baby7blog.com/ueditor/jsp/upload/image/20190510/1557448518478076491.png">
+<meta property="article:published_time" content="2019-05-10T00:47:16.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:18.725Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557729875653001252.jpg">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/20.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Scrapy实战：双向爬取（豆瓣电影Top250） | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/20.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Scrapy实战：双向爬取（豆瓣电影Top250）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-10 08:47:16" itemprop="dateCreated datePublished" datetime="2019-05-10T08:47:16+08:00">2019-05-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:18" itemprop="dateModified" datetime="2024-08-28T16:25:18+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">爬虫相关</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557729875653001252.jpg" width=200 /> </div>
+
+<p>爬取豆瓣电影排行的前250名，要爬取的信息有电影名,海报,评分,导演,编剧,主演,类型,片长,首次上映日期,简介</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="Scrapy实战：双向爬取（豆瓣电影Top250）"><a href="#Scrapy实战：双向爬取（豆瓣电影Top250）" class="headerlink" title="Scrapy实战：双向爬取（豆瓣电影Top250）"></a>Scrapy实战：双向爬取（豆瓣电影Top250）</h1></blockquote>
+<p>需要爬取的信息：豆瓣电影排行的前250名</p>
+<p>爬取网页：<a target="_blank" rel="noopener" href="https://movie.douban.com/top250">https://movie.douban.com/top250</a></p>
+<p>分析：</p>
+<p>Top排行页上部分</p>
+<p><img src="http://media.baby7blog.com/ueditor/jsp/upload/image/20190510/1557448496900014751.png" alt="Top排行页上部分"></p>
+<p>Top排行页下部分</p>
+<p><img src="http://media.baby7blog.com/ueditor/jsp/upload/image/20190510/1557448533556001986.png" alt="Top排行页下部分"></p>
+<p>电影详情页：</p>
+<p><img src="http://media.baby7blog.com/ueditor/jsp/upload/image/20190510/1557448518478076491.png" alt="Top排行页下部分"></p>
+<p>我们想爬取的信息：电影名,海报,评分,导演,编剧,主演,类型,片长,首次上映日期,简介</p>
+<h2 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h2><p>由于Top250页每页只有25条，另外电影信息在列表页中才有，所以需要进行双向爬取，在索引页中爬取信息是横向爬取，在分页中爬取下一页是纵向爬取。</p>
+<h2 id="过程："><a href="#过程：" class="headerlink" title="过程："></a>过程：</h2><p>要爬取的信息：items.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Define here the models for your scraped items</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># See documentation in:</span></span><br><span class="line"><span class="comment"># https://doc.scrapy.org/en/latest/topics/items.html</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.item <span class="keyword">import</span> Item, Field</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DoubanItem</span>(<span class="title class_ inherited__">Item</span>):</span><br><span class="line">    <span class="comment"># DouBan Movies</span></span><br><span class="line">    name = Field()                  <span class="comment"># 电影名</span></span><br><span class="line">    image_url = Field()             <span class="comment"># 海报</span></span><br><span class="line">    average = Field()               <span class="comment"># 评分</span></span><br><span class="line">    director = Field()              <span class="comment"># 导演</span></span><br><span class="line">    screenwriter = Field()          <span class="comment"># 编剧</span></span><br><span class="line">    star = Field()                  <span class="comment"># 主演</span></span><br><span class="line">    genre = Field()                 <span class="comment"># 类型</span></span><br><span class="line">    runtime = Field()               <span class="comment"># 片长</span></span><br><span class="line">    initialReleaseDate = Field()    <span class="comment"># 首次上映日期</span></span><br><span class="line">    summary = Field()               <span class="comment"># 简介</span></span><br></pre></td></tr></table></figure>
+
+<p>爬虫核心：basic.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urljoin</span><br><span class="line"><span class="keyword">from</span> scrapy.loader <span class="keyword">import</span> ItemLoader</span><br><span class="line"><span class="keyword">from</span> douban.items <span class="keyword">import</span> DoubanItem</span><br><span class="line"><span class="keyword">from</span> scrapy.loader.processors <span class="keyword">import</span> MapCompose, Join</span><br><span class="line"><span class="keyword">from</span> scrapy.http <span class="keyword">import</span> Request</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BasicSpider</span>(scrapy.Spider):</span><br><span class="line">    name = <span class="string">&quot;basic&quot;</span></span><br><span class="line">    allowed_domains = [<span class="string">&quot;web&quot;</span>]</span><br><span class="line">    start_urls = (</span><br><span class="line">        <span class="string">&#x27;https://movie.douban.com/top250&#x27;</span>,</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse</span>(<span class="params">self, response</span>):</span><br><span class="line">        next_selector = response.xpath(<span class="string">&#x27;//span[@class=&quot;next&quot;]/a/@href&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> next_selector.extract():</span><br><span class="line">            <span class="keyword">yield</span> Request(urljoin(response.url, url), dont_filter=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        item_selector = response.xpath(<span class="string">&#x27;//div[@class=&quot;hd&quot;]/a/@href&#x27;</span>)</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> item_selector.extract():</span><br><span class="line">            <span class="keyword">yield</span> Request(urljoin(response.url, url), callback=<span class="variable language_">self</span>.parse_item, dont_filter=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">parse_item</span>(<span class="params">self, response</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot; This function parses a property page</span></span><br><span class="line"><span class="string">        @url http://movie.douban.com/subject/26683723</span></span><br><span class="line"><span class="string">        @return items 1</span></span><br><span class="line"><span class="string">        @scrapes name average director screenwriter star genre runtime initialReleaseDate summary</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        item_loader = ItemLoader(item=DoubanItem(), response=response)</span><br><span class="line"></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;//*[@property=&quot;v:itemreviewed&quot;]/text()&#x27;</span>)                                 <span class="comment"># 电影名</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;image_url&#x27;</span>, <span class="string">&#x27;//*[@rel=&quot;v:image&quot;]/@src&#x27;</span>)                                          <span class="comment"># 海报</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;average&#x27;</span>, <span class="string">&#x27;//*[@property=&quot;v:average&quot;]/text()&#x27;</span>)                                   <span class="comment"># 评分</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;director&#x27;</span>, <span class="string">&#x27;//div[@id =&quot;info&quot;]/span[1]/span[@class=&quot;attrs&quot;]/a/text()&#x27;</span>)           <span class="comment"># 导演</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;screenwriter&#x27;</span>, <span class="string">&#x27;//div[@id =&quot;info&quot;]/span[2]/span[@class=&quot;attrs&quot;]/a/text()&#x27;</span>,</span><br><span class="line">                              Join())                                                                           <span class="comment"># 编剧</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;star&#x27;</span>, <span class="string">&#x27;//div[@id =&quot;info&quot;]/span[@class=&quot;actor&quot;]/span[@class=&quot;attrs&quot;]/a/text()&#x27;</span>,</span><br><span class="line">                              Join())                                                                           <span class="comment"># 主演</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;genre&#x27;</span>, <span class="string">&#x27;//*[@property=&quot;v:genre&quot;]/text()&#x27;</span>,</span><br><span class="line">                              Join())                                                                           <span class="comment"># 类型</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;runtime&#x27;</span>, <span class="string">&#x27;//*[@property=&quot;v:runtime&quot;]/text()&#x27;</span>)                                   <span class="comment"># 片长</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;initialReleaseDate&#x27;</span>, <span class="string">&#x27;//*[@property=&quot;v:initialReleaseDate&quot;]/text()&#x27;</span>)             <span class="comment"># 上映年限</span></span><br><span class="line">        item_loader.add_xpath(<span class="string">&#x27;summary&#x27;</span>, <span class="string">&#x27;//*[@property=&quot;v:summary&quot;]//text()&#x27;</span>,</span><br><span class="line">                              MapCompose(<span class="keyword">lambda</span> i: i.replace(<span class="string">&#x27; &#x27;</span>, <span class="string">&#x27;&#x27;</span>)),</span><br><span class="line">                              MapCompose(<span class="keyword">lambda</span> i: i.replace(<span class="string">&#x27;\n&#x27;</span>, <span class="string">&#x27;&#x27;</span>)),</span><br><span class="line">                              MapCompose(<span class="keyword">lambda</span> i: i.replace(<span class="string">&#x27;\u3000&#x27;</span>, <span class="string">&#x27;&#x27;</span>)),</span><br><span class="line">                              Join())                                                                           <span class="comment"># 简介</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> item_loader.load_item()</span><br></pre></td></tr></table></figure>
+
+<p>可以清楚的看到双向爬取的过程：next_selector是下一页的url，item_selector是列表中每条的url跳转</p>
+<p>保存文件的：pipelines.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Define your item pipelines here</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Don&#x27;t forget to add your pipeline to the ITEM_PIPELINES setting</span></span><br><span class="line"><span class="comment"># See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> pymysql</span><br><span class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DoubanPipeline</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">process_item</span>(<span class="params">self, item, spider</span>):</span><br><span class="line">        host = settings[<span class="string">&#x27;MYSQL_HOST&#x27;</span>]</span><br><span class="line">        user = settings[<span class="string">&#x27;MYSQL_USER&#x27;</span>]</span><br><span class="line">        psd = settings[<span class="string">&#x27;MYSQL_PASSWORD&#x27;</span>]</span><br><span class="line">        db = settings[<span class="string">&#x27;MYSQL_DB&#x27;</span>]</span><br><span class="line">        c = settings[<span class="string">&#x27;CHARSET&#x27;</span>]</span><br><span class="line">        con = pymysql.connect(host=host, user=user, passwd=psd, db=db, charset=c)</span><br><span class="line">        cur = con.cursor()</span><br><span class="line">        sql = (<span class="string">&quot;insert into movie(name, image_url, average, director, screenwriter, star, genre, runtime, initialReleaseDate, summary) &quot;</span></span><br><span class="line">             <span class="string">&quot;values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)&quot;</span>)</span><br><span class="line">        <span class="built_in">list</span> = [item[<span class="string">&#x27;name&#x27;</span>], item[<span class="string">&#x27;image_url&#x27;</span>], item[<span class="string">&#x27;average&#x27;</span>], item[<span class="string">&#x27;director&#x27;</span>], item[<span class="string">&#x27;screenwriter&#x27;</span>],</span><br><span class="line">            item[<span class="string">&#x27;star&#x27;</span>], item[<span class="string">&#x27;genre&#x27;</span>], item[<span class="string">&#x27;runtime&#x27;</span>], item[<span class="string">&#x27;initialReleaseDate&#x27;</span>], item[<span class="string">&#x27;summary&#x27;</span>]]</span><br><span class="line">        cur.execute(sql, <span class="built_in">list</span>)</span><br><span class="line">        con.commit()</span><br><span class="line">        cur.close()</span><br><span class="line">        con.close()</span><br><span class="line">        <span class="keyword">return</span> item</span><br></pre></td></tr></table></figure>
+
+<p>配置文件：settings.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">BOT_NAME = <span class="string">&#x27;douban&#x27;</span></span><br><span class="line"></span><br><span class="line">SPIDER_MODULES = [<span class="string">&#x27;douban.spiders&#x27;</span>]</span><br><span class="line">NEWSPIDER_MODULE = <span class="string">&#x27;douban.spiders&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 文件编码格式</span></span><br><span class="line">FEED_EXPORT_ENCODING = <span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Crawl responsibly by identifying yourself (and your website) on the user-agent</span></span><br><span class="line"><span class="comment">#USER_AGENT = &#x27;douban (+http://www.yourdomain.com)&#x27;</span></span><br><span class="line">USER_AGENT = <span class="string">&#x27;Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Obey robots.txt rules</span></span><br><span class="line">ROBOTSTXT_OBEY = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure maximum concurrent requests performed by Scrapy (default: 16)</span></span><br><span class="line">CONCURRENT_REQUESTS = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mysql数据库的配置信息</span></span><br><span class="line">MYSQL_HOST = <span class="string">&#x27;127.0.0.1&#x27;</span></span><br><span class="line">MYSQL_DB = <span class="string">&#x27;douban&#x27;</span>             <span class="comment"># 数据库名字</span></span><br><span class="line">MYSQL_USER = <span class="string">&#x27;root&#x27;</span>             <span class="comment"># 数据库账号</span></span><br><span class="line">MYSQL_PASSWORD = <span class="string">&#x27;你数据库的密码&#x27;</span>         <span class="comment"># 数据库密码</span></span><br><span class="line">MYSQL_PORT = <span class="number">3306</span>               <span class="comment"># 数据库端口</span></span><br><span class="line">CHARSET = <span class="string">&#x27;utf8&#x27;</span>                <span class="comment"># 格式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 当使用pipeline保存抓取内容时，需要设置相应的pipeline类</span></span><br><span class="line">ITEM_PIPELINES = &#123;</span><br><span class="line">    <span class="string">&#x27;douban.pipelines.DoubanPipeline&#x27;</span>: <span class="number">300</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/19.html" rel="prev" title="Scrapy实战：单页列表爬取">
+      <i class="fa fa-chevron-left"></i> Scrapy实战：单页列表爬取
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/22.html" rel="next" title="树莓派相关：MagicMirror²的安装">
+      树莓派相关：MagicMirror²的安装 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Scrapy%E5%AE%9E%E6%88%98%EF%BC%9A%E5%8F%8C%E5%90%91%E7%88%AC%E5%8F%96%EF%BC%88%E8%B1%86%E7%93%A3%E7%94%B5%E5%BD%B1Top250%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">Scrapy实战：双向爬取（豆瓣电影Top250）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">思路：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E7%A8%8B%EF%BC%9A"><span class="nav-number">1.2.</span> <span class="nav-text">过程：</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

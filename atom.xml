@@ -1,0 +1,2468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>七仔的博客</title>
+  <icon>https://baby7.github.io/icon.png</icon>
+  <subtitle>七仔的博客</subtitle>
+  <link href="https://baby7.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://baby7.github.io/"/>
+  <updated>2024-08-28T08:25:22.039Z</updated>
+  <id>https://baby7.github.io/</id>
+  
+  <author>
+    <name>七仔</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记录下使用@Async的低级错误</title>
+    <link href="https://baby7.github.io/myBlog/142.html"/>
+    <id>https://baby7.github.io/myBlog/142.html</id>
+    <published>2024-08-28T02:44:46.000Z</published>
+    <updated>2024-08-28T08:25:22.039Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724813078022859482&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;用这个注解也挺久了，没想到还能出现这种低级错误，也可能是博客后端代码太久没更新了。。。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客新增支持RSS订阅啦~</title>
+    <link href="https://baby7.github.io/myBlog/141.html"/>
+    <id>https://baby7.github.io/myBlog/141.html</id>
+    <published>2024-08-26T15:47:03.000Z</published>
+    <updated>2024-08-28T08:25:22.007Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724687221678254193&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;在建站五年后，终于是把这个古老的RSS订阅功能做了支持。。。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>简易AI对话的VueDemo</title>
+    <link href="https://baby7.github.io/myBlog/140.html"/>
+    <id>https://baby7.github.io/myBlog/140.html</id>
+    <published>2024-08-26T07:26:22.000Z</published>
+    <updated>2024-08-28T08:25:21.976Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724657180228986706&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;实现了连续对话，不过其中的GPT的Api已经失效想要使用的话需要另行寻找api&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="人工智能" scheme="https://baby7.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>爬虫入门</title>
+    <link href="https://baby7.github.io/myBlog/139.html"/>
+    <id>https://baby7.github.io/myBlog/139.html</id>
+    <published>2024-08-26T06:57:49.000Z</published>
+    <updated>2024-08-28T08:25:21.943Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724655467936613975&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;先叠甲，只用于学习和研究。个人修行不够，有错误的或者补充的地方请联系我，轻喷&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue视差标题背景</title>
+    <link href="https://baby7.github.io/myBlog/138.html"/>
+    <id>https://baby7.github.io/myBlog/138.html</id>
+    <published>2024-08-25T12:20:08.000Z</published>
+    <updated>2024-08-28T08:25:21.910Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724638288880964222&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;记录一个实现Vue视差标题背景的逻辑&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Vue部分优化记录</title>
+    <link href="https://baby7.github.io/myBlog/137.html"/>
+    <id>https://baby7.github.io/myBlog/137.html</id>
+    <published>2024-08-25T10:47:19.000Z</published>
+    <updated>2024-08-28T08:25:21.875Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724552828281700306&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;继后端进行版本升级后，想着对前端也进行一下优化，顺便记录一下&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>升级到SpringBoot3.2和JDK17</title>
+    <link href="https://baby7.github.io/myBlog/136.html"/>
+    <id>https://baby7.github.io/myBlog/136.html</id>
+    <published>2024-08-23T15:46:03.000Z</published>
+    <updated>2024-08-28T08:25:21.841Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724404685305371816&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;博客后台进行版本升级，SpringBoot从2.1升级到3.2，JDK从8升级到17，在这篇文章中记录一下需要注意的点&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客被注入攻击的记录</title>
+    <link href="https://baby7.github.io/myBlog/135.html"/>
+    <id>https://baby7.github.io/myBlog/135.html</id>
+    <published>2024-08-20T09:21:18.000Z</published>
+    <updated>2024-08-28T08:25:21.806Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1724145690207116630&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;博客又又又被攻击了，这次是注入攻击，百度了下被注入的网站还挺多。。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis Map 增长问题</title>
+    <link href="https://baby7.github.io/myBlog/134.html"/>
+    <id>https://baby7.github.io/myBlog/134.html</id>
+    <published>2024-08-05T06:04:29.000Z</published>
+    <updated>2024-08-28T08:25:21.774Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1722837867475707580&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;原因是redis中的hmset命令合并新增的和原先的（重复的覆盖），而不是重置，需要先del后再新增&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记一次m3u8文件的下载</title>
+    <link href="https://baby7.github.io/myBlog/133.html"/>
+    <id>https://baby7.github.io/myBlog/133.html</id>
+    <published>2024-05-12T14:06:26.000Z</published>
+    <updated>2024-08-28T08:25:21.740Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1715521703244679168&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;记一次m3u8文件的下载&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="破解" scheme="https://baby7.github.io/tags/%E7%A0%B4%E8%A7%A3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>七仔的桌面工具</title>
+    <link href="https://baby7.github.io/myBlog/132.html"/>
+    <id>https://baby7.github.io/myBlog/132.html</id>
+    <published>2024-04-25T02:39:40.000Z</published>
+    <updated>2024-08-28T08:25:21.707Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1714012498918989676&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;具有查看日期时间、天气、工作日、记录喝水、查询微博热搜、60s读世界和各种小工具的桌面工具，可以在托盘区单击隐藏和弹出，或使用快捷键Alt+1&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>一种用Python做界面和Java做后端的Win客户端运行逻辑</title>
+    <link href="https://baby7.github.io/myBlog/131.html"/>
+    <id>https://baby7.github.io/myBlog/131.html</id>
+    <published>2024-04-25T01:42:19.000Z</published>
+    <updated>2024-08-28T08:25:21.675Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1714007929222633567&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;使用PyQt5做界面，使用SpringBoot做后端，都打成exe，然后Python启动时启动Java后端，使用http做交互&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>用Github Actions做CICI流程分享</title>
+    <link href="https://baby7.github.io/myBlog/130.html"/>
+    <id>https://baby7.github.io/myBlog/130.html</id>
+    <published>2024-04-09T05:48:44.000Z</published>
+    <updated>2024-08-28T08:25:21.640Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1712641209666723290&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;之前用Github做了CICD，流程和代码放在一块，方便管理，可以构建、打包、推送镜像到Dockerhub、连接服务器做部署，这两天在阿里云仓库做了镜像，然后用Github Actions推送到阿里云仓库&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>influxdb有时存不进去</title>
+    <link href="https://baby7.github.io/myBlog/129.html"/>
+    <id>https://baby7.github.io/myBlog/129.html</id>
+    <published>2023-11-21T08:33:59.000Z</published>
+    <updated>2024-08-28T08:25:21.605Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1700555612496539586&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;最终发现是influxdb集群的max-series-per-database设置的不一样导致&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>奇奇怪怪的防烧屏算法</title>
+    <link href="https://baby7.github.io/myBlog/128.html"/>
+    <id>https://baby7.github.io/myBlog/128.html</id>
+    <published>2023-11-16T05:51:46.000Z</published>
+    <updated>2024-08-28T08:25:21.570Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1700113839037427045&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;我这里做的是很简陋的算法，就是对整体图像进行一个2px的正方形循环（每30秒进行一次平移）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="智能家居" scheme="https://baby7.github.io/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"/>
+    
+    
+    <category term="图像处理" scheme="https://baby7.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的博客架构改变历程</title>
+    <link href="https://baby7.github.io/myBlog/127.html"/>
+    <id>https://baby7.github.io/myBlog/127.html</id>
+    <published>2023-11-14T03:32:03.000Z</published>
+    <updated>2024-08-28T08:25:21.536Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1699932721880682100&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;记录下博客从SSM-&amp;gt;微服务-&amp;gt;单体的架构调整还有未来的设想&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>排查线上java程序cpu占用过高</title>
+    <link href="https://baby7.github.io/myBlog/126.html"/>
+    <id>https://baby7.github.io/myBlog/126.html</id>
+    <published>2023-11-14T03:28:31.000Z</published>
+    <updated>2024-08-28T08:25:21.501Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1699932476363617290&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;记录排查线上java程序cpu占用过高中使用的操作以便后续查询&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于时区中的夏令时（java）</title>
+    <link href="https://baby7.github.io/myBlog/124.html"/>
+    <id>https://baby7.github.io/myBlog/124.html</id>
+    <published>2023-11-14T02:57:04.000Z</published>
+    <updated>2024-08-28T08:25:21.462Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1699930621582679740&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;关于时区中的夏令时，夏冬令时感觉是时区中设计不好的一个东西&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>未接入小米网关3的155版本多模网关刷机简化步骤</title>
+    <link href="https://baby7.github.io/myBlog/123.html"/>
+    <id>https://baby7.github.io/myBlog/123.html</id>
+    <published>2023-11-04T15:50:17.000Z</published>
+    <updated>2024-08-28T08:25:21.428Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1699112939004485632&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;未接入小米网关3的155版本多模网关刷机简化步骤&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="智能家居" scheme="https://baby7.github.io/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于未登录状态下保持微博的cookies不失效</title>
+    <link href="https://baby7.github.io/myBlog/122.html"/>
+    <id>https://baby7.github.io/myBlog/122.html</id>
+    <published>2023-03-07T05:41:21.000Z</published>
+    <updated>2024-08-28T08:25:21.394Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1678166683180653125&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;通过对未登录状态下微博的cookies中的额时间戳和随机数进行修改来保持不失效&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>常用桌面软件</title>
+    <link href="https://baby7.github.io/myBlog/121.html"/>
+    <id>https://baby7.github.io/myBlog/121.html</id>
+    <published>2023-02-23T06:37:22.000Z</published>
+    <updated>2024-08-28T08:25:21.362Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1677134239577721679&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;推荐的是稍微冷门点的工具，主要宗旨就是软件尽量少广告，没标下载的可以下方留邮箱说明你要哪个&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="分享" scheme="https://baby7.github.io/categories/%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="推荐" scheme="https://baby7.github.io/tags/%E6%8E%A8%E8%8D%90/"/>
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于Docker安装的Stable Diffusion使用CPU进行AI绘画</title>
+    <link href="https://baby7.github.io/myBlog/120.html"/>
+    <id>https://baby7.github.io/myBlog/120.html</id>
+    <published>2022-10-21T08:40:10.000Z</published>
+    <updated>2024-08-28T08:25:21.329Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1666576799247675233&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;由于在dokcer安装Stable Diffusion的cpu模式上踩了太多坑，所以在这里记录一下&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="人工智能" scheme="https://baby7.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+    <category term="人工智能" scheme="https://baby7.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HomeAssistant的阿里云域名DDNS插件</title>
+    <link href="https://baby7.github.io/myBlog/119.html"/>
+    <id>https://baby7.github.io/myBlog/119.html</id>
+    <published>2022-10-20T08:20:45.000Z</published>
+    <updated>2024-08-28T08:25:21.296Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1666253900826291028&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;HomeAssistant的阿里云域名DDNS插件，仅用于阿里云的域名解析&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Nas" scheme="https://baby7.github.io/categories/Nas/"/>
+    
+    
+    <category term="Nas" scheme="https://baby7.github.io/tags/Nas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>企业微信应用每天60秒读懂世界</title>
+    <link href="https://baby7.github.io/myBlog/118.html"/>
+    <id>https://baby7.github.io/myBlog/118.html</id>
+    <published>2022-10-20T07:36:56.000Z</published>
+    <updated>2024-08-28T08:25:21.261Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1666251032936717828&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;一个简单的python脚本，每天定时执行即可，基于运小站的每天60秒读懂世界API&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Windows喝水记录工具v2.0</title>
+    <link href="https://baby7.github.io/myBlog/117.html"/>
+    <id>https://baby7.github.io/myBlog/117.html</id>
+    <published>2022-10-11T01:52:50.000Z</published>
+    <updated>2024-08-28T08:25:21.226Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1665452897023410652&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Windows喝水记录工具，喝一杯水就记录一下，养成每天喝水的好习惯&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringCloud远程连接Eureka并使用@FeignClient</title>
+    <link href="https://baby7.github.io/myBlog/116.html"/>
+    <id>https://baby7.github.io/myBlog/116.html</id>
+    <published>2022-05-18T06:28:07.000Z</published>
+    <updated>2024-08-28T08:25:21.192Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1652854894309770932&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;记录一下从连接远程服务做测试&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Github Action通过Dockerhub持续构建部署服务</title>
+    <link href="https://baby7.github.io/myBlog/115.html"/>
+    <id>https://baby7.github.io/myBlog/115.html</id>
+    <published>2022-05-10T03:11:01.000Z</published>
+    <updated>2024-08-28T08:25:21.157Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1652152259696720046&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;记录一下自己配置的Github Action，仅限于使用DockerCompose部署的项目，如果不是需要自己修改&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>各种新版IDEA出现的新东西和隐藏方法</title>
+    <link href="https://baby7.github.io/myBlog/114.html"/>
+    <id>https://baby7.github.io/myBlog/114.html</id>
+    <published>2022-05-05T02:38:38.000Z</published>
+    <updated>2024-08-28T08:25:21.120Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1651718289814304009&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;各种新版IDEA出现的新东西和隐藏方法【不定期更新】&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>威联通Plex设置Https</title>
+    <link href="https://baby7.github.io/myBlog/113.html"/>
+    <id>https://baby7.github.io/myBlog/113.html</id>
+    <published>2022-05-03T00:54:24.000Z</published>
+    <updated>2024-08-28T08:25:21.077Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1651539262858831523&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;网上威联通Plex设置Https的教程找不到，试错后写了这个&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Nas" scheme="https://baby7.github.io/categories/Nas/"/>
+    
+    
+    <category term="Nas" scheme="https://baby7.github.io/tags/Nas/"/>
+    
+    <category term="Plex" scheme="https://baby7.github.io/tags/Plex/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【python小工具】Json转MySQL建表语句</title>
+    <link href="https://baby7.github.io/myBlog/112.html"/>
+    <id>https://baby7.github.io/myBlog/112.html</id>
+    <published>2022-02-15T08:56:29.000Z</published>
+    <updated>2024-08-28T08:25:21.042Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1644915387782144697&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;通过查询neo4j得到的json转换为MySQL建表语句，包含剪贴板、tkinter等代码&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>国家公祭日网站变色方法</title>
+    <link href="https://baby7.github.io/myBlog/109.html"/>
+    <id>https://baby7.github.io/myBlog/109.html</id>
+    <published>2021-12-13T02:22:51.000Z</published>
+    <updated>2024-08-28T08:25:21.004Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1639362169831310145&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;国行公祭，祀我殇胞&lt;br&gt;今天是第八个&lt;br&gt;南京大屠杀死难者国家公祭日&lt;br&gt;我们以国之名，悼念逝者&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我的NAS折腾之路（威联通TS-551，不定期更新）</title>
+    <link href="https://baby7.github.io/myBlog/108.html"/>
+    <id>https://baby7.github.io/myBlog/108.html</id>
+    <published>2021-12-09T06:27:20.000Z</published>
+    <updated>2024-08-28T08:25:20.969Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1639031304266936474&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;讲一讲我入手威联通TS-551都搞了些什么&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Nas" scheme="https://baby7.github.io/categories/Nas/"/>
+    
+    
+    <category term="Nas" scheme="https://baby7.github.io/tags/Nas/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于为知笔记Docker容器的MySQL连接和备份</title>
+    <link href="https://baby7.github.io/myBlog/107.html"/>
+    <id>https://baby7.github.io/myBlog/107.html</id>
+    <published>2021-12-08T07:29:28.000Z</published>
+    <updated>2024-08-28T08:25:20.936Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1638948191014996100&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;进入docker查看sh文件以取得mysql的连接密码，连接后可以进行备份&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>HarmonyOS - 开发一个微博热搜服务卡片</title>
+    <link href="https://baby7.github.io/myBlog/106.html"/>
+    <id>https://baby7.github.io/myBlog/106.html</id>
+    <published>2021-08-05T03:12:40.000Z</published>
+    <updated>2024-08-28T08:25:20.903Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1628133158383963786&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;平常在微博也就看看热搜，别的都用不到，搞了个这个服务卡片，自己用着舒服（手动狗头）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins容器遭到挖矿程序入侵后的梳理和解决</title>
+    <link href="https://baby7.github.io/myBlog/105.html"/>
+    <id>https://baby7.github.io/myBlog/105.html</id>
+    <published>2021-08-02T08:55:56.000Z</published>
+    <updated>2024-08-28T08:25:20.869Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1627894743264134994&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;服务器CPU达到100%居高不下，查询时间发现情况持续了不止一天，最后发现是Jenkins漏洞导致的挖矿程序入侵&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Maven项目转换为Gradle项目</title>
+    <link href="https://baby7.github.io/myBlog/104.html"/>
+    <id>https://baby7.github.io/myBlog/104.html</id>
+    <published>2021-07-27T05:54:59.000Z</published>
+    <updated>2024-08-28T08:25:20.835Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1627365298339333286&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;相对于Maven，Gradle的配置文件更加简洁，更加适合阅读，Spring也从Maven转到了Gradle，这次我也将博客从Maven构建修改为Gradle构建&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Jenkins中BlueOcean的使用</title>
+    <link href="https://baby7.github.io/myBlog/103.html"/>
+    <id>https://baby7.github.io/myBlog/103.html</id>
+    <published>2021-07-27T03:39:51.000Z</published>
+    <updated>2024-08-28T08:25:20.799Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1627365305830645546&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;BlueOcean重新考虑了Jenkins的用户体验，由Jenkins Pipeline设计，但仍然兼容自由式工作，减少了团队成员的混乱，增加了清晰度&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用MircoPython在ESP32的OLED屏幕上显示个小电视</title>
+    <link href="https://baby7.github.io/myBlog/102.html"/>
+    <id>https://baby7.github.io/myBlog/102.html</id>
+    <published>2021-07-11T08:26:58.000Z</published>
+    <updated>2024-08-28T08:25:20.759Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1625992010537858231&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;是拿几根线组合出来的，随便画了画，作用相当于个Hello World&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="硬件相关" scheme="https://baby7.github.io/categories/%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>HarmonyOS实现MQTT消息监听展示</title>
+    <link href="https://baby7.github.io/myBlog/101.html"/>
+    <id>https://baby7.github.io/myBlog/101.html</id>
+    <published>2021-06-29T08:56:53.000Z</published>
+    <updated>2024-08-28T08:25:20.721Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1624956831251988394&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;因为harmonyOS暂时没有发现现成的mqtt的js包，所以使用Java进行Mqtt消息的接收，使用JS去定时调用Java接收到消息并展示&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>使用ELK容器对Nginx做热力图分析</title>
+    <link href="https://baby7.github.io/myBlog/100.html"/>
+    <id>https://baby7.github.io/myBlog/100.html</id>
+    <published>2021-06-07T04:53:56.000Z</published>
+    <updated>2024-08-28T08:25:20.682Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1623041187113582006&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;使用ES、Logstash、Kibana、Filebeat四个容器对Nginx日志分析，生成展示用的热力图&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于GPSLogger和企业微信的自动化提醒打卡</title>
+    <link href="https://baby7.github.io/myBlog/99.html"/>
+    <id>https://baby7.github.io/myBlog/99.html</id>
+    <published>2021-01-22T03:09:59.000Z</published>
+    <updated>2024-08-28T08:25:20.647Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1611284985877228756&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;很这次实现的基于GPSLogger记录位置，然后判断是否进入或离开公司，如果是，就发送消息到企业微信（手机微信也可以接收到）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="智能家居" scheme="https://baby7.github.io/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>给你的HomeAssistant添加个彩带特效</title>
+    <link href="https://baby7.github.io/myBlog/98.html"/>
+    <id>https://baby7.github.io/myBlog/98.html</id>
+    <published>2021-01-22T03:05:50.000Z</published>
+    <updated>2024-08-28T08:25:20.612Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1611284748273255002&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;配置-&amp;gt;Lovelace仪表盘-&amp;gt;资源 这里可以添加Javascript模块，把特效的地址输进去，就直接有效果了&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="智能家居" scheme="https://baby7.github.io/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>奇奇怪怪的插件之ha_chandao(禅道接入HomeAssistant)</title>
+    <link href="https://baby7.github.io/myBlog/97.html"/>
+    <id>https://baby7.github.io/myBlog/97.html</id>
+    <published>2021-01-21T03:26:26.000Z</published>
+    <updated>2024-08-28T08:25:20.577Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/1611199556712296169&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;禅道接入HomeAssistant，可以查看任务和Bug的数量，配合自动化可以实现有了任务&amp;#x2F;bug立即通过微信通知&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="智能家居" scheme="https://baby7.github.io/categories/%E6%99%BA%E8%83%BD%E5%AE%B6%E5%B1%85/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>关于博客数据库的数据被勒索和数据恢复</title>
+    <link href="https://baby7.github.io/myBlog/96.html"/>
+    <id>https://baby7.github.io/myBlog/96.html</id>
+    <published>2020-10-26T14:14:21.000Z</published>
+    <updated>2024-08-28T08:25:20.542Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FmgtE04iw5ITpg_A_MhYdPGJNQnf&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;您需要支付0.055比特币（BTC）才能恢复数据库：列出了我的数据库列表，然后给了个邮箱：如果您需要证明，请通过以下电子邮件与我们联系：&lt;a href=&quot;mailto:&amp;#x64;&amp;#97;&amp;#116;&amp;#97;&amp;#x62;&amp;#x61;&amp;#115;&amp;#101;&amp;#50;&amp;#56;&amp;#64;&amp;#x70;&amp;#114;&amp;#x6f;&amp;#116;&amp;#x6f;&amp;#110;&amp;#x6d;&amp;#x61;&amp;#105;&amp;#108;&amp;#x2e;&amp;#99;&amp;#111;&amp;#109;&quot;&gt;&amp;#x64;&amp;#97;&amp;#116;&amp;#97;&amp;#x62;&amp;#x61;&amp;#115;&amp;#101;&amp;#50;&amp;#56;&amp;#64;&amp;#x70;&amp;#114;&amp;#x6f;&amp;#116;&amp;#x6f;&amp;#110;&amp;#x6d;&amp;#x61;&amp;#105;&amp;#108;&amp;#x2e;&amp;#99;&amp;#111;&amp;#109;&lt;/a&gt;，算了算价格（当然交钱是不可能的）大概是四千多&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>springboot集成Elasticsearch进行操作</title>
+    <link href="https://baby7.github.io/myBlog/95.html"/>
+    <id>https://baby7.github.io/myBlog/95.html</id>
+    <published>2020-10-21T13:06:17.000Z</published>
+    <updated>2024-08-28T08:25:20.508Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FucNx592eoWc9OFfqRsOusSCkbYA&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;springboot集成Elasticsearch进行操作&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博客自动更新sitemap文件</title>
+    <link href="https://baby7.github.io/myBlog/94.html"/>
+    <id>https://baby7.github.io/myBlog/94.html</id>
+    <published>2020-10-21T12:48:19.000Z</published>
+    <updated>2024-08-28T08:25:20.474Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FuzZOs2yhLrXiwHKttaPZ9xXtCUe&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;我的博客之前的sitemap文件都是手动更新的，太麻烦了，现在改为定时更新，思路是使用python读取博客的文章信息并生成sitemap文件，然后使用华为DevCloud定时去执行&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>服务器被meow攻击，Elasticsearch数据被删除</title>
+    <link href="https://baby7.github.io/myBlog/93.html"/>
+    <id>https://baby7.github.io/myBlog/93.html</id>
+    <published>2020-10-13T21:51:28.000Z</published>
+    <updated>2024-08-28T08:25:20.440Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FlM9du_xXjyqPOkUep16KYdOABqs&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Elasticsearch这几个月的测试数据被删除，通过http:&amp;#x2F;&amp;#x2F;***&amp;#x2F;_cat&amp;#x2F;indices?v查看索引列表发现之前的数据均被删除，多出来了很多以-meow结尾的数据&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Jenkins&amp;Docker部署系列】四、Vue的构建和部署(Nginx)</title>
+    <link href="https://baby7.github.io/myBlog/92.html"/>
+    <id>https://baby7.github.io/myBlog/92.html</id>
+    <published>2020-10-03T03:11:22.000Z</published>
+    <updated>2024-08-28T08:25:20.404Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fg2wCiZwVTY6QYAzaNjrTUFPI1ry&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;【Jenkins&amp;amp;Docker构建部署系列】是我在实践中走过的一条路，踩过一些坑，在这里记下，以防以后再犯哈哈哈哈&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Jenkins&amp;Docker部署系列】三、SpringBoot的构建的和部署</title>
+    <link href="https://baby7.github.io/myBlog/91.html"/>
+    <id>https://baby7.github.io/myBlog/91.html</id>
+    <published>2020-10-03T03:10:52.000Z</published>
+    <updated>2024-08-28T08:25:20.370Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fg2wCiZwVTY6QYAzaNjrTUFPI1ry&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;【Jenkins&amp;amp;Docker构建部署系列】是我在实践中走过的一条路，踩过一些坑，在这里记下，以防以后再犯哈哈哈哈&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Jenkins&amp;Docker部署系列】二、数据库Docker的安装(Mysql、Redis)</title>
+    <link href="https://baby7.github.io/myBlog/90.html"/>
+    <id>https://baby7.github.io/myBlog/90.html</id>
+    <published>2020-10-03T03:10:22.000Z</published>
+    <updated>2024-08-28T08:25:20.335Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fg2wCiZwVTY6QYAzaNjrTUFPI1ry&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;【Jenkins&amp;amp;Docker构建部署系列】是我在实践中走过的一条路，踩过一些坑，在这里记下，以防以后再犯哈哈哈哈&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Jenkins&amp;Docker构建部署系列】一、环境安装</title>
+    <link href="https://baby7.github.io/myBlog/89.html"/>
+    <id>https://baby7.github.io/myBlog/89.html</id>
+    <published>2020-10-03T03:09:33.000Z</published>
+    <updated>2024-08-28T08:25:20.302Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fg2wCiZwVTY6QYAzaNjrTUFPI1ry&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;【Jenkins&amp;amp;Docker构建部署系列】是我在实践中走过的一条路，踩过一些坑，在这里记下，以防以后再犯哈哈哈哈&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】MQTT发送与接收</title>
+    <link href="https://baby7.github.io/myBlog/88.html"/>
+    <id>https://baby7.github.io/myBlog/88.html</id>
+    <published>2020-09-23T04:49:23.000Z</published>
+    <updated>2024-08-28T08:25:20.270Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FqHtyULRowmVX8B8dRt4sdAa5zkd&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;魔镜的环境数据存储使用HBase进行存储，使用传感器获取环境数据，然后Python使用MQTT协议发送到后端进行接收存储&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot使用切面实现日志记录</title>
+    <link href="https://baby7.github.io/myBlog/87.html"/>
+    <id>https://baby7.github.io/myBlog/87.html</id>
+    <published>2020-09-23T04:13:56.000Z</published>
+    <updated>2024-08-28T08:25:20.236Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;None&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;自定义注解，使用Spring AOP实现日志记录&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>SpringBoot整合CFX框架</title>
+    <link href="https://baby7.github.io/myBlog/86.html"/>
+    <id>https://baby7.github.io/myBlog/86.html</id>
+    <published>2020-09-22T13:51:07.000Z</published>
+    <updated>2024-08-28T08:25:20.200Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FhDb4tAB68LoL9BP9y5Lc71TarJY&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Apache CXF是一个开源的WebService框架，CXF可以用来构建和开发WebService，些服务可以支持多种协议，比如：SOAP、POST&amp;#x2F;HTTP、HTTP，这篇文章讲的是SOAP这个协议使用CXF框架整合进入SpringBoot&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Mybatis-plus子查询的一个思路</title>
+    <link href="https://baby7.github.io/myBlog/85.html"/>
+    <id>https://baby7.github.io/myBlog/85.html</id>
+    <published>2020-09-22T05:52:35.000Z</published>
+    <updated>2024-08-28T08:25:20.166Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FrsCM7eBM3iGEtMY-rgr4Hjwqumr&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;思路就是QueryWrapper中的getCustomSqlSegment()这个函数，其实在Mybatis的xml文件中${ew.customSqlSegment}的customSqlSegment也是用的这个函数&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用华为云DevCloud进行项目自动化构建部署</title>
+    <link href="https://baby7.github.io/myBlog/83.html"/>
+    <id>https://baby7.github.io/myBlog/83.html</id>
+    <published>2020-09-21T05:51:33.000Z</published>
+    <updated>2024-08-28T08:25:20.131Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FmWmDtdJ4AznX4NRAM2boLIRSumq&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;华为云DevCloud提供了许许多多的功能，我们取其中的代码仓库、编译构建、部署、发布、流水线的功能&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python处理apiDoc转swagger</title>
+    <link href="https://baby7.github.io/myBlog/82.html"/>
+    <id>https://baby7.github.io/myBlog/82.html</id>
+    <published>2020-09-10T09:49:01.000Z</published>
+    <updated>2024-08-28T08:25:20.092Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FjsEh1-AjpBCTxaVVS_SgWHKkX7R&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;使用apidoc包生成apidoc的json格式数据，然后使用python读取出接口地址、名字、组名、输入参数格式和例子、输出参数格式和例子等，然后根据swagger格式填入对应的数据即可生成swagger的json格式&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用MySQL存储过程生成大量用户数据</title>
+    <link href="https://baby7.github.io/myBlog/81.html"/>
+    <id>https://baby7.github.io/myBlog/81.html</id>
+    <published>2020-08-25T15:23:18.000Z</published>
+    <updated>2024-08-28T08:25:20.060Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FsGXMqNDGJHr_ZRM75HzJTesqr4H&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;项目需要进行性能测试，所以需要生成用户数据来进行测试，这里使用MySQL存储过程生成大量用户数据&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Home Assistant】使用GPSLogger记录位置</title>
+    <link href="https://baby7.github.io/myBlog/80.html"/>
+    <id>https://baby7.github.io/myBlog/80.html</id>
+    <published>2020-07-03T15:31:11.000Z</published>
+    <updated>2024-08-28T08:25:20.025Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FlIVgZW8LOuAB32QAIhCygaZ6tY_&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;我用的hass版本是0.111.4，对于GPSLogger有相关说明，也可以跳过不看&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>荣耀路由器Pro2内网穿透步骤（花生壳）</title>
+    <link href="https://baby7.github.io/myBlog/79.html"/>
+    <id>https://baby7.github.io/myBlog/79.html</id>
+    <published>2020-07-02T05:44:52.000Z</published>
+    <updated>2024-08-28T08:25:19.989Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FguRlZkjxqV3XgB5GmOlMGhnm2sG&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;提前说一下，虽然可以一直使用，但是需要花六块钱，还要实名认证&lt;br&gt;由于我的HomeAssistant需要做一个公网访问，所以想到了对路由器做内网穿透，中间踩了点坑，下面分享一下步骤&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】节假日信息</title>
+    <link href="https://baby7.github.io/myBlog/78.html"/>
+    <id>https://baby7.github.io/myBlog/78.html</id>
+    <published>2020-06-29T06:39:29.000Z</published>
+    <updated>2024-08-28T08:25:19.957Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fns2ojEAsdQABiOYUsscPOQqLksf&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;调用后端获取节假日列表信息然后Vue渲染到前端列表&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】智能家居控制</title>
+    <link href="https://baby7.github.io/myBlog/77.html"/>
+    <id>https://baby7.github.io/myBlog/77.html</id>
+    <published>2020-06-29T06:27:41.000Z</published>
+    <updated>2024-08-28T08:25:19.923Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FoCGeeXhKnmWDLCUMO7s2H6QkUA5&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Home Assistant(hass)是一个开源的基于Python的智能家居控制系统，可以连接很多品牌的智能家居并且控制，并且相对于那些品牌的智能家居有更多的自由和控制性。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="树莓派" scheme="https://baby7.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】DHT11传感器温湿度的获取与显示</title>
+    <link href="https://baby7.github.io/myBlog/76.html"/>
+    <id>https://baby7.github.io/myBlog/76.html</id>
+    <published>2020-06-29T05:26:15.000Z</published>
+    <updated>2024-08-28T08:25:19.891Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fhh6_JPg6lgPmumpRTloDcZAL-n9&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;通过DHT11获取温湿度信息然后通过Queue发送数据到显示进程再使用selenium执行js语句显示&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="树莓派" scheme="https://baby7.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】基于dlib的情绪识别</title>
+    <link href="https://baby7.github.io/myBlog/75.html"/>
+    <id>https://baby7.github.io/myBlog/75.html</id>
+    <published>2020-06-18T13:19:48.000Z</published>
+    <updated>2024-08-28T08:25:19.856Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fr5Q6TUtx_QEk_FuENuWkn3ErXDT&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;首先dlib库进行人脸识别与特征标定获得人脸对应的68个特征点，然后通过嘴巴张开距离占面部识别框宽度的比例、眉毛上扬程度、眯眼睛程度对用户情绪进行判定&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="人工智能" scheme="https://baby7.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】天气信息的显示</title>
+    <link href="https://baby7.github.io/myBlog/74.html"/>
+    <id>https://baby7.github.io/myBlog/74.html</id>
+    <published>2020-06-18T12:38:03.000Z</published>
+    <updated>2024-08-28T08:25:19.823Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fm5zywKHBGmtRuQZAg8N0PohDYpG&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;将中国天气网的定制的插件进行调整，并改为Vue可用&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】多进程和进程间通信</title>
+    <link href="https://baby7.github.io/myBlog/73.html"/>
+    <id>https://baby7.github.io/myBlog/73.html</id>
+    <published>2020-06-18T12:18:43.000Z</published>
+    <updated>2024-08-28T08:25:19.789Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FvaymZ3S5dOaKRov9OZDH3RfsD8u&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;因为python多线程并不是并行执行，因此较适合与I&amp;#x2F;O密集型程序，多进程并行执行适用于CPU密集型程序，我们的四个模块相对更适合多进程&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】selenium控制浏览器</title>
+    <link href="https://baby7.github.io/myBlog/72.html"/>
+    <id>https://baby7.github.io/myBlog/72.html</id>
+    <published>2020-06-18T11:55:04.000Z</published>
+    <updated>2024-08-28T08:25:19.756Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FsAln6TeH9wBLS4nscbA-KxF7JcJ&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;python使用selenium打开浏览器并打开指定页面&amp;amp;执行js语句对页面进行修改&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【“魔镜”系列】开机自启动</title>
+    <link href="https://baby7.github.io/myBlog/71.html"/>
+    <id>https://baby7.github.io/myBlog/71.html</id>
+    <published>2020-06-18T05:58:44.000Z</published>
+    <updated>2024-08-28T08:25:19.722Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FqRKykOFxDfQNdzhDt-PLneTFOKS&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;魔镜系列中的开机自启动，魔镜实现通电后直接启动&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="树莓派" scheme="https://baby7.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>“魔镜”智能家居系统（我的毕设）</title>
+    <link href="https://baby7.github.io/myBlog/70.html"/>
+    <id>https://baby7.github.io/myBlog/70.html</id>
+    <published>2020-06-18T05:23:58.000Z</published>
+    <updated>2024-08-28T08:25:19.688Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FqZ0qi34oEBKCFDEFSBMMfjXO7El&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;灵感来源于《白雪公主》里皇后的魔镜，然后就想给对象做一个。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="魔镜" scheme="https://baby7.github.io/categories/%E9%AD%94%E9%95%9C/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="人工智能" scheme="https://baby7.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+    <category term="树莓派" scheme="https://baby7.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>vue看板娘插件-雷姆</title>
+    <link href="https://baby7.github.io/myBlog/69.html"/>
+    <id>https://baby7.github.io/myBlog/69.html</id>
+    <published>2020-04-28T12:01:53.000Z</published>
+    <updated>2024-08-28T08:25:19.655Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fp6sRBrDbemUzTkI5w70xNHLhhgM&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;博客一直没有个看板娘，内容又比较生硬，所以想加个看板娘在角落。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>对Jeecg-Boot中Token失效返回格式的调整</title>
+    <link href="https://baby7.github.io/myBlog/68.html"/>
+    <id>https://baby7.github.io/myBlog/68.html</id>
+    <published>2020-04-28T11:03:20.000Z</published>
+    <updated>2024-08-28T08:25:19.608Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FqOPohNT3eVm82WKXEea7Zgwpw6E&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;前端在对接过程中发现token失效后返回直接返回500，而不是返回200然后在返回体中设置自定义返回码，需要后端调整为返回200ok，请求体中的code为自定义的。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>针对微信获取小程序码scene参数的数据压缩算法</title>
+    <link href="https://baby7.github.io/myBlog/67.html"/>
+    <id>https://baby7.github.io/myBlog/67.html</id>
+    <published>2020-04-28T00:30:33.000Z</published>
+    <updated>2024-08-28T08:25:19.574Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fh9vlJ_AsmG6B6AMGBegmgKciVTa&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;针对微信小程序码获取接口B的scene参数对输入参数做压缩处理放入scene参数中&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="微信小程序" scheme="https://baby7.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hbase 3节点分布式集群搭建（服务器）</title>
+    <link href="https://baby7.github.io/myBlog/66.html"/>
+    <id>https://baby7.github.io/myBlog/66.html</id>
+    <published>2020-03-25T07:23:23.000Z</published>
+    <updated>2024-08-28T08:25:19.539Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fp2rhwM_SXzZ7gOrPjiScRgynSA8&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;根据别人的搭建经验 ，从在虚拟机上的安装修改为服务器的安装&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于谷歌/火狐无头浏览器模式解决Vue的SEO问题 2.0</title>
+    <link href="https://baby7.github.io/myBlog/65.html"/>
+    <id>https://baby7.github.io/myBlog/65.html</id>
+    <published>2020-03-25T07:09:59.000Z</published>
+    <updated>2024-08-28T08:25:19.505Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fm0bs4IF_GPYs8pBXQU2FkBvFclJ&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;这是 基于谷歌&amp;#x2F;火狐无头浏览器模式解决Vue的SEO问题 2.0版本，优化了上一个版本，去掉了nodejs模块，集成到了python中&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python通过数据库自动生成SSM代码</title>
+    <link href="https://baby7.github.io/myBlog/64.html"/>
+    <id>https://baby7.github.io/myBlog/64.html</id>
+    <published>2020-03-25T06:57:29.000Z</published>
+    <updated>2024-08-28T08:25:19.471Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fs2jLDGO2v279jmDu1Y8N0BNO3a4&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;思路是做一个模板，然后读取数据库结构，最后生成代码包。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>为Scrapy爬虫添加UA池和动态IP代理池</title>
+    <link href="https://baby7.github.io/myBlog/63.html"/>
+    <id>https://baby7.github.io/myBlog/63.html</id>
+    <published>2020-03-25T06:31:41.000Z</published>
+    <updated>2024-08-28T08:25:19.437Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FjkvD2ElfLRfnznMQ7zpqDP-RVsH&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;大家在进行爬取数据时可能会被封,这种情况可以通过降低爬取速度、更换user-agent、更换ip来预防，这里写了我的爬虫经验&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>centos7.5安装mysql8</title>
+    <link href="https://baby7.github.io/myBlog/62.html"/>
+    <id>https://baby7.github.io/myBlog/62.html</id>
+    <published>2020-03-25T05:36:20.000Z</published>
+    <updated>2024-08-28T08:25:19.403Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FsGXMqNDGJHr_ZRM75HzJTesqr4H&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;用centos7.5服务器安装myql8踩了挺多坑，记录一下，千万不要用yum在centos7.5安装mysql8&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于Element-UI的Vue动态输入框</title>
+    <link href="https://baby7.github.io/myBlog/61.html"/>
+    <id>https://baby7.github.io/myBlog/61.html</id>
+    <published>2019-12-23T09:31:26.000Z</published>
+    <updated>2024-08-28T08:25:19.369Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FqIwaPtC1QqY5X-X1Xpr2h9l5AXI&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;由于需要一个不确定数量的输入控件所以做了出来，然后封装了一下，大家自取&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pyhton3爬取全国航班信息</title>
+    <link href="https://baby7.github.io/myBlog/59.html"/>
+    <id>https://baby7.github.io/myBlog/59.html</id>
+    <published>2019-12-16T07:44:29.000Z</published>
+    <updated>2024-08-28T08:25:19.328Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FtlXhSAkdSe-hZOVlogwiSaae-07&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;可以查询到家的航班有哪些，找到每个城市最便宜的，然后看看去那个城市火车要多久，整一整可以便宜很多&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java获取零点时间戳踩坑记录</title>
+    <link href="https://baby7.github.io/myBlog/55.html"/>
+    <id>https://baby7.github.io/myBlog/55.html</id>
+    <published>2019-12-06T10:01:00.000Z</published>
+    <updated>2024-08-28T08:25:19.283Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FkMz9abn2NcayM_92-YspXIZouUr&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Java获取零点时间戳踩坑记录，每天零点到八点间为前一天零电脑&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Phoenix查询优化(千万数据0.1秒查询)</title>
+    <link href="https://baby7.github.io/myBlog/53.html"/>
+    <id>https://baby7.github.io/myBlog/53.html</id>
+    <published>2019-12-04T03:22:05.000Z</published>
+    <updated>2024-08-28T08:25:19.243Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FpkcVHtbpTJuPoMdMHoMz87LxQQ7&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Phoenix查询优化(千万数据0.1秒查询)Phoenix: 5.0,HBase:2.0,Zookeeper:3.4.12&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="大数据" scheme="https://baby7.github.io/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>IDEA中git的操作</title>
+    <link href="https://baby7.github.io/myBlog/49.html"/>
+    <id>https://baby7.github.io/myBlog/49.html</id>
+    <published>2019-11-24T11:00:41.000Z</published>
+    <updated>2024-08-28T08:25:19.208Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fj12b-shJGsu3j14vl78m2asAn9q&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;安装git、IDEA配置git、从在线git仓库clone&amp;#x2F;下载项目、提交和更新、本地回退、切换分支、合并分支&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx的配置使用</title>
+    <link href="https://baby7.github.io/myBlog/47.html"/>
+    <id>https://baby7.github.io/myBlog/47.html</id>
+    <published>2019-11-20T08:57:23.000Z</published>
+    <updated>2024-08-28T08:25:19.177Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fs6miUWXBT1kHs4L3cmd_yVznutS&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;https的配置、强制使用https访问、开启GZIP、location的判断、开启缓存&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS部署JDK、Tomcat、Redis</title>
+    <link href="https://baby7.github.io/myBlog/45.html"/>
+    <id>https://baby7.github.io/myBlog/45.html</id>
+    <published>2019-11-20T08:10:18.000Z</published>
+    <updated>2024-08-28T08:25:19.142Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FjFCU6-pYmeKjvja2tOxzEwmitwx&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;使用华为云进行JDK和Tomcat的安装，手动安装redis&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记一次服务器疑似watchbog挖矿病毒入侵</title>
+    <link href="https://baby7.github.io/myBlog/43.html"/>
+    <id>https://baby7.github.io/myBlog/43.html</id>
+    <published>2019-11-19T03:49:50.000Z</published>
+    <updated>2024-08-28T08:25:19.109Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FvsqLovMu9AVStVmfJFQpF96iteq&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;网站崩溃，查询发现是后台服务无法请求到，继续查发现全部的微服务都挂了，所以在华为云重新部署，但是部署失败，服务无法启动，使用ssh连接手动测试启动后发现还是不行&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="服务器相关" scheme="https://baby7.github.io/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python自动判断Maven依赖</title>
+    <link href="https://baby7.github.io/myBlog/41.html"/>
+    <id>https://baby7.github.io/myBlog/41.html</id>
+    <published>2019-11-15T09:44:49.000Z</published>
+    <updated>2024-08-28T08:25:19.069Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FkemCPTkOuBMMvwQvfsmHpW_1qK7&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;python自动判断Maven依赖&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于谷歌/火狐无头浏览器模式解决Vue的SEO问题</title>
+    <link href="https://baby7.github.io/myBlog/39.html"/>
+    <id>https://baby7.github.io/myBlog/39.html</id>
+    <published>2019-11-15T07:05:03.000Z</published>
+    <updated>2024-08-28T08:25:19.036Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fr9_iufjOcnPNk0QdHDAb71WrdTu&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;基于谷歌&amp;#x2F;火狐无头浏览器模式解决Vue的SEO问题&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java程序解析yml文件报错解决</title>
+    <link href="https://baby7.github.io/myBlog/37.html"/>
+    <id>https://baby7.github.io/myBlog/37.html</id>
+    <published>2019-11-14T07:34:47.000Z</published>
+    <updated>2024-08-28T08:25:19.004Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FoYxbrqn3DYT3IPqyQr5GQ6JO4ss&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;java.nio.charset.MalformedInputException: Input length &amp;#x3D; 1&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL相邻去重</title>
+    <link href="https://baby7.github.io/myBlog/31.html"/>
+    <id>https://baby7.github.io/myBlog/31.html</id>
+    <published>2019-11-03T03:36:14.000Z</published>
+    <updated>2024-08-28T08:25:18.969Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FnSlmyqDHaPkAldqx9xvI8wkmEql&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;&amp;#x2F;&lt;em&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;&lt;strong&gt;MySQL相邻去重&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/strong&gt;&lt;/em&gt;*&amp;#x2F;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>豆瓣电影分析</title>
+    <link href="https://baby7.github.io/myBlog/27.html"/>
+    <id>https://baby7.github.io/myBlog/27.html</id>
+    <published>2019-06-09T01:25:37.000Z</published>
+    <updated>2024-08-28T08:25:18.933Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190609/1560072180710081520.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;分析了豆瓣电影数据并进行可视化，分析的数据有评论数量、评分、时长、电影类型、评分星级&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Scrapy豆瓣整站爬虫</title>
+    <link href="https://baby7.github.io/myBlog/26.html"/>
+    <id>https://baby7.github.io/myBlog/26.html</id>
+    <published>2019-06-04T05:56:39.000Z</published>
+    <updated>2024-08-28T08:25:18.896Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FseS4wB5iYauqeMr3yfuN2zzeJRF&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Scrapy豆瓣整站爬虫，爬取豆瓣下电影、读书、音乐、同城四个分类的数据并保存到MySQL，文末有源码&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Spring MVC实现微信小程序登录流程</title>
+    <link href="https://baby7.github.io/myBlog/25.html"/>
+    <id>https://baby7.github.io/myBlog/25.html</id>
+    <published>2019-06-02T22:31:21.000Z</published>
+    <updated>2024-08-28T08:25:18.862Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://p.qpic.cn/pic_wework/3685288192/9f993793ca07f7b6a9f4359d7ba58998ced701fabcda2bdf/0&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Spring MVC实现微信小程序登录流程&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="微信小程序" scheme="https://baby7.github.io/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>炫酷的博客背景</title>
+    <link href="https://baby7.github.io/myBlog/24.html"/>
+    <id>https://baby7.github.io/myBlog/24.html</id>
+    <published>2019-05-14T06:49:15.000Z</published>
+    <updated>2024-08-28T08:25:18.829Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190514/1557845162323072001.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;使用JavaScript实现，生成150个点，然后使用嵌套的for循环来判断每两个点之间是否需要连线以及连线的透明度&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Intellij IDEA插件及快捷操作分享</title>
+    <link href="https://baby7.github.io/myBlog/23.html"/>
+    <id>https://baby7.github.io/myBlog/23.html</id>
+    <published>2019-05-12T00:11:54.000Z</published>
+    <updated>2024-08-28T08:25:18.796Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190512/1557646293798067134.gif&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;几个Intellij IDEA插件和快捷操作的分享，后续我如果再遇到好的插件或学习到快捷操作会再更新&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="分享" scheme="https://baby7.github.io/categories/%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树莓派相关：MagicMirror²的安装</title>
+    <link href="https://baby7.github.io/myBlog/22.html"/>
+    <id>https://baby7.github.io/myBlog/22.html</id>
+    <published>2019-05-11T00:31:01.000Z</published>
+    <updated>2024-08-28T08:25:18.761Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190610/1560126831432033200.jpg&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;MagicMirror²是一个开源的魔镜项目，软件大概原理就是一个Web页面，然后全屏，黑色底色，硬件原理就是在原子镜后面放一个屏幕&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="硬件相关" scheme="https://baby7.github.io/categories/%E7%A1%AC%E4%BB%B6%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="树莓派" scheme="https://baby7.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Scrapy实战：双向爬取（豆瓣电影Top250）</title>
+    <link href="https://baby7.github.io/myBlog/20.html"/>
+    <id>https://baby7.github.io/myBlog/20.html</id>
+    <published>2019-05-10T00:47:16.000Z</published>
+    <updated>2024-08-28T08:25:18.725Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557729875653001252.jpg&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;爬取豆瓣电影排行的前250名，要爬取的信息有电影名,海报,评分,导演,编剧,主演,类型,片长,首次上映日期,简介&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Scrapy实战：单页列表爬取</title>
+    <link href="https://baby7.github.io/myBlog/19.html"/>
+    <id>https://baby7.github.io/myBlog/19.html</id>
+    <published>2019-05-09T04:18:48.000Z</published>
+    <updated>2024-08-28T08:25:18.687Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190509/1557403517447021492.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;爬取信息如下图红色框内所示，包括（序号，音频编号，专家ID，专家名，感受，音频URL），根据爬取信息自行设计MySql数据库表，并将爬取信息存储数据库。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>七仔的博客架构</title>
+    <link href="https://baby7.github.io/myBlog/18.html"/>
+    <id>https://baby7.github.io/myBlog/18.html</id>
+    <published>2019-05-03T04:37:45.000Z</published>
+    <updated>2024-08-28T08:25:18.651Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190503/1556857224358060666.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;七仔的博客使用SSM架构，redis缓存，nginx负载均衡，动静分离，MySQL主主备份，CDN加速等技术，实现更快的访问网站。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在我的网站上使用Nginx</title>
+    <link href="https://baby7.github.io/myBlog/17.html"/>
+    <id>https://baby7.github.io/myBlog/17.html</id>
+    <published>2019-05-03T03:48:17.000Z</published>
+    <updated>2024-08-28T08:25:18.619Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fs6miUWXBT1kHs4L3cmd_yVznutS&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Nginx是一款轻量级的Web 服务器&amp;#x2F;反向代理服务器及电子邮件（IMAP&amp;#x2F;POP3）代理服务器，在BSD-like 协议下发行。其特点是占有内存少，并发能力强&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>七牛云融合CDN加速</title>
+    <link href="https://baby7.github.io/myBlog/16.html"/>
+    <id>https://baby7.github.io/myBlog/16.html</id>
+    <published>2019-05-02T07:03:16.000Z</published>
+    <updated>2024-08-28T08:25:18.586Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://www.qiniu.com/assets/banner/banner-cdn-right-zh-fc67ff6b66e30168d1865163cb9a9294af40308741cd39d3eb8e83b40e71a82c.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;七牛CDN是在传统CDN基础上实现的对数据网络加速进一步优化的融合管理服务。融合优质节点,可监控,智能调度,为用户提供连续,稳定快速的内容分发服务。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在SSM中使用Redis实现高并发抢座</title>
+    <link href="https://baby7.github.io/myBlog/15.html"/>
+    <id>https://baby7.github.io/myBlog/15.html</id>
+    <published>2019-04-14T13:34:29.000Z</published>
+    <updated>2024-08-28T08:25:18.553Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://static.open-open.com/news/uploadImg/20160618/20160618093614_122.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;在SSM中使用Redis实现高并发抢座，写了大概需要的过程，大家可以借鉴借鉴&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Redis" scheme="https://baby7.github.io/tags/Redis/"/>
+    
+    <category term="高并发" scheme="https://baby7.github.io/tags/%E9%AB%98%E5%B9%B6%E5%8F%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>音乐播放器插件</title>
+    <link href="https://baby7.github.io/myBlog/14.html"/>
+    <id>https://baby7.github.io/myBlog/14.html</id>
+    <published>2019-04-13T09:29:55.000Z</published>
+    <updated>2024-08-28T08:25:18.518Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190513/1557755571328051252.jpg&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;这款播放器界面简洁优雅，功能强大，直接调用QQ音乐歌曲或歌单ID自动加载歌曲列表&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>六种设计模式结合的Java绘图板</title>
+    <link href="https://baby7.github.io/myBlog/13.html"/>
+    <id>https://baby7.github.io/myBlog/13.html</id>
+    <published>2019-04-13T09:10:20.000Z</published>
+    <updated>2024-08-28T08:25:18.474Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555146348750008778.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Java绘图板使用的设计模式有：工厂模式、备忘录模式、单例模式、模板模式、迭代器模式、状态模式&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="设计模式" scheme="https://baby7.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>UEditor的使用及Word的导入</title>
+    <link href="https://baby7.github.io/myBlog/12.html"/>
+    <id>https://baby7.github.io/myBlog/12.html</id>
+    <published>2019-04-13T08:02:01.000Z</published>
+    <updated>2024-08-28T08:25:18.434Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190504/1556972824317046630.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;UEditor是一个富文本编辑器，这个集成word导入的更是方便（图片也可以导入）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>帮助到我的文章及博客</title>
+    <link href="https://baby7.github.io/myBlog/11.html"/>
+    <id>https://baby7.github.io/myBlog/11.html</id>
+    <published>2019-04-13T07:38:42.000Z</published>
+    <updated>2024-08-28T08:25:18.399Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FqGSq4663w9hOHUB8Cwo9YUzjV2_&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;整理了一些帮助到我的文章及博客，因为确实帮到了我，所以想分享给大家&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="分享" scheme="https://baby7.github.io/categories/%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="转载" scheme="https://baby7.github.io/tags/%E8%BD%AC%E8%BD%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>推荐的工具及网站</title>
+    <link href="https://baby7.github.io/myBlog/10.html"/>
+    <id>https://baby7.github.io/myBlog/10.html</id>
+    <published>2019-04-13T07:20:17.000Z</published>
+    <updated>2024-08-28T08:25:18.355Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/FkUCkNodSBEUIVu0m-KsHT6-hGWU&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;自己推荐的一些工具和网站，因为觉得用着挺好所以推荐给大家。（不定时更新）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="分享" scheme="https://baby7.github.io/categories/%E5%88%86%E4%BA%AB/"/>
+    
+    
+    <category term="推荐" scheme="https://baby7.github.io/tags/%E6%8E%A8%E8%8D%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Juicer模板引擎</title>
+    <link href="https://baby7.github.io/myBlog/9.html"/>
+    <id>https://baby7.github.io/myBlog/9.html</id>
+    <published>2019-04-13T04:49:53.000Z</published>
+    <updated>2024-08-28T08:25:18.323Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://static.npmjs.com/58a19602036db1daee0d7863c94673a4.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Juicer 是一个高效、轻量的前端 (Javascript) 模板引擎，使用 Juicer 可以是你的代码实现数据和视图模型的分离(MVC)&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>代码高亮插件：SyntaxHighlighter的简单使用</title>
+    <link href="https://baby7.github.io/myBlog/8.html"/>
+    <id>https://baby7.github.io/myBlog/8.html</id>
+    <published>2019-04-13T04:39:05.000Z</published>
+    <updated>2024-08-28T08:25:18.287Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190413/1555130191429019056.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;SyntaxHighlighter是一款代码高亮插件，支持多种语言、多种主题&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端技术" scheme="https://baby7.github.io/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+    <category term="插件" scheme="https://baby7.github.io/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>部署个人网站步骤</title>
+    <link href="https://baby7.github.io/myBlog/7.html"/>
+    <id>https://baby7.github.io/myBlog/7.html</id>
+    <published>2019-04-12T08:36:32.000Z</published>
+    <updated>2024-08-28T08:25:18.252Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fgh-tWBmqrtB2BqO4J9nQzuk-rkH&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;自己整理的部署网站时的一些步骤，可能不太全，如果发现有错误或缺少步骤请与我练习，不要让别人被我带沟里。。。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="后端技术" scheme="https://baby7.github.io/categories/%E5%90%8E%E7%AB%AF%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="建站" scheme="https://baby7.github.io/tags/%E5%BB%BA%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python 网易云音乐 歌单及MV下载器</title>
+    <link href="https://baby7.github.io/myBlog/6.html"/>
+    <id>https://baby7.github.io/myBlog/6.html</id>
+    <published>2019-04-11T08:06:20.000Z</published>
+    <updated>2024-08-28T08:25:18.217Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190412/1555066008664005192.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;通过网易云API，根据歌单的ID即可下载全部歌曲，如果歌曲绑定了MV将会同时下载MV&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="爬虫相关" scheme="https://baby7.github.io/categories/%E7%88%AC%E8%99%AB%E7%9B%B8%E5%85%B3/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="网易云" scheme="https://baby7.github.io/tags/%E7%BD%91%E6%98%93%E4%BA%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python 人脸识别（加圣诞帽等）</title>
+    <link href="https://baby7.github.io/myBlog/5.html"/>
+    <id>https://baby7.github.io/myBlog/5.html</id>
+    <published>2019-04-11T07:54:49.000Z</published>
+    <updated>2024-08-28T08:25:18.180Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190411/1554969011460048157.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;使用Python的cv2库进行识别，image_processing库进行图像处理，可以实现 实时的替换人脸&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="人工智能" scheme="https://baby7.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+    <category term="python" scheme="https://baby7.github.io/tags/python/"/>
+    
+    <category term="人工智能" scheme="https://baby7.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="图像处理" scheme="https://baby7.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MFC桌面精灵（不规则窗体，天气预报）</title>
+    <link href="https://baby7.github.io/myBlog/4.html"/>
+    <id>https://baby7.github.io/myBlog/4.html</id>
+    <published>2019-04-11T07:48:49.000Z</published>
+    <updated>2024-08-28T08:25:18.146Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190411/1554968794740068792.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;使用C++,采用MFC开发，启动后桌面会出现一个小人（《家庭教师》动漫中的里包恩）（此处是不规则窗体的应用），左键可以拖动，点击胸前的奶嘴可以弹出快捷启动页面，可以启动某些路径下的资源，点击右下角会弹出天气预报界面，包含今明天气温度和天气图标&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="C或C++" scheme="https://baby7.github.io/tags/C%E6%88%96C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java实现打水印（文字水印，图片水印）</title>
+    <link href="https://baby7.github.io/myBlog/3.html"/>
+    <id>https://baby7.github.io/myBlog/3.html</id>
+    <published>2019-04-11T07:43:20.000Z</published>
+    <updated>2024-08-28T08:25:18.111Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190411/1554968461316046387.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;文字水印可设置参数：水印文字，透明度，横向位置，纵向位置，旋转角度，字体，颜色 图片水印可设置参数：透明度，横向位置，纵向位置，旋转角度&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="图像处理" scheme="https://baby7.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>C语言打水印</title>
+    <link href="https://baby7.github.io/myBlog/2.html"/>
+    <id>https://baby7.github.io/myBlog/2.html</id>
+    <published>2019-04-11T07:32:21.000Z</published>
+    <updated>2024-08-28T08:25:18.067Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/ueditor/jsp/upload/image/20190411/1554967637217065347.png&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;c语言实现打水印，合成两张图片，去除水印图片的黑色，将剩下的像素添加到原图片上&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="桌面技术" scheme="https://baby7.github.io/categories/%E6%A1%8C%E9%9D%A2%E6%8A%80%E6%9C%AF/"/>
+    
+    
+    <category term="图像处理" scheme="https://baby7.github.io/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/"/>
+    
+    <category term="C或C++" scheme="https://baby7.github.io/tags/C%E6%88%96C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java实现BP神经网络MNIST手写数字识别</title>
+    <link href="https://baby7.github.io/myBlog/1.html"/>
+    <id>https://baby7.github.io/myBlog/1.html</id>
+    <published>2019-04-10T12:51:03.000Z</published>
+    <updated>2024-08-28T08:25:18.035Z</updated>
+    
+    
+    <summary type="html">&lt;div align=&quot;center&quot;&gt; &lt;img src=&quot;https://media.baby7blog.com/Fq1uNYcAqQsPELjoG808WFjE0_oL&quot; width=200 /&gt; &lt;/div&gt;
+
+&lt;p&gt;Java实现BP神经网络，内含BP神经网络类，采用MNIST数据集，包含服务器和客户端程序，可在服务器训练后使客户端直接使用训练结果，界面有画板，可以手写数字&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="人工智能" scheme="https://baby7.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+    <category term="Java" scheme="https://baby7.github.io/tags/Java/"/>
+    
+    <category term="人工智能" scheme="https://baby7.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="神经网络" scheme="https://baby7.github.io/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
+  
+</feed>

@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="针对微信小程序码获取接口B的scene参数对输入参数做压缩处理放入scene参数中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="针对微信获取小程序码scene参数的数据压缩算法">
+<meta property="og:url" content="https://baby7.github.io/myBlog/67.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="针对微信小程序码获取接口B的scene参数对输入参数做压缩处理放入scene参数中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/Fh9vlJ_AsmG6B6AMGBegmgKciVTa">
+<meta property="article:published_time" content="2020-04-28T00:30:33.000Z">
+<meta property="article:modified_time" content="2024-08-28T08:25:19.574Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="微信小程序">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/Fh9vlJ_AsmG6B6AMGBegmgKciVTa">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/67.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>针对微信获取小程序码scene参数的数据压缩算法 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/67.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          针对微信获取小程序码scene参数的数据压缩算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-04-28 08:30:33" itemprop="dateCreated datePublished" datetime="2020-04-28T08:30:33+08:00">2020-04-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-28 16:25:19" itemprop="dateModified" datetime="2024-08-28T16:25:19+08:00">2024-08-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">前端技术</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/Fh9vlJ_AsmG6B6AMGBegmgKciVTa" width=200 /> </div>
+
+<p>针对微信小程序码获取接口B的scene参数对输入参数做压缩处理放入scene参数中</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="针对微信获取小程序码scene参数的数据压缩算法"><a href="#针对微信获取小程序码scene参数的数据压缩算法" class="headerlink" title="针对微信获取小程序码scene参数的数据压缩算法"></a>针对微信获取小程序码scene参数的数据压缩算法</h1></blockquote>
+<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>微信小程序现在有四个获取小程序码的接口，分别是:</p>
+<ul>
+<li><h4 id="接口-A-适用于需要的码数量较少的业务场景"><a href="#接口-A-适用于需要的码数量较少的业务场景" class="headerlink" title="接口 A: 适用于需要的码数量较少的业务场景"></a>接口 A: 适用于需要的码数量较少的业务场景</h4></li>
+</ul>
+<p>生成小程序码，可接受 path 参数较长，生成个数受限，请谨慎使用。</p>
+<ul>
+<li><h4 id="接口-B：适用于需要的码数量极多的业务场景"><a href="#接口-B：适用于需要的码数量极多的业务场景" class="headerlink" title="接口 B：适用于需要的码数量极多的业务场景"></a>接口 B：适用于需要的码数量极多的业务场景</h4></li>
+</ul>
+<p>生成小程序码，可接受页面参数较短，生成个数不受限。</p>
+<ul>
+<li><h4 id="接口-C：适用于需要的码数量较少的业务场景（不推荐使用）"><a href="#接口-C：适用于需要的码数量较少的业务场景（不推荐使用）" class="headerlink" title="接口 C：适用于需要的码数量较少的业务场景（不推荐使用）"></a>接口 C：适用于需要的码数量较少的业务场景（不推荐使用）</h4></li>
+</ul>
+<p>生成二维码，可接受 path 参数较长，生成个数受限。</p>
+<ul>
+<li><h4 id="接口-D：适用于“一物一码”的业务场景"><a href="#接口-D：适用于“一物一码”的业务场景" class="headerlink" title="接口 D：适用于“一物一码”的业务场景"></a>接口 D：适用于“一物一码”的业务场景</h4></li>
+</ul>
+<p>微信一物一码 支持生成小程序码。微信通过“一物一码”接口发放的二维码相比较普通链接二维码更安全、支持更小的印刷面积，支持跳转到指定小程序页面，且无数量限制</p>
+<h3 id="二、问题"><a href="#二、问题" class="headerlink" title="二、问题"></a>二、问题</h3><p>需要生成的小程序码数量要求很大，接口D的场景不一致，不考虑，接口A和接口C的生成数量加起来不超过十万，剩下的选择只有接口B，但是接口B的要求scene参数为（最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&amp;’()<em>+,&#x2F;:;&#x3D;?@-._~，其它字符请自行编码为合法字符）<br>算起来的话数字10个，大小写英文有26</em>2&#x3D;52个，加上特殊字符共有82个字符，业务要求将两个信息放入32个字符内，不考虑别的手段，两个信息一个信息的数量小，但是另一个信息为数字和英文组成的36进制编码。<br>经过计算后可以发现将特殊字符中的一个作为分隔符，将32位信息36进制压缩进81进制中可以缩短到27位，一个做分隔，还有4位保存另一个信息！可以做！</p>
+<h3 id="三、接口B文档"><a href="#三、接口B文档" class="headerlink" title="三、接口B文档"></a>三、接口B文档</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">POST https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>access_token</td>
+<td>string</td>
+<td></td>
+<td>是</td>
+<td><a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/access-token/auth.getAccessToken.html">接口调用凭证</a></td>
+</tr>
+<tr>
+<td>scene</td>
+<td>string</td>
+<td></td>
+<td>是</td>
+<td>最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&amp;’()*+,&#x2F;:;&#x3D;?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）</td>
+</tr>
+<tr>
+<td>page</td>
+<td>string</td>
+<td>主页</td>
+<td>否</td>
+<td>必须是已经发布的小程序存在的页面（否则报错），例如 pages&#x2F;index&#x2F;index, 根路径前不要填加 &#x2F;,不能携带参数（参数请放在scene字段里），如果不填写这个字段，默认跳主页面</td>
+</tr>
+<tr>
+<td>width</td>
+<td>number</td>
+<td>430</td>
+<td>否</td>
+<td>二维码的宽度，单位 px，最小 280px，最大 1280px</td>
+</tr>
+<tr>
+<td>auto_color</td>
+<td>boolean</td>
+<td>false</td>
+<td>否</td>
+<td>自动配置线条颜色，如果颜色依然是黑色，则说明不建议配置主色调，默认 false</td>
+</tr>
+<tr>
+<td>line_color</td>
+<td>Object</td>
+<td>{“r”:0,”g”:0,”b”:0}</td>
+<td>否</td>
+<td>auto_color 为 false 时生效，使用 rgb 设置颜色 例如 {“r”:”xxx”,”g”:”xxx”,”b”:”xxx”} 十进制表示</td>
+</tr>
+<tr>
+<td>is_hyaline</td>
+<td>boolean</td>
+<td>false</td>
+<td>否</td>
+<td>是否需要透明底色，为 true 时，生成透明底色的小程序</td>
+</tr>
+</tbody></table>
+<p>返回值为图片的Buffer</p>
+<h3 id="四、操作"><a href="#四、操作" class="headerlink" title="四、操作"></a>四、操作</h3><p>将82个字符中的“-”拿出来做分隔符，剩下81个字符做为81进制，将36进制转为10进制，再将10进制转为81进制。</p>
+<h3 id="五、工具类"><a href="#五、工具类" class="headerlink" title="五、工具类"></a>五、工具类</h3><p>我写好了工具类，直接拿来用就可以</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.lang.StringUtils;</span><br><span class="line"><span class="keyword">import</span> java.math.BigInteger;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 小程序码加密解密（进制转换）</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MiniCodeUtil</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**八十一进制*/</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">chars</span> <span class="operator">=</span></span><br><span class="line">            <span class="string">&quot;0123456789&quot;</span> +</span><br><span class="line">            <span class="string">&quot;ABCDEFGHIJ&quot;</span> +</span><br><span class="line">            <span class="string">&quot;KLMNOPQRST&quot;</span> +</span><br><span class="line">            <span class="string">&quot;UVWXYZabcd&quot;</span> +</span><br><span class="line">            <span class="string">&quot;efghijklmn&quot;</span> +</span><br><span class="line">            <span class="string">&quot;opqrstuvwx&quot;</span> +</span><br><span class="line">            <span class="string">&quot;yz!#$&amp;&#x27;()*&quot;</span> +</span><br><span class="line">            <span class="string">&quot;+,/:;=?@._&quot;</span> +</span><br><span class="line">            <span class="string">&quot;~&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">scale</span> <span class="operator">=</span> <span class="number">81</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="variable">minLength</span> <span class="operator">=</span> <span class="number">4</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 加密</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">encode</span><span class="params">(String str)</span> &#123;</span><br><span class="line">        <span class="type">BigInteger</span> <span class="variable">num</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BigInteger</span>(str, <span class="number">36</span>);</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="type">int</span> remainder;</span><br><span class="line">        <span class="keyword">while</span> (num.compareTo(BigInteger.valueOf(scale - <span class="number">1</span>)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            remainder = num.mod(BigInteger.valueOf(scale)).intValue();</span><br><span class="line">            sb.append(chars.charAt(remainder));</span><br><span class="line">            <span class="comment">/**除以进制数，获取下一个末尾数*/</span></span><br><span class="line">            num = num.divide(BigInteger.valueOf(scale));</span><br><span class="line">        &#125;</span><br><span class="line">        sb.append(chars.charAt(num.intValue()));</span><br><span class="line">        <span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> sb.reverse().toString();</span><br><span class="line">        <span class="keyword">return</span> StringUtils.leftPad(value, minLength, <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解密</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> str 字符串</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">decode</span><span class="params">(String str)</span> &#123;</span><br><span class="line">        <span class="comment">/**将 0 开头的字符串进行替换*/</span></span><br><span class="line">        str = str.replace(<span class="string">&quot;^0*&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">BigInteger</span> <span class="variable">value</span> <span class="operator">=</span> BigInteger.ZERO;</span><br><span class="line">        <span class="type">char</span> tempChar;</span><br><span class="line">        BigInteger tempCharValue;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length(); i++) &#123;</span><br><span class="line">            <span class="comment">/**获取字符*/</span></span><br><span class="line">            tempChar = str.charAt(i);</span><br><span class="line">            <span class="comment">/**单字符值*/</span></span><br><span class="line">            tempCharValue = BigInteger.valueOf(chars.indexOf(tempChar));</span><br><span class="line">            <span class="comment">/**单字符值在进制规则下表示的值*/</span></span><br><span class="line">            <span class="type">BigInteger</span> <span class="variable">item</span> <span class="operator">=</span> BigInteger.valueOf(scale).pow(str.length() - i - <span class="number">1</span>);</span><br><span class="line">            value = value.add(tempCharValue.multiply(item));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> addZeroForNum(value.toString(<span class="number">36</span>), <span class="number">32</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 补零</span></span><br><span class="line"><span class="comment">     * str 原字符串</span></span><br><span class="line"><span class="comment">     * strLength 字符串总长</span></span><br><span class="line"><span class="comment">     * */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">addZeroForNum</span><span class="params">(String str, <span class="type">int</span> strLength)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">strLen</span> <span class="operator">=</span> str.length();</span><br><span class="line">        <span class="keyword">if</span> (strLen &lt; strLength) &#123;</span><br><span class="line">            <span class="keyword">while</span> (strLen &lt; strLength) &#123;</span><br><span class="line">                <span class="type">StringBuffer</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>();</span><br><span class="line">                sb.append(<span class="string">&quot;0&quot;</span>).append(str);<span class="comment">// 左补0</span></span><br><span class="line">                <span class="comment">// sb.append(str).append(&quot;0&quot;);//右补0</span></span><br><span class="line">                str = sb.toString();</span><br><span class="line">                strLen = str.length();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> str;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="六、调用方式"><a href="#六、调用方式" class="headerlink" title="六、调用方式"></a>六、调用方式</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(MiniCodeUtil.decode(MiniCodeUtil.encode(<span class="string">&quot;995587e102064d47b670f5b81253dd58&quot;</span>)));</span><br></pre></td></tr></table></figure>
+<h3 id="七、Javascript函数（未做大数处理）"><a href="#七、Javascript函数（未做大数处理）" class="headerlink" title="七、Javascript函数（未做大数处理）"></a>七、Javascript函数（未做大数处理）</h3><p>写了个javascript的解密函数，但是javascript对大于9007199254740992的数处理出现错误，所以该函数只能对位数比较短的数做处理，例如处理32位数会出现问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="title class_">Stack</span> = (<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">var</span> items = <span class="keyword">new</span> <span class="title class_">WeakMap</span>();</span><br><span class="line">    <span class="comment">//先入后出，后入先出</span></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Stack</span>&#123;</span><br><span class="line">        <span class="title function_">constructor</span>(<span class="params"></span>)&#123;</span><br><span class="line">            items.<span class="title function_">set</span>(<span class="variable language_">this</span>,[]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">push</span>(<span class="params">ele</span>)&#123;</span><br><span class="line">            <span class="comment">//入栈</span></span><br><span class="line">            <span class="keyword">var</span> ls = items.<span class="title function_">get</span>(<span class="variable language_">this</span>);</span><br><span class="line">            ls.<span class="title function_">push</span>(ele);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">pop</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="comment">//出栈</span></span><br><span class="line">            <span class="keyword">var</span> ls = items.<span class="title function_">get</span>(<span class="variable language_">this</span>);</span><br><span class="line">            <span class="keyword">return</span> ls.<span class="title function_">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">size</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="comment">//获取栈的长度</span></span><br><span class="line">            <span class="keyword">var</span> ls = items.<span class="title function_">get</span>(<span class="variable language_">this</span>);</span><br><span class="line">            <span class="keyword">return</span> ls.<span class="property">length</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="title function_">print</span>(<span class="params"></span>)&#123;</span><br><span class="line">            <span class="comment">//打印栈</span></span><br><span class="line">            <span class="keyword">var</span> ls = items.<span class="title function_">get</span>(<span class="variable language_">this</span>);</span><br><span class="line">            <span class="keyword">return</span> ls.<span class="title function_">toString</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Stack</span>;</span><br><span class="line">&#125;)();</span><br><span class="line">    </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * num 需要转化的数字</span></span><br><span class="line"><span class="comment">    * base 转化的进制，默认为 2</span></span><br><span class="line"><span class="comment">    * */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">devide</span>(<span class="params">num,base</span>)&#123;</span><br><span class="line">    base = <span class="title class_">Math</span>.<span class="title function_">floor</span>(base) || <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">typeof</span> num != <span class="string">&quot;number&quot;</span> || num &lt; <span class="number">0</span> || base &gt; <span class="number">36</span> || base &lt; <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;参数错误&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    num = <span class="title class_">Math</span>.<span class="title function_">floor</span>(num);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> code = <span class="string">&quot;0123456789abcdefghijklmnopqrstuvwxyz&quot;</span>;</span><br><span class="line">    <span class="keyword">var</span> stack = <span class="keyword">new</span> <span class="title class_">Stack</span>();</span><br><span class="line">    <span class="keyword">var</span> res = <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> rem;</span><br><span class="line">    <span class="keyword">while</span>(num &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        rem = num % base;</span><br><span class="line">        stack.<span class="title function_">push</span>(rem);</span><br><span class="line">        num = <span class="title class_">Math</span>.<span class="title function_">floor</span>(num/base);</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">while</span>(stack.<span class="title function_">size</span>() &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        res += code[stack.<span class="title function_">pop</span>()];</span><br><span class="line">    &#125;</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">transfrom</span>(<span class="params">num,base</span>)&#123;</span><br><span class="line">    <span class="comment">//任意进制转十进制</span></span><br><span class="line">    <span class="keyword">var</span> bases = [</span><br><span class="line">        <span class="string">&quot;0&quot;</span>,<span class="string">&quot;1&quot;</span>,<span class="string">&quot;2&quot;</span>,<span class="string">&quot;3&quot;</span>,<span class="string">&quot;4&quot;</span>,<span class="string">&quot;5&quot;</span>,<span class="string">&quot;6&quot;</span>,<span class="string">&quot;7&quot;</span>,<span class="string">&quot;8&quot;</span>,<span class="string">&quot;9&quot;</span>,</span><br><span class="line">        <span class="string">&quot;A&quot;</span>,<span class="string">&quot;B&quot;</span>,<span class="string">&quot;C&quot;</span>,<span class="string">&quot;D&quot;</span>,<span class="string">&quot;E&quot;</span>,<span class="string">&quot;F&quot;</span>,<span class="string">&quot;G&quot;</span>,<span class="string">&quot;H&quot;</span>,<span class="string">&quot;I&quot;</span>,<span class="string">&quot;J&quot;</span>,</span><br><span class="line">        <span class="string">&quot;K&quot;</span>,<span class="string">&quot;L&quot;</span>,<span class="string">&quot;M&quot;</span>,<span class="string">&quot;N&quot;</span>,<span class="string">&quot;O&quot;</span>,<span class="string">&quot;P&quot;</span>,<span class="string">&quot;Q&quot;</span>,<span class="string">&quot;R&quot;</span>,<span class="string">&quot;S&quot;</span>,<span class="string">&quot;T&quot;</span>,</span><br><span class="line">        <span class="string">&quot;U&quot;</span>,<span class="string">&quot;V&quot;</span>,<span class="string">&quot;W&quot;</span>,<span class="string">&quot;X&quot;</span>,<span class="string">&quot;Y&quot;</span>,<span class="string">&quot;Z&quot;</span>,<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>,<span class="string">&quot;c&quot;</span>,<span class="string">&quot;d&quot;</span>,</span><br><span class="line">        <span class="string">&quot;e&quot;</span>,<span class="string">&quot;f&quot;</span>,<span class="string">&quot;g&quot;</span>,<span class="string">&quot;h&quot;</span>,<span class="string">&quot;i&quot;</span>,<span class="string">&quot;j&quot;</span>,<span class="string">&quot;k&quot;</span>,<span class="string">&quot;l&quot;</span>,<span class="string">&quot;m&quot;</span>,<span class="string">&quot;n&quot;</span>,</span><br><span class="line">        <span class="string">&quot;o&quot;</span>,<span class="string">&quot;p&quot;</span>,<span class="string">&quot;q&quot;</span>,<span class="string">&quot;r&quot;</span>,<span class="string">&quot;s&quot;</span>,<span class="string">&quot;t&quot;</span>,<span class="string">&quot;u&quot;</span>,<span class="string">&quot;v&quot;</span>,<span class="string">&quot;w&quot;</span>,<span class="string">&quot;x&quot;</span>,</span><br><span class="line">        <span class="string">&quot;y&quot;</span>,<span class="string">&quot;z&quot;</span>,<span class="string">&quot;!&quot;</span>,<span class="string">&quot;#&quot;</span>,<span class="string">&quot;$&quot;</span>,<span class="string">&quot;&amp;&quot;</span>,<span class="string">&quot;&#x27;&quot;</span>,<span class="string">&quot;(&quot;</span>,<span class="string">&quot;)&quot;</span>,<span class="string">&quot;*&quot;</span>,</span><br><span class="line">        <span class="string">&quot;+&quot;</span>,<span class="string">&quot;,&quot;</span>,<span class="string">&quot;/&quot;</span>,<span class="string">&quot;:&quot;</span>,<span class="string">&quot;;&quot;</span>,<span class="string">&quot;=&quot;</span>,<span class="string">&quot;?&quot;</span>,<span class="string">&quot;@&quot;</span>,<span class="string">&quot;.&quot;</span>,<span class="string">&quot;_&quot;</span>,</span><br><span class="line">        <span class="string">&quot;~&quot;</span>];</span><br><span class="line">    <span class="keyword">var</span> config = &#123;&#125;;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> k = <span class="number">0</span>; k &lt; base; k++)&#123;</span><br><span class="line">        config[bases[k]] = k;</span><br><span class="line">    &#125;</span><br><span class="line">    num = <span class="title class_">String</span>(num);</span><br><span class="line">    <span class="keyword">var</span> count =  <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">var</span> i;</span><br><span class="line">    <span class="keyword">while</span>(num.<span class="property">length</span> &gt; <span class="number">0</span>)&#123;</span><br><span class="line">        i  = num[num.<span class="property">length</span> - <span class="number">1</span>];</span><br><span class="line">        i = config[i];</span><br><span class="line">        res = res + i * <span class="title class_">Math</span>.<span class="title function_">pow</span>(base,count);</span><br><span class="line">        num = num.<span class="title function_">substr</span>(<span class="number">0</span>,num.<span class="property">length</span>-<span class="number">1</span>);</span><br><span class="line">        count++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/**字符串*/</span></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;1f/@*WYzW(Bq:yJSWqguXPJSf1W&#x27;</span></span><br><span class="line"><span class="keyword">var</span> str_res = <span class="title function_">devide</span>(<span class="title function_">transfrom</span>(str,<span class="number">81</span>),<span class="number">36</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;str_res :&quot;</span> + str_res )</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># 微信小程序</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/66.html" rel="prev" title="Hbase 3节点分布式集群搭建（服务器）">
+      <i class="fa fa-chevron-left"></i> Hbase 3节点分布式集群搭建（服务器）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/myBlog/68.html" rel="next" title="对Jeecg-Boot中Token失效返回格式的调整">
+      对Jeecg-Boot中Token失效返回格式的调整 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%92%88%E5%AF%B9%E5%BE%AE%E4%BF%A1%E8%8E%B7%E5%8F%96%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%A0%81scene%E5%8F%82%E6%95%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">针对微信获取小程序码scene参数的数据压缩算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%89%8D%E8%A8%80"><span class="nav-number">1.0.1.</span> <span class="nav-text">一、前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3-A-%E9%80%82%E7%94%A8%E4%BA%8E%E9%9C%80%E8%A6%81%E7%9A%84%E7%A0%81%E6%95%B0%E9%87%8F%E8%BE%83%E5%B0%91%E7%9A%84%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF"><span class="nav-number">1.0.1.1.</span> <span class="nav-text">接口 A: 适用于需要的码数量较少的业务场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3-B%EF%BC%9A%E9%80%82%E7%94%A8%E4%BA%8E%E9%9C%80%E8%A6%81%E7%9A%84%E7%A0%81%E6%95%B0%E9%87%8F%E6%9E%81%E5%A4%9A%E7%9A%84%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF"><span class="nav-number">1.0.1.2.</span> <span class="nav-text">接口 B：适用于需要的码数量极多的业务场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3-C%EF%BC%9A%E9%80%82%E7%94%A8%E4%BA%8E%E9%9C%80%E8%A6%81%E7%9A%84%E7%A0%81%E6%95%B0%E9%87%8F%E8%BE%83%E5%B0%91%E7%9A%84%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF%EF%BC%88%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.0.1.3.</span> <span class="nav-text">接口 C：适用于需要的码数量较少的业务场景（不推荐使用）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3-D%EF%BC%9A%E9%80%82%E7%94%A8%E4%BA%8E%E2%80%9C%E4%B8%80%E7%89%A9%E4%B8%80%E7%A0%81%E2%80%9D%E7%9A%84%E4%B8%9A%E5%8A%A1%E5%9C%BA%E6%99%AF"><span class="nav-number">1.0.1.4.</span> <span class="nav-text">接口 D：适用于“一物一码”的业务场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%97%AE%E9%A2%98"><span class="nav-number">1.0.2.</span> <span class="nav-text">二、问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%8E%A5%E5%8F%A3B%E6%96%87%E6%A1%A3"><span class="nav-number">1.0.3.</span> <span class="nav-text">三、接口B文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%93%8D%E4%BD%9C"><span class="nav-number">1.0.4.</span> <span class="nav-text">四、操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="nav-number">1.0.5.</span> <span class="nav-text">五、工具类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="nav-number">1.0.6.</span> <span class="nav-text">六、调用方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%83%E3%80%81Javascript%E5%87%BD%E6%95%B0%EF%BC%88%E6%9C%AA%E5%81%9A%E5%A4%A7%E6%95%B0%E5%A4%84%E7%90%86%EF%BC%89"><span class="nav-number">1.0.7.</span> <span class="nav-text">七、Javascript函数（未做大数处理）</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">115</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
