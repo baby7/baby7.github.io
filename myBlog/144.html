@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://media.baby7blog.com/1724133434144361391">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://media.baby7blog.com/1724133434144361391">
+  <link rel="icon" type="image/png" sizes="16x16" href="https://media.baby7blog.com/1724133434144361391">
+  <link rel="mask-icon" href="https://media.baby7blog.com/1724133434144361391" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"baby7.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"right","Muse | Mist":320,"width":300,"display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近对博客的加载速度和各种文件体积进行了优化，特此记录一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博客的加载速度和大小的优化、优化再优化">
+<meta property="og:url" content="https://baby7.github.io/myBlog/144.html">
+<meta property="og:site_name" content="七仔的博客">
+<meta property="og:description" content="最近对博客的加载速度和各种文件体积进行了优化，特此记录一下">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://media.baby7blog.com/1725004467771127665">
+<meta property="og:image" content="https://media.baby7blog.com/1725004825745192178">
+<meta property="og:image" content="https://media.baby7blog.com/1725004754371824603">
+<meta property="article:published_time" content="2024-08-30T07:54:29.000Z">
+<meta property="article:modified_time" content="2024-08-30T08:00:44.000Z">
+<meta property="article:author" content="七仔">
+<meta property="article:tag" content="建站">
+<meta property="article:tag" content="插件">
+<meta property="article:tag" content="图像处理">
+<meta property="article:tag" content="Nginx">
+<meta property="article:tag" content="plugin">
+<meta property="article:tag" content="升级">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="SEO">
+<meta property="article:tag" content="收录">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://media.baby7blog.com/1725004467771127665">
+
+<link rel="canonical" href="https://baby7.github.io/myBlog/144.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>博客的加载速度和大小的优化、优化再优化 | 七仔的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="七仔的博客" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">七仔的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">七仔的博客GithubPages分博</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/index.html" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://baby7.github.io/myBlog/144.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://media.baby7blog.com/1724133440168933713">
+      <meta itemprop="name" content="七仔">
+      <meta itemprop="description" content="主要记录自己在写程序过程中的发现、问题、成果">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="七仔的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          博客的加载速度和大小的优化、优化再优化
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-08-30 15:54:29 / 修改时间：16:00:44" itemprop="dateCreated datePublished" datetime="2024-08-30T15:54:29+08:00">2024-08-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9B%B8%E5%85%B3/" itemprop="url" rel="index"><span itemprop="name">服务器相关</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <div align="center"> <img src="https://media.baby7blog.com/1725004467771127665" width=200 /> </div>
+
+<p>最近对博客的加载速度和各种文件体积进行了优化，特此记录一下</p>
+<span id="more"></span>
+
+<blockquote>
+<h1 id="博客的加载速度和大小的优化、优化再优化"><a href="#博客的加载速度和大小的优化、优化再优化" class="headerlink" title="博客的加载速度和大小的优化、优化再优化"></a>博客的加载速度和大小的优化、优化再优化</h1></blockquote>
+<h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><p>最近对博客的加载速度和各种文件体积进行了优化，特此记录一下</p>
+<br>
+
+<h2 id="1-基础"><a href="#1-基础" class="headerlink" title="1. 基础"></a>1. 基础</h2><h3 id="1-1-图片加载优化"><a href="#1-1-图片加载优化" class="headerlink" title="1.1 图片加载优化"></a>1.1 图片加载优化</h3><ol>
+<li><p>对于非文章类的大图片先进行一遍压缩，使用各种压缩网站就可以</p>
+</li>
+<li><p>然后对于各种图片最好都转换为为webp格式，相对于传统格式能降低大小大概四成左右</p>
+</li>
+</ol>
+<h3 id="1-2-gzip压缩"><a href="#1-2-gzip压缩" class="headerlink" title="1.2 gzip压缩"></a>1.2 gzip压缩</h3><p>gzip是针对文本类型进行压缩的，例如html、js、css、txt等格式，可以在nginx处打开</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    gzip  on;</span><br><span class="line">    gzip_buffers 32 4K;</span><br><span class="line">    gzip_comp_level 6;</span><br><span class="line">    gzip_types text/plain application/javascript text/css;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="2-首屏渲染"><a href="#2-首屏渲染" class="headerlink" title="2. 首屏渲染"></a>2. 首屏渲染</h2><p>Vue类型的博客的内容是通过实时加载去渲染的，如果蜘蛛只获取了html而没有去加载js的话实际是没有内容的。有几种解决方案。</p>
+<ol>
+<li><p>将vue渲染成静态文件，每次增加新文章都重新渲染一遍，然后上传到服务器上。优点是加载快，但是调整插件什么的比较麻烦。</p>
+</li>
+<li><p>实时判断爬虫然后进行服务器端渲染。</p>
+</li>
+</ol>
+<p>我这里主要讲一下服务端渲染。首先是nginx判断爬虫:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    server &#123;</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        location ... &#123;</span><br><span class="line">            </span><br><span class="line">            if ($http_user_agent ~* &quot;Sogou web spider|BingPreview|baidu|Baiduspider|twitterbot|facebookexternalhit|rogerbot|linkedinbot|embedly|quora link preview|showyoubot|outbrain|pinterest|slackbot|vkShare|W3C_Validator|bingbot|Sosospider|Sogou Pic Spider|Googlebot|360Spider|qihoobot|Googlebot-Mobile|Googlebot-Image|Mediapartners-Google|Adsbot-Google|Feedfetcher-Google|Yahoo! Slurp|Yahoo! Slurp China|YoudaoBot|Sogou spider|Sogou web spider|MSNBot|ia_archiver|Tomato Bot|Sogou web spider|soso|sogou|yahoo|sohu-search|yodao|robozilla|msnbot|MJ12bot|NHN|Twiceler|FeedDemon|JikeSpider|Indy Library|Alexa Toolbar|AskTbFXTV|AhrefsBot|CrawlDaddy|CoolpadWebkit|Java|Feedly|UniversalFeedParser|ApacheBench|Microsoft URL Control|Swiftbot|ZmEu|oBot|jaunty|Python-urllib|lightDeckReports Bot|YYSpider|DigExt|YisouSpider|HttpClient|MJ12bot|heritrix|EasouSpider|LinkpadBot|Googlebot|Ezooms&quot;) &#123;</span><br><span class="line">                proxy_pass  http://xxx.xxx.xxx.xxx:3000?url=https%3A%2F%2Fwww.xxxxxxxx.com$&#123;document_uri&#125;$is_args$query_string;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>逻辑就是通过请求的User-Agent判断是否是爬虫，如果是爬虫就调用一个端口为3000的服务将路径转发给它让它加载完返回加载后（js会渲染完成）的html。</p>
+<p>至于这个端口为3000的服务，我是用了一个docker安装的镜像为zenato&#x2F;puppeteer-renderer的容器，对外端口为3000，作用就是进行服务端渲染。</p>
+<p>docker运行语句:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name puppeteer-renderer -p 3000:3000 zenato/puppeteer-renderer:latest</span><br></pre></td></tr></table></figure>
+
+<p>zenato&#x2F;puppeteer-renderer的开源地址：<a target="_blank" rel="noopener" href="https://github.com/zenato/puppeteer-renderer">https://github.com/zenato/puppeteer-renderer</a></p>
+<br>
+
+<h2 id="3-接口"><a href="#3-接口" class="headerlink" title="3. 接口"></a>3. 接口</h2><p>后端服务其实没什么好说的，就是做缓存就好了，可以用Redis。另外一般返回格式为json，所以最好在nginx处加上json格式的gzip。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    ...</span><br><span class="line">    gzip_types text/plain application/javascript text/css application/json;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="4-Live2d的优化"><a href="#4-Live2d的优化" class="headerlink" title="4. Live2d的优化"></a>4. Live2d的优化</h2><p>对于live2d，基础的js和css的优化就不说了，顺便提一下live2d的图片因为要拼接起来，所以很大，记得也要压缩</p>
+<p>这里主要说一下moc格式，其实moc是进行gzip压缩的，两种方案：</p>
+<ol>
+<li>对nginx进行配置，再增加一个针对moc的gzip压缩</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">    ...</span><br><span class="line">    gzip_types text/plain application/javascript text/css application/json text/x-moc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>调整xx.model.json文件中的后缀</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;model&quot;</span><span class="punctuation">:</span> <span class="string">&quot;xx.moc.txt&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后修改xx.moc为xx.moc.txt即可（需要确保nginx有做text&#x2F;plain的gzip压缩）</p>
+<br>
+
+<h2 id="5-七牛云的优化"><a href="#5-七牛云的优化" class="headerlink" title="5. 七牛云的优化"></a>5. 七牛云的优化</h2><h3 id="5-1-七牛云的图片瘦身"><a href="#5-1-七牛云的图片瘦身" class="headerlink" title="5.1 七牛云的图片瘦身"></a>5.1 七牛云的图片瘦身</h3><p>可以在七牛云的 对象存储 -&gt; 空间管理 -&gt; 你自己的空间 -&gt; 多媒体样式 -&gt; 新建样式 中配置。</p>
+<p>我这里建议是打开图片瘦身+输出格式为webp。需要注意修改以后右侧可以看到示例链接，复制你图片的链接加上多出来的后缀即可访问。我这里访问后基本可以做到瘦身三四成的样子。</p>
+<p>放一下配置截图:</p>
+<p><img src="https://media.baby7blog.com/1725004825745192178" alt="image.png"></p>
+<h3 id="5-2-七牛云的gzip压缩"><a href="#5-2-七牛云的gzip压缩" class="headerlink" title="5.2 七牛云的gzip压缩"></a>5.2 七牛云的gzip压缩</h3><p>截止到我写这篇文章的时候，七牛云会默认开启gzip加速的类型有:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">text/plain</span><br><span class="line">text/css</span><br><span class="line">text/javascript</span><br><span class="line">text/xml</span><br><span class="line">application/x-javascript</span><br><span class="line">application/json</span><br><span class="line">application/xml</span><br><span class="line">application/xml+rss</span><br><span class="line">application/javascript</span><br></pre></td></tr></table></figure>
+
+<p>来源: <a target="_blank" rel="noopener" href="https://developer.qiniu.com/fusion/1571/seven-niuyun-support-for-text-file-download-optimization">https://developer.qiniu.com/fusion/1571/seven-niuyun-support-for-text-file-download-optimization</a></p>
+<p>不能进行自定义，所以对于上面的live2d的moc文件最好调整为txt格式进行gzip压缩</p>
+<br>
+
+<h2 id="6-工具"><a href="#6-工具" class="headerlink" title="6. 工具"></a>6. 工具</h2><p>我这里用了谷歌的 PageSpeed Insights 进行分析，分析还是很全的。</p>
+<p>PageSpeed Insights: <a target="_blank" rel="noopener" href="https://pagespeed.web.dev/?hl=zh_CN">https://pagespeed.web.dev/?hl=zh_CN</a></p>
+<p>放一下截图:</p>
+<p><img src="https://media.baby7blog.com/1725004754371824603" alt="4790eaf60145dd91b3f147df0db582f0.png"></p>
+<p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/144.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/144.html</a></p>
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BB%BA%E7%AB%99/" rel="tag"># 建站</a>
+              <a href="/tags/%E6%8F%92%E4%BB%B6/" rel="tag"># 插件</a>
+              <a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" rel="tag"># 图像处理</a>
+              <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+              <a href="/tags/plugin/" rel="tag"># plugin</a>
+              <a href="/tags/%E5%8D%87%E7%BA%A7/" rel="tag"># 升级</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/SEO/" rel="tag"># SEO</a>
+              <a href="/tags/%E6%94%B6%E5%BD%95/" rel="tag"># 收录</a>
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tags/%E4%BC%98%E5%8C%96/" rel="tag"># 优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/myBlog/143.html" rel="prev" title="使用 Github Pages 和 Hexo 搭建博客">
+      <i class="fa fa-chevron-left"></i> 使用 Github Pages 和 Hexo 搭建博客
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E5%92%8C%E5%A4%A7%E5%B0%8F%E7%9A%84%E4%BC%98%E5%8C%96%E3%80%81%E4%BC%98%E5%8C%96%E5%86%8D%E4%BC%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">博客的加载速度和大小的优化、优化再优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">0. 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E7%A1%80"><span class="nav-number">1.2.</span> <span class="nav-text">1. 基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1 图片加载优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-gzip%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2 gzip压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%A6%96%E5%B1%8F%E6%B8%B2%E6%9F%93"><span class="nav-number">1.3.</span> <span class="nav-text">2. 首屏渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.4.</span> <span class="nav-text">3. 接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Live2d%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">4. Live2d的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%B8%83%E7%89%9B%E4%BA%91%E7%9A%84%E4%BC%98%E5%8C%96"><span class="nav-number">1.6.</span> <span class="nav-text">5. 七牛云的优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E4%B8%83%E7%89%9B%E4%BA%91%E7%9A%84%E5%9B%BE%E7%89%87%E7%98%A6%E8%BA%AB"><span class="nav-number">1.6.1.</span> <span class="nav-text">5.1 七牛云的图片瘦身</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E4%B8%83%E7%89%9B%E4%BA%91%E7%9A%84gzip%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.6.2.</span> <span class="nav-text">5.2 七牛云的gzip压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%B7%A5%E5%85%B7"><span class="nav-number">1.7.</span> <span class="nav-text">6. 工具</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="七仔"
+      src="https://media.baby7blog.com/1724133440168933713">
+  <p class="site-author-name" itemprop="name">七仔</p>
+  <div class="site-description" itemprop="description">主要记录自己在写程序过程中的发现、问题、成果</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">117</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">95</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/baby7" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;baby7" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/baby7blog@foxmail.com" title="E-Mail → baby7blog@foxmail.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baby7blog.com/" title="https:&#x2F;&#x2F;www.baby7blog.com&#x2F;" rel="noopener" target="_blank">七仔的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hcworld.xyz/" title="https:&#x2F;&#x2F;www.hcworld.xyz" rel="noopener" target="_blank">张红尘的博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.qqsuu.cn/" title="https:&#x2F;&#x2F;blog.qqsuu.cn&#x2F;" rel="noopener" target="_blank">大米博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://kymjs.com/" title="https:&#x2F;&#x2F;kymjs.com&#x2F;" rel="noopener" target="_blank">开源实验室</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://my.gintama.love/" title="https:&#x2F;&#x2F;my.gintama.love&#x2F;" rel="noopener" target="_blank">HanSan'Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://howiehz.top/" title="https:&#x2F;&#x2F;howiehz.top&#x2F;" rel="noopener" target="_blank">皓子的小站</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.wexiami.com/" title="https:&#x2F;&#x2F;blog.wexiami.com&#x2F;" rel="noopener" target="_blank">大熊要飞翔</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.chaoniulian.com/" title="https:&#x2F;&#x2F;www.chaoniulian.com&#x2F;" rel="noopener" target="_blank">超牛链AI</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://sugarat.top/" title="https:&#x2F;&#x2F;sugarat.top&#x2F;" rel="noopener" target="_blank">粥里有勺糖</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.baiwulin.com/" title="https:&#x2F;&#x2F;www.baiwulin.com&#x2F;" rel="noopener" target="_blank">雾林博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://greatdk.com/" title="https:&#x2F;&#x2F;greatdk.com&#x2F;" rel="noopener" target="_blank">DK博客</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.jdjwzx233.cn/" title="https:&#x2F;&#x2F;www.jdjwzx233.cn&#x2F;" rel="noopener" target="_blank">jdjwzx233-Blog</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://blog.gadore.top/" title="https:&#x2F;&#x2F;blog.gadore.top&#x2F;" rel="noopener" target="_blank">千里之豪的格物垛</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">七仔</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
