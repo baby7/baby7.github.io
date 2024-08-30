@@ -29,10 +29,12 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://media.baby7blog.com/Fs2jLDGO2v279jmDu1Y8N0BNO3a4">
 <meta property="article:published_time" content="2020-03-25T06:57:29.000Z">
-<meta property="article:modified_time" content="2024-08-29T00:01:09.000Z">
+<meta property="article:modified_time" content="2024-08-29T00:37:15.000Z">
 <meta property="article:author" content="七仔">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="python">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="SpringBoot">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://media.baby7blog.com/Fs2jLDGO2v279jmDu1Y8N0BNO3a4">
 
@@ -201,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-29 08:01:09" itemprop="dateModified" datetime="2024-08-29T08:01:09+08:00">2024-08-29</time>
+                <time title="修改时间：2024-08-29 08:37:15" itemprop="dateModified" datetime="2024-08-29T08:37:15+08:00">2024-08-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,334 +232,18 @@
 <span id="more"></span>
 
 <blockquote>
-<h1 id="python通过数据库自动生成SSM代码"><a href="#python通过数据库自动生成SSM代码" class="headerlink" title="python通过数据库自动生成SSM代码"></a>python通过数据库自动生成SSM代码</h1><p>前段时间要写几个差不多的项目，后天都是用的SSM，然后用ajax通信，就先敲了个这个出来。<br>思路是做一个模板，然后读取数据库结构，最后生成代码包。<br>因为比较着急，也没细做，先放到这，后面有时间了完善一下。</p>
-</blockquote>
-<h2 id="主模块"><a href="#主模块" class="headerlink" title="主模块"></a>主模块</h2><pre><code class="python">#!/usr/bin/python3
-import mysql
-import file
-import template
+<h1 id="python通过数据库自动生成SSM代码"><a href="#python通过数据库自动生成SSM代码" class="headerlink" title="python通过数据库自动生成SSM代码"></a>python通过数据库自动生成SSM代码</h1></blockquote>
+<p>前段时间要写几个差不多的项目，后天都是用的SSM，然后用ajax通信，就先敲了个这个出来。</p>
+<p>思路是做一个模板，然后读取数据库结构，最后生成代码包。</p>
+<p>因为比较着急，也没细做，先放到这，后面有时间了完善一下。</p>
+<h2 id="主模块"><a href="#主模块" class="headerlink" title="主模块"></a>主模块</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="keyword">import</span> mysql</span><br><span class="line"><span class="keyword">import</span> file</span><br><span class="line"><span class="keyword">import</span> template</span><br><span class="line"></span><br><span class="line">db_name = <span class="string">&quot;*&quot;</span>    <span class="comment"># 数据库名</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 连接数据库读取表列表</span></span><br><span class="line">    table_list = mysql.get_table_list(db_name)</span><br><span class="line">    <span class="comment"># 获取代码模板</span></span><br><span class="line">    template_list = file.get_template_list()</span><br><span class="line">    <span class="keyword">for</span> table <span class="keyword">in</span> table_list:</span><br><span class="line">        <span class="comment"># 获取表结构</span></span><br><span class="line">        table_struct_list = mysql.get_table_struct(table, db_name)</span><br><span class="line">        <span class="comment"># 对代码模板进行加工</span></span><br><span class="line">        code_gen_list = template.handle(table, table_struct_list, template_list)</span><br><span class="line">        <span class="comment"># 输出成品代码</span></span><br><span class="line">        file.save_code_gen(table, code_gen_list)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-db_name = &quot;*&quot;    # 数据库名
+<h2 id="文件模块"><a href="#文件模块" class="headerlink" title="文件模块"></a>文件模块</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python3</span><br><span class="line">import os</span><br><span class="line">import template</span><br><span class="line"></span><br><span class="line"># 代码模板列表</span><br><span class="line">template_baseJavaWeb_path_list = [</span><br><span class="line">    &quot;template-baseJavaWeb/bean/Base.java&quot;,</span><br><span class="line">    &quot;template-baseJavaWeb/controller/BaseController.java&quot;,</span><br><span class="line">    &quot;template-baseJavaWeb/dao/BaseMapper.java&quot;,</span><br><span class="line">    &quot;template-baseJavaWeb/mapping/BaseMapper.xml&quot;,</span><br><span class="line">    &quot;template-baseJavaWeb/service/BaseService.java&quot;,</span><br><span class="line">    &quot;template-baseJavaWeb/serviceImpl/BaseServiceImpl.java&quot;</span><br><span class="line">]</span><br><span class="line"># template_ssm_manage_path_list = [</span><br><span class="line">#     &quot;template-ssm-manage/controller/BaseController.java&quot;,</span><br><span class="line">#     &quot;template-ssm-manage/mapper/BaseMapper.java&quot;,</span><br><span class="line">#     &quot;template-ssm-manage/mapper/BaseMapper.xml&quot;,</span><br><span class="line">#     &quot;template-ssm-manage/service/BaseService.java&quot;,</span><br><span class="line">#     &quot;template-ssm-manage/po/Base.java&quot;</span><br><span class="line"># ]</span><br><span class="line"># template_permission_path_list = [</span><br><span class="line">#     &quot;template-permission/controller/BaseController.java&quot;,</span><br><span class="line">#     &quot;template-permission/mapper/BaseMapper.java&quot;,</span><br><span class="line">#     &quot;template-permission/mapper/BaseMapper.xml&quot;,</span><br><span class="line">#     &quot;template-permission/pojo/Base.java&quot;,</span><br><span class="line">#     &quot;template-permission/service/impl/BaseServiceImpl.java&quot;,</span><br><span class="line">#     &quot;template-permission/service/BaseService.java&quot;</span><br><span class="line"># ]</span><br><span class="line"></span><br><span class="line">template_path_list = template_baseJavaWeb_path_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_template_list():</span><br><span class="line">    &quot;&quot;&quot;代码模板列表获取</span><br><span class="line"></span><br><span class="line">    :return: 代码模板列表</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    template_list = []</span><br><span class="line">    for template_path in template_path_list:</span><br><span class="line">        with open(template_path, &#x27;r&#x27;, encoding=&#x27;UTF-8&#x27;) as file:</span><br><span class="line">            template_list.append(file.read())</span><br><span class="line">    print(&quot;获取代码模板成功，代码模板路径列表：&quot; + str(template_path_list))</span><br><span class="line">    return template_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def save_code_gen(table_name, code_gen_list):</span><br><span class="line">    &quot;&quot;&quot;成品代码保存</span><br><span class="line"></span><br><span class="line">    :param table_name: 表名</span><br><span class="line">    :param code_gen_list: 成品代码列表</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    index = 0</span><br><span class="line">    for template_path in template_path_list:</span><br><span class="line">        template_folder_path = template_path[:template_path.find(&quot;Base&quot;)-1]</span><br><span class="line">        template_folder_path = template_folder_path.replace(&quot;template&quot;, &quot;code-gen&quot;)</span><br><span class="line">        if not os.path.exists(template_folder_path):</span><br><span class="line">            os.makedirs(template_folder_path)</span><br><span class="line">        template_path = template_path.replace(&quot;template&quot;, &quot;code-gen&quot;)</span><br><span class="line">        template_path = template_path.replace(&quot;Base&quot;, template.line_to_hump(table_name[&quot;Name&quot;]))</span><br><span class="line">        print(&quot;保存路径：&quot; + template_path)</span><br><span class="line">        with open(template_path, &#x27;w+&#x27;, encoding=&#x27;UTF-8&#x27;) as file:</span><br><span class="line">            file.write(code_gen_list[index])</span><br><span class="line">        index = index + 1</span><br><span class="line">    print(&quot;保存成品代码成功！！！&quot;)</span><br></pre></td></tr></table></figure>
 
+<h2 id="数据库模块"><a href="#数据库模块" class="headerlink" title="数据库模块"></a>数据库模块</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">import pymysql</span><br><span class="line"></span><br><span class="line">host = &#x27;localhost&#x27;</span><br><span class="line">user = &#x27;root&#x27;</span><br><span class="line">password = &#x27;root&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_table_list(db_name):</span><br><span class="line">    &quot;&quot;&quot;连接数据库读取表列表</span><br><span class="line"></span><br><span class="line">    :return: 数据库表列表</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    tables = []</span><br><span class="line">    connection = pymysql.connect(host=host, user=user, password=password, db=db_name,</span><br><span class="line">                                 charset=&#x27;utf8&#x27;, cursorclass=pymysql.cursors.DictCursor)</span><br><span class="line">    try:</span><br><span class="line">        with connection.cursor() as cursor:</span><br><span class="line">            cursor.execute(&quot;show table status;&quot;)</span><br><span class="line">            table = cursor.fetchall()  # 获取所有（输出是列表，列表中的每个元素是字典，字典的KEY是Tables_in_拼接数据库名称）</span><br><span class="line">        for k in range(len(table)):  # 提取表名</span><br><span class="line">            tables.append(&#123;&quot;Name&quot;: table[k][&#x27;Name&#x27;], &quot;Comment&quot;: table[k][&#x27;Comment&#x27;]&#125;)</span><br><span class="line">    finally:</span><br><span class="line">        connection.commit()</span><br><span class="line">        connection.close()</span><br><span class="line">    print(&quot;获取表名成功，[表名,注释]列表：&quot; + str(tables))</span><br><span class="line">    return tables</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_table_struct(table_name, db_name):</span><br><span class="line">    &quot;&quot;&quot;获取表结构</span><br><span class="line">    </span><br><span class="line">    :param table_name: &#123;Name:表名,Comment:注释&#125;</span><br><span class="line">    :return: 表结构</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    structs = []</span><br><span class="line">    connection = pymysql.connect(host=host, user=user, password=password, db=db_name,</span><br><span class="line">                                 charset=&#x27;utf8&#x27;, cursorclass=pymysql.cursors.DictCursor)</span><br><span class="line">    cursor = connection.cursor()</span><br><span class="line">    sql = &quot;show full columns from `&quot; + table_name[&quot;Name&quot;] + &quot;`&quot;</span><br><span class="line">    cursor.execute(sql)  # 查询表结构</span><br><span class="line">    for x in cursor:</span><br><span class="line">        structs.append(x)</span><br><span class="line">    connection.close()</span><br><span class="line">    print(&quot;获取表结构成功，结构列表：&quot; + str(structs))</span><br><span class="line">    return structs</span><br></pre></td></tr></table></figure>
 
-if __name__ == &#39;__main__&#39;:
-    # 连接数据库读取表列表
-    table_list = mysql.get_table_list(db_name)
-    # 获取代码模板
-    template_list = file.get_template_list()
-    for table in table_list:
-        # 获取表结构
-        table_struct_list = mysql.get_table_struct(table, db_name)
-        # 对代码模板进行加工
-        code_gen_list = template.handle(table, table_struct_list, template_list)
-        # 输出成品代码
-        file.save_code_gen(table, code_gen_list)
-</code></pre>
-<h2 id="文件模块"><a href="#文件模块" class="headerlink" title="文件模块"></a>文件模块</h2><pre><code class="linux">#!/usr/bin/python3
-import os
-import template
+<h2 id="代码生成模块"><a href="#代码生成模块" class="headerlink" title="代码生成模块"></a>代码生成模块</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python3</span><br><span class="line">import re</span><br><span class="line"># 模板规则:</span><br><span class="line"># 形如$base$的用表名替换</span><br><span class="line"># 形如$Base$的用表名大驼峰风格替换</span><br><span class="line"># 形如$Note$的用表注释替换</span><br><span class="line"># 形如$for *$(*为长度不一的字符串)的</span><br><span class="line">#   其内有%javaType%的用字段类型转Java类型替换</span><br><span class="line">#   其内有%type%的用字段类型替换</span><br><span class="line">#   其内有%note%的用字段注释替换</span><br><span class="line">#   其内有%name_%的用字段名替换</span><br><span class="line">#   其内有%name%的用字段名(转小驼峰)替换</span><br><span class="line">#   其内有%Name%的用字段名(转大驼峰)替换</span><br><span class="line">#   其内有%in-*%(*为长度不一的字符串)的*用来做列表分隔符，例子:a,b,c中的,</span><br><span class="line"># $for0 *$为列表第一个</span><br><span class="line"># $for+ *$为列表从第二个到最后一个</span><br><span class="line"></span><br><span class="line">re_for = r&quot;\$for[a-zA-Z0-9%\-; 	\n\r\.=\(\)&lt;&gt;&#123;&#125;/\&quot;\*@_,!&#x27;#+]+\$&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def line_to_hump(line):</span><br><span class="line">    &quot;&quot;&quot;下划线风格转为大驼峰</span><br><span class="line"></span><br><span class="line">    :param line: 下划线风格字符串</span><br><span class="line">    :return: 大驼峰风格字符串</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    if &quot;_&quot; in line:</span><br><span class="line">        return &quot;&quot;.join(map(lambda x: x.capitalize(), line.split(&quot;_&quot;)))</span><br><span class="line">    return line.capitalize()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def to_little_hump(hump):</span><br><span class="line">    &quot;&quot;&quot;转为小驼峰</span><br><span class="line"></span><br><span class="line">    :param line: 大驼峰风格字符串</span><br><span class="line">    :return: 小驼峰风格字符串</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    return hump[0:1].lower() + hump[1:]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def to_type(type):</span><br><span class="line">    if &quot;int&quot; in type:</span><br><span class="line">        return &quot;INTEGER&quot;</span><br><span class="line">    if &quot;double&quot; in type:</span><br><span class="line">        return &quot;DOUBLE&quot;</span><br><span class="line">    if &quot;varchar&quot; in type:</span><br><span class="line">        return &quot;VARCHAR&quot;</span><br><span class="line">    if &quot;text&quot; in type:</span><br><span class="line">        return &quot;VARCHAR&quot;</span><br><span class="line">    if &quot;date&quot; in type:</span><br><span class="line">        return &quot;DATE&quot;</span><br><span class="line">    if &quot;decimal&quot; in type:</span><br><span class="line">        return &quot;DECIMAL&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def to_java_type(type):</span><br><span class="line">    if &quot;int&quot; in type:</span><br><span class="line">        return &quot;Integer&quot;</span><br><span class="line">    if &quot;double&quot; in type:</span><br><span class="line">        return &quot;Double&quot;</span><br><span class="line">    if &quot;varchar&quot; in type:</span><br><span class="line">        return &quot;String&quot;</span><br><span class="line">    if &quot;text&quot; in type:</span><br><span class="line">        return &quot;String&quot;</span><br><span class="line">    if &quot;date&quot; in type:</span><br><span class="line">        return &quot;Date&quot;</span><br><span class="line">    if &quot;decimal&quot; in type:</span><br><span class="line">        return &quot;BigDecimal&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def handle_table_name(table_name, template_list):</span><br><span class="line">    &quot;&quot;&quot;表名处理</span><br><span class="line"></span><br><span class="line">    :param table_name: &#123;Name:表名,Comment:注释&#125;</span><br><span class="line">    :param template_list: 代码模板</span><br><span class="line">    :return: 加工代码</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    code_gen_list = []</span><br><span class="line">    for template in template_list:</span><br><span class="line">        print()</span><br><span class="line">        template = template.replace(&quot;$base$&quot;, table_name[&quot;Name&quot;])</span><br><span class="line">        template = template.replace(&quot;$Base$&quot;, line_to_hump(table_name[&quot;Name&quot;]))</span><br><span class="line">        template = template.replace(&quot;$Note$&quot;, table_name[&quot;Comment&quot;])</span><br><span class="line">        code_gen_list.append(template)</span><br><span class="line">    return code_gen_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def get_for_handle_list(table_struct, for_sign_list, index, length):</span><br><span class="line">    &quot;&quot;&quot;列表内处理</span><br><span class="line"></span><br><span class="line">    :param table_struct: 字段结构</span><br><span class="line">    :param index: 循环下标</span><br><span class="line">    :param for_sign_list: for模板列表</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    for_handle_list = []</span><br><span class="line">    for for_sign in for_sign_list:</span><br><span class="line">        before_for_sign = for_sign</span><br><span class="line">        if &quot;$for0&quot; in for_sign and index != 0:</span><br><span class="line">            for_handle_list.append(for_sign)</span><br><span class="line">            continue</span><br><span class="line">        if &quot;$for+&quot; in for_sign and index == 0:</span><br><span class="line">            for_handle_list.append(for_sign)</span><br><span class="line">            continue</span><br><span class="line">        if &quot;%name_%&quot; in for_sign:</span><br><span class="line">            for_sign = for_sign.replace(&quot;%name_%&quot;, table_struct[&quot;Field&quot;])</span><br><span class="line">        if &quot;%name%&quot; in for_sign:</span><br><span class="line">            for_sign = for_sign.replace(&quot;%name%&quot;, to_little_hump(line_to_hump(table_struct[&quot;Field&quot;])))</span><br><span class="line">        if &quot;%Name%&quot; in for_sign:</span><br><span class="line">            for_sign = for_sign.replace(&quot;%Name%&quot;, line_to_hump(table_struct[&quot;Field&quot;]))</span><br><span class="line">        if &quot;%note%&quot; in for_sign:</span><br><span class="line">            for_sign = for_sign.replace(&quot;%note%&quot;, table_struct[&quot;Comment&quot;])</span><br><span class="line">        if &quot;%javaType%&quot; in for_sign:</span><br><span class="line">            for_sign = for_sign.replace(&quot;%javaType%&quot;, to_java_type(table_struct[&quot;Type&quot;]))</span><br><span class="line">        if &quot;%type%&quot; in for_sign:</span><br><span class="line">            for_sign = for_sign.replace(&quot;%type%&quot;, to_type(table_struct[&quot;Type&quot;]))</span><br><span class="line">        sign = re.search(r&quot;%in-[ ,]+%&quot;, for_sign)</span><br><span class="line">        if sign:</span><br><span class="line">            for_sign = for_sign.replace(sign.group(), &quot;,&quot;)</span><br><span class="line">        for_sign = for_sign.replace(&quot;$for0&quot;, &quot;&quot;).replace(&quot;$for+&quot;, &quot;&quot;)</span><br><span class="line">        for_sign = for_sign.replace(&quot;$for&quot;, &quot;&quot;).replace(&quot;$&quot;, &quot;&quot;)</span><br><span class="line">        if index &lt; (length - 1):</span><br><span class="line">            for_sign = for_sign + before_for_sign</span><br><span class="line">        else:</span><br><span class="line">            for_sign = for_sign[::-1]</span><br><span class="line">            for_sign = for_sign.replace(&quot;,&quot;, &quot;&quot;, 1)</span><br><span class="line">            for_sign = for_sign[::-1]</span><br><span class="line">        for_handle_list.append(for_sign)</span><br><span class="line">    return for_handle_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def handle_struct_list(table_struct_list, template_list):</span><br><span class="line">    &quot;&quot;&quot;列表处理</span><br><span class="line"></span><br><span class="line">    :param table_struct_list: 表结构列表</span><br><span class="line">    :param template_list: 代码模板</span><br><span class="line">    :return: 加工代码</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    code_gen_list = []</span><br><span class="line">    for template in template_list:</span><br><span class="line">        index = 0</span><br><span class="line">        for table_struct in table_struct_list:</span><br><span class="line">            # 获取for列表并留下恢复记号</span><br><span class="line">            for_sign = re.search(re_for, template)</span><br><span class="line">            for_sign_list = []</span><br><span class="line">            while for_sign:</span><br><span class="line">                for_sign_str = for_sign.group()</span><br><span class="line">                for_sign_list.append(for_sign_str)</span><br><span class="line">                template = template.replace(for_sign.group(), &quot;^^^&quot;, 1)</span><br><span class="line">                for_sign = re.search(re_for, template)</span><br><span class="line">            # 进行列表内处理</span><br><span class="line">            for_handle_list = get_for_handle_list(table_struct, for_sign_list, index, len(table_struct_list))</span><br><span class="line">            # 进行恢复替换</span><br><span class="line">            for for_handle in for_handle_list:</span><br><span class="line">                template = template.replace(&quot;^^^&quot;, for_handle, 1)</span><br><span class="line">            index = index + 1</span><br><span class="line">        code_gen_list.append(template)</span><br><span class="line">    return code_gen_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def handle_end(template_list):</span><br><span class="line">    &quot;&quot;&quot;最后处理</span><br><span class="line"></span><br><span class="line">    :param template_list: 代码模板</span><br><span class="line">    :return: 加工代码</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    code_handle_list = []</span><br><span class="line">    for template in template_list:</span><br><span class="line">        for_sign = re.search(re_for, template)</span><br><span class="line">        while for_sign:</span><br><span class="line">            template = template.replace(for_sign.group(), &quot;&quot;)</span><br><span class="line">            for_sign = re.search(re_for, template)</span><br><span class="line">        code_handle_list.append(template)</span><br><span class="line">    code_gen_list = []</span><br><span class="line">    for template in code_handle_list:</span><br><span class="line">        template = template.replace(&quot;$for0&quot;, &quot;&quot;).replace(&quot;$for+&quot;, &quot;&quot;)</span><br><span class="line">        template = template.replace(&quot;$for&quot;, &quot;&quot;).replace(&quot;$&quot;, &quot;&quot;).replace(&quot;^^^&quot;, &quot;&quot;)</span><br><span class="line">        code_gen_list.append(template)</span><br><span class="line">    return code_gen_list</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def handle(table_name, table_struct_list, template_list):</span><br><span class="line">    &quot;&quot;&quot;总处理函数</span><br><span class="line"></span><br><span class="line">    :param table_name: &#123;Name:表名,Comment:注释&#125;</span><br><span class="line">    :param table_struct_list: 表结构列表</span><br><span class="line">    :param template_list: 模板列表</span><br><span class="line">    :return: 成品代码列表</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    code_gen_list = handle_table_name(table_name, template_list)</span><br><span class="line">    code_gen_list = handle_struct_list(table_struct_list, code_gen_list)</span><br><span class="line">    code_gen_list = handle_end(code_gen_list)</span><br><span class="line">    return code_gen_list</span><br></pre></td></tr></table></figure>
 
-# 代码模板列表
-template_baseJavaWeb_path_list = [
-    &quot;template-baseJavaWeb/bean/Base.java&quot;,
-    &quot;template-baseJavaWeb/controller/BaseController.java&quot;,
-    &quot;template-baseJavaWeb/dao/BaseMapper.java&quot;,
-    &quot;template-baseJavaWeb/mapping/BaseMapper.xml&quot;,
-    &quot;template-baseJavaWeb/service/BaseService.java&quot;,
-    &quot;template-baseJavaWeb/serviceImpl/BaseServiceImpl.java&quot;
-]
-# template_ssm_manage_path_list = [
-#     &quot;template-ssm-manage/controller/BaseController.java&quot;,
-#     &quot;template-ssm-manage/mapper/BaseMapper.java&quot;,
-#     &quot;template-ssm-manage/mapper/BaseMapper.xml&quot;,
-#     &quot;template-ssm-manage/service/BaseService.java&quot;,
-#     &quot;template-ssm-manage/po/Base.java&quot;
-# ]
-# template_permission_path_list = [
-#     &quot;template-permission/controller/BaseController.java&quot;,
-#     &quot;template-permission/mapper/BaseMapper.java&quot;,
-#     &quot;template-permission/mapper/BaseMapper.xml&quot;,
-#     &quot;template-permission/pojo/Base.java&quot;,
-#     &quot;template-permission/service/impl/BaseServiceImpl.java&quot;,
-#     &quot;template-permission/service/BaseService.java&quot;
-# ]
-
-template_path_list = template_baseJavaWeb_path_list
-
-
-def get_template_list():
-    &quot;&quot;&quot;代码模板列表获取
-
-    :return: 代码模板列表
-    &quot;&quot;&quot;
-    template_list = []
-    for template_path in template_path_list:
-        with open(template_path, &#39;r&#39;, encoding=&#39;UTF-8&#39;) as file:
-            template_list.append(file.read())
-    print(&quot;获取代码模板成功，代码模板路径列表：&quot; + str(template_path_list))
-    return template_list
-
-
-def save_code_gen(table_name, code_gen_list):
-    &quot;&quot;&quot;成品代码保存
-
-    :param table_name: 表名
-    :param code_gen_list: 成品代码列表
-    &quot;&quot;&quot;
-    index = 0
-    for template_path in template_path_list:
-        template_folder_path = template_path[:template_path.find(&quot;Base&quot;)-1]
-        template_folder_path = template_folder_path.replace(&quot;template&quot;, &quot;code-gen&quot;)
-        if not os.path.exists(template_folder_path):
-            os.makedirs(template_folder_path)
-        template_path = template_path.replace(&quot;template&quot;, &quot;code-gen&quot;)
-        template_path = template_path.replace(&quot;Base&quot;, template.line_to_hump(table_name[&quot;Name&quot;]))
-        print(&quot;保存路径：&quot; + template_path)
-        with open(template_path, &#39;w+&#39;, encoding=&#39;UTF-8&#39;) as file:
-            file.write(code_gen_list[index])
-        index = index + 1
-    print(&quot;保存成品代码成功！！！&quot;)
-</code></pre>
-<h2 id="数据库模块"><a href="#数据库模块" class="headerlink" title="数据库模块"></a>数据库模块</h2><pre><code class="linux">import pymysql
-
-host = &#39;localhost&#39;
-user = &#39;root&#39;
-password = &#39;root&#39;
-
-
-def get_table_list(db_name):
-    &quot;&quot;&quot;连接数据库读取表列表
-
-    :return: 数据库表列表
-    &quot;&quot;&quot;
-    tables = []
-    connection = pymysql.connect(host=host, user=user, password=password, db=db_name,
-                                 charset=&#39;utf8&#39;, cursorclass=pymysql.cursors.DictCursor)
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(&quot;show table status;&quot;)
-            table = cursor.fetchall()  # 获取所有（输出是列表，列表中的每个元素是字典，字典的KEY是Tables_in_拼接数据库名称）
-        for k in range(len(table)):  # 提取表名
-            tables.append(&#123;&quot;Name&quot;: table[k][&#39;Name&#39;], &quot;Comment&quot;: table[k][&#39;Comment&#39;]&#125;)
-    finally:
-        connection.commit()
-        connection.close()
-    print(&quot;获取表名成功，[表名,注释]列表：&quot; + str(tables))
-    return tables
-
-
-def get_table_struct(table_name, db_name):
-    &quot;&quot;&quot;获取表结构
-    
-    :param table_name: &#123;Name:表名,Comment:注释&#125;
-    :return: 表结构
-    &quot;&quot;&quot;
-    structs = []
-    connection = pymysql.connect(host=host, user=user, password=password, db=db_name,
-                                 charset=&#39;utf8&#39;, cursorclass=pymysql.cursors.DictCursor)
-    cursor = connection.cursor()
-    sql = &quot;show full columns from `&quot; + table_name[&quot;Name&quot;] + &quot;`&quot;
-    cursor.execute(sql)  # 查询表结构
-    for x in cursor:
-        structs.append(x)
-    connection.close()
-    print(&quot;获取表结构成功，结构列表：&quot; + str(structs))
-    return structs
-</code></pre>
-<h2 id="代码生成模块"><a href="#代码生成模块" class="headerlink" title="代码生成模块"></a>代码生成模块</h2><pre><code class="linux">#!/usr/bin/python3
-import re
-# 模板规则:
-# 形如$base$的用表名替换
-# 形如$Base$的用表名大驼峰风格替换
-# 形如$Note$的用表注释替换
-# 形如$for *$(*为长度不一的字符串)的
-#   其内有%javaType%的用字段类型转Java类型替换
-#   其内有%type%的用字段类型替换
-#   其内有%note%的用字段注释替换
-#   其内有%name_%的用字段名替换
-#   其内有%name%的用字段名(转小驼峰)替换
-#   其内有%Name%的用字段名(转大驼峰)替换
-#   其内有%in-*%(*为长度不一的字符串)的*用来做列表分隔符，例子:a,b,c中的,
-# $for0 *$为列表第一个
-# $for+ *$为列表从第二个到最后一个
-
-re_for = r&quot;\$for[a-zA-Z0-9%\-; 	\n\r\.=\(\)&lt;&gt;&#123;&#125;/\&quot;\*@_,!&#39;#+]+\$&quot;
-
-
-def line_to_hump(line):
-    &quot;&quot;&quot;下划线风格转为大驼峰
-
-    :param line: 下划线风格字符串
-    :return: 大驼峰风格字符串
-    &quot;&quot;&quot;
-    if &quot;_&quot; in line:
-        return &quot;&quot;.join(map(lambda x: x.capitalize(), line.split(&quot;_&quot;)))
-    return line.capitalize()
-
-
-def to_little_hump(hump):
-    &quot;&quot;&quot;转为小驼峰
-
-    :param line: 大驼峰风格字符串
-    :return: 小驼峰风格字符串
-    &quot;&quot;&quot;
-    return hump[0:1].lower() + hump[1:]
-
-
-def to_type(type):
-    if &quot;int&quot; in type:
-        return &quot;INTEGER&quot;
-    if &quot;double&quot; in type:
-        return &quot;DOUBLE&quot;
-    if &quot;varchar&quot; in type:
-        return &quot;VARCHAR&quot;
-    if &quot;text&quot; in type:
-        return &quot;VARCHAR&quot;
-    if &quot;date&quot; in type:
-        return &quot;DATE&quot;
-    if &quot;decimal&quot; in type:
-        return &quot;DECIMAL&quot;
-
-
-def to_java_type(type):
-    if &quot;int&quot; in type:
-        return &quot;Integer&quot;
-    if &quot;double&quot; in type:
-        return &quot;Double&quot;
-    if &quot;varchar&quot; in type:
-        return &quot;String&quot;
-    if &quot;text&quot; in type:
-        return &quot;String&quot;
-    if &quot;date&quot; in type:
-        return &quot;Date&quot;
-    if &quot;decimal&quot; in type:
-        return &quot;BigDecimal&quot;
-
-
-def handle_table_name(table_name, template_list):
-    &quot;&quot;&quot;表名处理
-
-    :param table_name: &#123;Name:表名,Comment:注释&#125;
-    :param template_list: 代码模板
-    :return: 加工代码
-    &quot;&quot;&quot;
-    code_gen_list = []
-    for template in template_list:
-        print()
-        template = template.replace(&quot;$base$&quot;, table_name[&quot;Name&quot;])
-        template = template.replace(&quot;$Base$&quot;, line_to_hump(table_name[&quot;Name&quot;]))
-        template = template.replace(&quot;$Note$&quot;, table_name[&quot;Comment&quot;])
-        code_gen_list.append(template)
-    return code_gen_list
-
-
-def get_for_handle_list(table_struct, for_sign_list, index, length):
-    &quot;&quot;&quot;列表内处理
-
-    :param table_struct: 字段结构
-    :param index: 循环下标
-    :param for_sign_list: for模板列表
-    :return:
-    &quot;&quot;&quot;
-    for_handle_list = []
-    for for_sign in for_sign_list:
-        before_for_sign = for_sign
-        if &quot;$for0&quot; in for_sign and index != 0:
-            for_handle_list.append(for_sign)
-            continue
-        if &quot;$for+&quot; in for_sign and index == 0:
-            for_handle_list.append(for_sign)
-            continue
-        if &quot;%name_%&quot; in for_sign:
-            for_sign = for_sign.replace(&quot;%name_%&quot;, table_struct[&quot;Field&quot;])
-        if &quot;%name%&quot; in for_sign:
-            for_sign = for_sign.replace(&quot;%name%&quot;, to_little_hump(line_to_hump(table_struct[&quot;Field&quot;])))
-        if &quot;%Name%&quot; in for_sign:
-            for_sign = for_sign.replace(&quot;%Name%&quot;, line_to_hump(table_struct[&quot;Field&quot;]))
-        if &quot;%note%&quot; in for_sign:
-            for_sign = for_sign.replace(&quot;%note%&quot;, table_struct[&quot;Comment&quot;])
-        if &quot;%javaType%&quot; in for_sign:
-            for_sign = for_sign.replace(&quot;%javaType%&quot;, to_java_type(table_struct[&quot;Type&quot;]))
-        if &quot;%type%&quot; in for_sign:
-            for_sign = for_sign.replace(&quot;%type%&quot;, to_type(table_struct[&quot;Type&quot;]))
-        sign = re.search(r&quot;%in-[ ,]+%&quot;, for_sign)
-        if sign:
-            for_sign = for_sign.replace(sign.group(), &quot;,&quot;)
-        for_sign = for_sign.replace(&quot;$for0&quot;, &quot;&quot;).replace(&quot;$for+&quot;, &quot;&quot;)
-        for_sign = for_sign.replace(&quot;$for&quot;, &quot;&quot;).replace(&quot;$&quot;, &quot;&quot;)
-        if index &lt; (length - 1):
-            for_sign = for_sign + before_for_sign
-        else:
-            for_sign = for_sign[::-1]
-            for_sign = for_sign.replace(&quot;,&quot;, &quot;&quot;, 1)
-            for_sign = for_sign[::-1]
-        for_handle_list.append(for_sign)
-    return for_handle_list
-
-
-def handle_struct_list(table_struct_list, template_list):
-    &quot;&quot;&quot;列表处理
-
-    :param table_struct_list: 表结构列表
-    :param template_list: 代码模板
-    :return: 加工代码
-    &quot;&quot;&quot;
-    code_gen_list = []
-    for template in template_list:
-        index = 0
-        for table_struct in table_struct_list:
-            # 获取for列表并留下恢复记号
-            for_sign = re.search(re_for, template)
-            for_sign_list = []
-            while for_sign:
-                for_sign_str = for_sign.group()
-                for_sign_list.append(for_sign_str)
-                template = template.replace(for_sign.group(), &quot;^^^&quot;, 1)
-                for_sign = re.search(re_for, template)
-            # 进行列表内处理
-            for_handle_list = get_for_handle_list(table_struct, for_sign_list, index, len(table_struct_list))
-            # 进行恢复替换
-            for for_handle in for_handle_list:
-                template = template.replace(&quot;^^^&quot;, for_handle, 1)
-            index = index + 1
-        code_gen_list.append(template)
-    return code_gen_list
-
-
-def handle_end(template_list):
-    &quot;&quot;&quot;最后处理
-
-    :param template_list: 代码模板
-    :return: 加工代码
-    &quot;&quot;&quot;
-    code_handle_list = []
-    for template in template_list:
-        for_sign = re.search(re_for, template)
-        while for_sign:
-            template = template.replace(for_sign.group(), &quot;&quot;)
-            for_sign = re.search(re_for, template)
-        code_handle_list.append(template)
-    code_gen_list = []
-    for template in code_handle_list:
-        template = template.replace(&quot;$for0&quot;, &quot;&quot;).replace(&quot;$for+&quot;, &quot;&quot;)
-        template = template.replace(&quot;$for&quot;, &quot;&quot;).replace(&quot;$&quot;, &quot;&quot;).replace(&quot;^^^&quot;, &quot;&quot;)
-        code_gen_list.append(template)
-    return code_gen_list
-
-
-def handle(table_name, table_struct_list, template_list):
-    &quot;&quot;&quot;总处理函数
-
-    :param table_name: &#123;Name:表名,Comment:注释&#125;
-    :param table_struct_list: 表结构列表
-    :param template_list: 模板列表
-    :return: 成品代码列表
-    &quot;&quot;&quot;
-    code_gen_list = handle_table_name(table_name, template_list)
-    code_gen_list = handle_struct_list(table_struct_list, code_gen_list)
-    code_gen_list = handle_end(code_gen_list)
-    return code_gen_list
-</code></pre>
 <p>这些就是全部代码了，然后还要根据模板规则写个模板，最后运行就可以<br>这里放上模板和代码，对了还要在项目里加个base包和里面的文件，里面是抽出来的基本增删改查操作，base也放进去了：</p>
 <p><a target="_blank" rel="noopener" href="https://media.baby7blog.com/code-gen-ssm.7z">点击下载文件</a></p>
 <p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/64.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/64.html</a></p>
@@ -590,6 +276,8 @@ def handle(table_name, table_struct_list, template_list):
           <div class="post-tags">
               <a href="/tags/Java/" rel="tag"># Java</a>
               <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+              <a href="/tags/SpringBoot/" rel="tag"># SpringBoot</a>
           </div>
 
         
@@ -679,7 +367,7 @@ def handle(table_name, table_struct_list, template_list):
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -692,7 +380,7 @@ def handle(table_name, table_struct_list, template_list):
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">95</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

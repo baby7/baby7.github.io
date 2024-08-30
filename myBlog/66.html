@@ -29,9 +29,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://media.baby7blog.com/Fp2rhwM_SXzZ7gOrPjiScRgynSA8">
 <meta property="article:published_time" content="2020-03-25T07:23:23.000Z">
-<meta property="article:modified_time" content="2024-08-29T00:37:54.000Z">
+<meta property="article:modified_time" content="2024-08-29T08:26:57.000Z">
 <meta property="article:author" content="七仔">
 <meta property="article:tag" content="大数据">
+<meta property="article:tag" content="BigData">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://media.baby7blog.com/Fp2rhwM_SXzZ7gOrPjiScRgynSA8">
 
@@ -200,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-29 08:37:54" itemprop="dateModified" datetime="2024-08-29T08:37:54+08:00">2024-08-29</time>
+                <time title="修改时间：2024-08-29 16:26:57" itemprop="dateModified" datetime="2024-08-29T16:26:57+08:00">2024-08-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,12 +231,14 @@
 
 <blockquote>
 <h1 id="Hbase-3节点分布式集群搭建（服务器）"><a href="#Hbase-3节点分布式集群搭建（服务器）" class="headerlink" title="Hbase 3节点分布式集群搭建（服务器）"></a>Hbase 3节点分布式集群搭建（服务器）</h1></blockquote>
-<p>主要参考了<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34758475/article/details/84337320">hbase高可用性分布式集群搭建（3节点超详细集群安装）</a><br>中间踩了一堆坑，最后发现服务器的host应该这么设置(vim &#x2F;etc&#x2F;hosts)：<br>master</p>
+<p>主要参考了<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34758475/article/details/84337320">hbase高可用性分布式集群搭建（3节点超详细集群安装）</a><br>中间踩了一堆坑，最后发现服务器的host应该这么设置(vim &#x2F;etc&#x2F;hosts)：</p>
+<p>master</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">填你的内网IP master</span><br><span class="line">填你的公网IP slave1</span><br><span class="line">填你的公网IP slave2</span><br></pre></td></tr></table></figure>
 <p>slave1</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">填你的公网IP master</span><br><span class="line">填你的内网IP slave1</span><br><span class="line">填你的公网IP slave2</span><br></pre></td></tr></table></figure>
 <p>slave2</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">填你的公网IP master</span><br><span class="line">填你的公网IP slave1</span><br><span class="line">填你的内网IP slave2</span><br></pre></td></tr></table></figure>
+
 <p>这是三节点的配置，多节点以此类推<br>然后三个服务器之间的安全组要配置：对其余两台服务器放通所有协议和端口（注意！！！只对其余两台服务器，别全放开了，可能别人分分钟给你黑了）</p>
 <p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/66.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/66.html</a></p>
     </div>
@@ -266,6 +269,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag"># 大数据</a>
+              <a href="/tags/BigData/" rel="tag"># BigData</a>
           </div>
 
         
@@ -355,7 +359,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -368,7 +372,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">95</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

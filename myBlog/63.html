@@ -29,9 +29,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://media.baby7blog.com/FjkvD2ElfLRfnznMQ7zpqDP-RVsH">
 <meta property="article:published_time" content="2020-03-25T06:31:41.000Z">
-<meta property="article:modified_time" content="2024-08-28T13:17:18.000Z">
+<meta property="article:modified_time" content="2024-08-29T00:36:58.000Z">
 <meta property="article:author" content="七仔">
 <meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="Scrapy">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://media.baby7blog.com/FjkvD2ElfLRfnznMQ7zpqDP-RVsH">
 
@@ -200,7 +202,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-08-28 21:17:18" itemprop="dateModified" datetime="2024-08-28T21:17:18+08:00">2024-08-28</time>
+                <time title="修改时间：2024-08-29 08:36:58" itemprop="dateModified" datetime="2024-08-29T08:36:58+08:00">2024-08-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,19 +231,25 @@
 <span id="more"></span>
 
 <blockquote>
-<h1 id="为Scrapy爬虫添加UA池和动态IP代理池"><a href="#为Scrapy爬虫添加UA池和动态IP代理池" class="headerlink" title="为Scrapy爬虫添加UA池和动态IP代理池"></a>为Scrapy爬虫添加UA池和动态IP代理池</h1><p>大家在进行爬取数据时可能会被封,这种情况可以通过降低爬取速度、更换user-agent、更换ip来预防，这里写了我的爬虫经验</p>
-</blockquote>
+<h1 id="为Scrapy爬虫添加UA池和动态IP代理池"><a href="#为Scrapy爬虫添加UA池和动态IP代理池" class="headerlink" title="为Scrapy爬虫添加UA池和动态IP代理池"></a>为Scrapy爬虫添加UA池和动态IP代理池</h1></blockquote>
+<p>大家在进行爬取数据时可能会被封,这种情况可以通过降低爬取速度、更换user-agent、更换ip来预防，这里写了我的爬虫经验</p>
 <h2 id="添加UA池"><a href="#添加UA池" class="headerlink" title="添加UA池"></a>添加UA池</h2><p>在setting.py中添加</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">USER_AGENT_LIST = [</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1092.0 Safari/536.6&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.6 (KHTML, like Gecko) Chrome/20.0.1090.0 Safari/536.6&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/19.77.34.5 Safari/537.1&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.9 Safari/536.5&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.0) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.36 Safari/536.5&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1062.0 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.0 Safari/536.3&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24&quot;</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
 <p>然后在setting.py中取消注释DOWNLOADER_MIDDLEWARES(*处改成你自己的)：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DOWNLOADER_MIDDLEWARES = &#123;</span><br><span class="line">   <span class="string">&#x27;*.middlewares.Job51SpiderMiddleware&#x27;</span>: <span class="number">543</span>,</span><br><span class="line">   <span class="string">&#x27;*.middlewares.Job51DownloaderMiddleware&#x27;</span>: <span class="number">543</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>然后再middlewares.py的*DownloaderMiddleware类中的process_request函数中添加</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user_agent = random.choice(spider.settings[<span class="string">&#x27;USER_AGENT_LIST&#x27;</span>])</span><br><span class="line"><span class="built_in">print</span>(user_agent)</span><br><span class="line">request.headers[<span class="string">&#x27;User-Agent&#x27;</span>] = user_agent</span><br></pre></td></tr></table></figure>
+
 <p>运行后查看是否输出user-agent，输出代表成功了</p>
-<h2 id="添加动态IP代理池"><a href="#添加动态IP代理池" class="headerlink" title="添加动态IP代理池"></a>添加动态IP代理池</h2><p>添加IP代理池有很大程度上防止被封，但是免费的IP代理很难找到，找到了也用不久（事实上我就没找到过能用的），后来发现了个<a target="_blank" rel="noopener" href="https://www.abuyun.com/">阿布云</a>，有动态IP代理，然后是注册就送三个小时，并发每秒5个，这着实爽到我了，后面再用是每秒5个的话一小时一块钱！？，对于用不了那么多数据量的来说够够的了，添加并发的话大概每5个&#x2F;秒的话是加4-5毛。没打广告啊(￣▽￣)”<br>下面讲讲具体操作：<br>在middlewares.py上方添加</p>
+<h2 id="添加动态IP代理池"><a href="#添加动态IP代理池" class="headerlink" title="添加动态IP代理池"></a>添加动态IP代理池</h2><p>添加IP代理池有很大程度上防止被封，但是免费的IP代理很难找到，找到了也用不久（事实上我就没找到过能用的），后来发现了个<a target="_blank" rel="noopener" href="https://www.abuyun.com/">阿布云</a>，有动态IP代理，然后是注册就送三个小时，并发每秒5个，这着实爽到我了，后面再用是每秒5个的话一小时一块钱！？，对于用不了那么多数据量的来说够够的了，添加并发的话大概每5个&#x2F;秒的话是加4-5毛。没打广告啊(￣▽￣)”</p>
+<p>下面讲讲具体操作：</p>
+<p>在middlewares.py上方添加</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 阿布云 ip代理</span></span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="comment"># 代理服务器</span></span><br><span class="line">proxyServer = <span class="string">&quot;http://http-dyn.abuyun.com:9020&quot;</span></span><br><span class="line"><span class="comment"># 代理隧道验证信息</span></span><br><span class="line">proxyUser = <span class="string">&quot;填你自己在阿布云获取到的&quot;</span></span><br><span class="line">proxyPass = <span class="string">&quot;填你自己在阿布云获取到的&quot;</span></span><br><span class="line">proxyAuth = <span class="string">&quot;Basic &quot;</span> + base64.urlsafe_b64encode(<span class="built_in">bytes</span>((proxyUser + <span class="string">&quot;:&quot;</span> + proxyPass), <span class="string">&quot;ascii&quot;</span>)).decode(<span class="string">&quot;utf8&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>然后在*SpiderMiddleware类的process_request函数里增加：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">request.meta[<span class="string">&quot;proxy&quot;</span>] = proxyServer</span><br><span class="line">request.headers[<span class="string">&quot;Proxy-Authorization&quot;</span>] = proxyAuth</span><br><span class="line"><span class="built_in">print</span>(proxyServer)</span><br><span class="line"><span class="built_in">print</span>(proxyAuth)</span><br></pre></td></tr></table></figure>
+
 <p>运行后查看是否有输出 </p>
 <p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/63.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/63.html</a></p>
     </div>
@@ -272,6 +280,8 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+              <a href="/tags/Scrapy/" rel="tag"># Scrapy</a>
           </div>
 
         
@@ -361,7 +371,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">116</span>
+          <span class="site-state-item-count">117</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -374,7 +384,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">95</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
