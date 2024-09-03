@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://media.baby7blog.com/1725004825745192178">
 <meta property="og:image" content="https://media.baby7blog.com/1725004754371824603">
 <meta property="article:published_time" content="2024-08-30T07:54:29.000Z">
-<meta property="article:modified_time" content="2024-08-30T08:00:44.000Z">
+<meta property="article:modified_time" content="2024-09-03T02:09:20.000Z">
 <meta property="article:author" content="七仔">
 <meta property="article:tag" content="建站">
 <meta property="article:tag" content="插件">
@@ -204,10 +204,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-08-30 15:54:29 / 修改时间：16:00:44" itemprop="dateCreated datePublished" datetime="2024-08-30T15:54:29+08:00">2024-08-30</time>
+              <time title="创建时间：2024-08-30 15:54:29" itemprop="dateCreated datePublished" datetime="2024-08-30T15:54:29+08:00">2024-08-30</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-03 10:09:20" itemprop="dateModified" datetime="2024-09-03T10:09:20+08:00">2024-09-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -219,6 +225,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -274,7 +287,7 @@
 <br>
 
 <h2 id="4-Live2d的优化"><a href="#4-Live2d的优化" class="headerlink" title="4. Live2d的优化"></a>4. Live2d的优化</h2><p>对于live2d，基础的js和css的优化就不说了，顺便提一下live2d的图片因为要拼接起来，所以很大，记得也要压缩</p>
-<p>这里主要说一下moc格式，其实moc是进行gzip压缩的，两种方案：</p>
+<p>这里主要说一下moc格式，moc这个是用来存live2d模型的，我这里会达到三百多k，非常占资源，其实moc是可以进行gzip压缩的，压缩后我这里会降低到一百多k，不到一半，moc进行gzip压缩有我这里有两种方案：</p>
 <ol>
 <li>对nginx进行配置，再增加一个针对moc的gzip压缩</li>
 </ol>
@@ -535,6 +548,26 @@
   </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 

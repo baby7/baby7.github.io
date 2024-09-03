@@ -217,6 +217,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -236,17 +243,29 @@
 <h1 id="【Home-Assistant】使用GPSLogger记录位置"><a href="#【Home-Assistant】使用GPSLogger记录位置" class="headerlink" title="【Home Assistant】使用GPSLogger记录位置"></a>【Home Assistant】使用GPSLogger记录位置</h1></blockquote>
 <h4 id="我用的hass版本是0-111-4，对于GPSLogger有相关说明，也可以跳过不看"><a href="#我用的hass版本是0-111-4，对于GPSLogger有相关说明，也可以跳过不看" class="headerlink" title="我用的hass版本是0.111.4，对于GPSLogger有相关说明，也可以跳过不看"></a>我用的hass版本是0.111.4，对于GPSLogger有相关<a target="_blank" rel="noopener" href="https://www.home-assistant.io/integrations/gpslogger">说明</a>，也可以跳过不看</h4><p>启动Hass，点击配置-&gt;集成-&gt;右下角添加</p>
 <p>找到GPSLogger，添加，记录下提供的一串代码</p>
-<p>下载GPSLogger应用：打开<a target="_blank" rel="noopener" href="https://github.com/mendhak/gpslogger/releases">https://github.com/mendhak/gpslogger/releases</a></p>
+<p>下载GPSLogger应用：打开 <a target="_blank" rel="noopener" href="https://github.com/mendhak/gpslogger/releases">https://github.com/mendhak/gpslogger/releases</a></p>
 <p>找到最新的apk下载安装到手机（我安装的时候是106版本）</p>
 <p>打开应用，</p>
 <p>点击左上角-&gt;常规选项-&gt;打开开机自启动和在应用程序启动时启动-&gt;返回-&gt;记录细节-&gt;记录到自定义URL</p>
-<p>url:<br>http:&#x2F;&#x2F;（这里填外网地址）&#x2F;api&#x2F;webhook&#x2F;（这里填前面拿到的代码）</p>
-<p>HTTP内容：<br>latitude&#x3D;%LAT&amp;longitude&#x3D;%LON&amp;device&#x3D;%SER&amp;accuracy&#x3D;%ACC&amp;battery&#x3D;%BATT&amp;speed&#x3D;%SPD&amp;direction&#x3D;%DIR&amp;altitude&#x3D;%ALT&amp;provider&#x3D;%PROV&amp;activity&#x3D;%ACT</p>
-<p>HTTP头：<br>Content-Type: application&#x2F;x-www-form-urlencoded</p>
-<p>HTTP方法：<br>POST</p>
+<p>url:</p>
+<blockquote>
+<p>http:&#x2F;&#x2F;（这里填外网地址）&#x2F;api&#x2F;webhook&#x2F;（这里填前面拿到的代码）</p>
+</blockquote>
+<p>HTTP内容：</p>
+<blockquote>
+<p>latitude&#x3D;%LAT&amp;longitude&#x3D;%LON&amp;device&#x3D;%SER&amp;accuracy&#x3D;%ACC&amp;battery&#x3D;%BATT&amp;speed&#x3D;%SPD&amp;direction&#x3D;%DIR&amp;altitude&#x3D;%ALT&amp;provider&#x3D;%PROV&amp;activity&#x3D;%ACT</p>
+</blockquote>
+<p>HTTP头：</p>
+<blockquote>
+<p>Content-Type: application&#x2F;x-www-form-urlencoded</p>
+</blockquote>
+<p>HTTP方法：</p>
+<blockquote>
+<p>POST</p>
+</blockquote>
 <p>Base Authenication：<br>填你的hass的用户名密码</p>
 <p>填完退出，这时候Home Assistant应该就会增加一个实体，就成功了</p>
-<h4 id="这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客荣耀路由器Pro2的内网穿透方案"><a href="#这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客荣耀路由器Pro2的内网穿透方案" class="headerlink" title="这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客荣耀路由器Pro2的内网穿透方案"></a>这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客<a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog?id=79">荣耀路由器Pro2的内网穿透方案</a></h4><p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/80.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/80.html</a></p>
+<h4 id="这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客荣耀路由器Pro2的内网穿透方案"><a href="#这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客荣耀路由器Pro2的内网穿透方案" class="headerlink" title="这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客荣耀路由器Pro2的内网穿透方案"></a>这里讲一下hass的ip就是你安装的主机ip，端口一般是8123，GPSLogger需要外网访问，没有公网IP的话，一般需要做内网穿透，这里可以参考我写的另一篇博客<a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/79.html">荣耀路由器Pro2的内网穿透方案</a></h4><p><span>此为博主副博客，留言请去主博客，转载请注明出处：</span><a target="_blank" rel="noopener" href="https://www.baby7blog.com/myBlog/80.html" style="color: rgb(63, 134, 232);">https://www.baby7blog.com/myBlog/80.html</a></p>
     </div>
 
     
@@ -475,6 +494,26 @@
   </div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
